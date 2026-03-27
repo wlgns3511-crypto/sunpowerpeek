@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 const SITE_NAME = "SunPowerPeek";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sunpowerpeek.com";
+const GA_ID = "G-795SVW8599";
 
 export const metadata: Metadata = {
   title: {
@@ -31,6 +32,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","${GA_ID}")` }} />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5724806562146685"

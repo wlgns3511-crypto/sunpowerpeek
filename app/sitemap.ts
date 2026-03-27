@@ -12,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE_URL, changeFrequency: "monthly", priority: 1.0 },
     { url: `${SITE_URL}/calculator`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/incentives`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/compare`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/solar-cities`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/about`, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE_URL}/privacy`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${SITE_URL}/terms`, changeFrequency: "yearly", priority: 0.2 },
@@ -36,5 +38,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...statePages, ...zipPages, ...comparePages];
+  const solarCitiesPages: MetadataRoute.Sitemap = states.map((s) => ({
+    url: `${SITE_URL}/solar-cities/${s.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const incentiveStatePages: MetadataRoute.Sitemap = states.map((s) => ({
+    url: `${SITE_URL}/incentives/${s.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...statePages, ...zipPages, ...comparePages, ...solarCitiesPages, ...incentiveStatePages];
 }

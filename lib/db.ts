@@ -192,59 +192,16 @@ export function getNeighboringStates(abbr: string): State[] {
   return getDb().prepare(`SELECT * FROM states WHERE abbr IN (${placeholders}) ORDER BY state`).all(...neighborAbbrs) as State[];
 }
 
-// --- Comparison pairs ---
+// --- All state vs state comparison pairs (50*49/2 = 1,225 pairs) ---
 
 export function getTopComparisonPairs(): { state1: string; state2: string; slug: string }[] {
-  const pairs = [
-    ['california', 'texas'], ['california', 'arizona'], ['texas', 'florida'],
-    ['new-york', 'california'], ['arizona', 'nevada'], ['florida', 'georgia'],
-    ['texas', 'new-york'], ['california', 'colorado'], ['hawaii', 'california'],
-    ['massachusetts', 'connecticut'], ['north-carolina', 'south-carolina'],
-    ['new-jersey', 'new-york'], ['washington', 'oregon'], ['colorado', 'utah'],
-    ['virginia', 'maryland'], ['illinois', 'indiana'], ['ohio', 'michigan'],
-    ['tennessee', 'kentucky'], ['alabama', 'mississippi'], ['minnesota', 'wisconsin'],
-    ['missouri', 'kansas'], ['louisiana', 'texas'], ['georgia', 'alabama'],
-    ['ohio', 'pennsylvania'], ['california', 'florida'], ['texas', 'arizona'],
-    ['new-york', 'new-jersey'], ['florida', 'south-carolina'], ['virginia', 'north-carolina'],
-    ['michigan', 'indiana'], ['colorado', 'arizona'], ['washington', 'california'],
-    ['arizona', 'new-mexico'], ['nevada', 'utah'], ['idaho', 'montana'],
-    ['wyoming', 'colorado'], ['new-mexico', 'texas'], ['arkansas', 'oklahoma'],
-    ['mississippi', 'louisiana'], ['north-dakota', 'south-dakota'], ['maine', 'new-hampshire'],
-    ['vermont', 'new-hampshire'], ['rhode-island', 'connecticut'], ['hawaii', 'arizona'],
-    ['california', 'nevada'], ['texas', 'colorado'], ['florida', 'north-carolina'],
-    ['new-york', 'massachusetts'], ['pennsylvania', 'new-jersey'], ['oregon', 'washington'],
-    ['arizona', 'utah'], ['new-mexico', 'colorado'], ['illinois', 'missouri'],
-    ['tennessee', 'alabama'], ['georgia', 'north-carolina'], ['michigan', 'wisconsin'],
-    ['iowa', 'nebraska'], ['oklahoma', 'texas'], ['kentucky', 'west-virginia'],
-    ['south-carolina', 'georgia'], ['maryland', 'delaware'], ['alaska', 'hawaii'],
-    ['california', 'oregon'], ['florida', 'texas'], ['new-york', 'connecticut'],
-    ['arizona', 'california'], ['texas', 'new-mexico'], ['colorado', 'nevada'],
-    ['massachusetts', 'rhode-island'], ['connecticut', 'new-york'], ['alabama', 'georgia'],
-    ['kentucky', 'tennessee'], ['indiana', 'ohio'], ['wisconsin', 'minnesota'],
-    ['kansas', 'nebraska'], ['oklahoma', 'arkansas'], ['louisiana', 'mississippi'],
-    ['south-dakota', 'nebraska'], ['montana', 'wyoming'], ['utah', 'colorado'],
-    ['new-hampshire', 'massachusetts'], ['delaware', 'new-jersey'],
-    ['west-virginia', 'virginia'], ['north-carolina', 'virginia'],
-    ['california', 'new-york'], ['texas', 'california'], ['florida', 'california'],
-    ['new-york', 'texas'], ['arizona', 'texas'], ['colorado', 'california'],
-    ['hawaii', 'new-york'], ['massachusetts', 'california'], ['new-jersey', 'california'],
-    ['north-carolina', 'texas'], ['georgia', 'texas'], ['virginia', 'texas'],
-    ['washington', 'texas'], ['ohio', 'texas'], ['pennsylvania', 'texas'],
-    ['illinois', 'texas'], ['michigan', 'texas'], ['minnesota', 'texas'],
-    ['tennessee', 'texas'], ['alabama', 'texas'], ['hawaii', 'texas'],
-    ['arizona', 'florida'], ['nevada', 'california'], ['new-mexico', 'arizona'],
-    ['colorado', 'texas'], ['utah', 'arizona'], ['oregon', 'california'],
-    ['washington', 'arizona'], ['idaho', 'utah'], ['montana', 'colorado'],
-  ];
-
-  const seen = new Set<string>();
-  const unique: { state1: string; state2: string; slug: string }[] = [];
-  for (const [s1, s2] of pairs) {
-    const key = [s1, s2].sort().join('|');
-    if (!seen.has(key)) {
-      seen.add(key);
-      unique.push({ state1: s1, state2: s2, slug: `${s1}-vs-${s2}-solar` });
+  const states = getDb().prepare('SELECT slug FROM states ORDER BY state').all() as { slug: string }[];
+  const slugs = states.map((s) => s.slug);
+  const pairs: { state1: string; state2: string; slug: string }[] = [];
+  for (let i = 0; i < slugs.length; i++) {
+    for (let j = i + 1; j < slugs.length; j++) {
+      pairs.push({ state1: slugs[i], state2: slugs[j], slug: `${slugs[i]}-vs-${slugs[j]}-solar` });
     }
   }
-  return unique;
+  return pairs;
 }

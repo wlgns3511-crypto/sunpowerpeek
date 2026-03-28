@@ -7,6 +7,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { DataFeedback } from "@/components/DataFeedback";
 import { FreshnessTag } from "@/components/FreshnessTag";
+import { CiteButton } from "@/components/CiteButton";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -270,6 +271,10 @@ export default async function StatePage({ params }: PageProps) {
 
       <DataFeedback />
       <FreshnessTag source="NREL, DSIRE, EIA" />
+
+      <div className="flex items-center gap-4 mt-4">
+        <CiteButton title={`${state.state} Solar Panel Costs & Savings`} url={`https://sunpowerpeek.com/state/${slug}/`} source="SunPowerPeek (NREL Data)" />
+      </div>
     </>
   );
 }

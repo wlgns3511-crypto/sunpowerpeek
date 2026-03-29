@@ -7,6 +7,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { DataFeedback } from "@/components/DataFeedback";
 import { FreshnessTag } from "@/components/FreshnessTag";
+import { ComparisonBar } from "@/components/ComparisonBar";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -141,6 +142,49 @@ export default async function CompareStatePage({ params }: PageProps) {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      {/* Visual Comparison Bars */}
+      <section className="mb-8">
+        <h2 className="text-xl font-bold text-slate-800 mb-3">Visual Solar Comparison</h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px", margin: "24px 0" }}>
+          {state1.avg_sun_hours != null && state2.avg_sun_hours != null && (
+            <div>
+              <h3 className="text-sm font-medium text-slate-600 mb-2">Peak Sun Hours per Day</h3>
+              <ComparisonBar
+                bars={[{ label: state1.state, value: state1.avg_sun_hours }, { label: state2.state, value: state2.avg_sun_hours }]}
+                format={(v) => v.toFixed(1) + " hrs"}
+              />
+            </div>
+          )}
+          {state1.avg_20yr_savings != null && state2.avg_20yr_savings != null && (
+            <div>
+              <h3 className="text-sm font-medium text-slate-600 mb-2">20-Year Savings</h3>
+              <ComparisonBar
+                bars={[{ label: state1.state, value: state1.avg_20yr_savings }, { label: state2.state, value: state2.avg_20yr_savings }]}
+                format={(v) => "$" + v.toLocaleString()}
+              />
+            </div>
+          )}
+          {state1.avg_payback_years != null && state2.avg_payback_years != null && (
+            <div>
+              <h3 className="text-sm font-medium text-slate-600 mb-2">Payback Period</h3>
+              <ComparisonBar
+                bars={[{ label: state1.state, value: state1.avg_payback_years }, { label: state2.state, value: state2.avg_payback_years }]}
+                format={(v) => v.toFixed(1) + " yrs"}
+              />
+            </div>
+          )}
+          {cost1 != null && cost2 != null && (
+            <div>
+              <h3 className="text-sm font-medium text-slate-600 mb-2">6kW System Cost</h3>
+              <ComparisonBar
+                bars={[{ label: state1.state, value: cost1 }, { label: state2.state, value: cost2 }]}
+                format={(v) => "$" + v.toLocaleString()}
+              />
+            </div>
+          )}
         </div>
       </section>
 

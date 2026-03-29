@@ -1,0 +1,24 @@
+{
+  "common": {
+    "home": "Inicio",
+    "calculator": "Calculadora",
+    "incentives": "Incentivos",
+    "compare": "Comparar",
+    "about": "Acerca de",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "contact": "Contacto",
+    "langSwitch": "EN",
+    "langSwitchPrefix": ""
+  },
+  "state": {
+    "solarCosts": "Costos y Ahorro de Energía Solar en {state}",
+    "solarEnergy": "Energía Solar",
+    "savings": "Ahorro",
+    "paybackPeriod": "Período de Recuperación",
+    "sunHours": "Horas de Sol",
+    "systemCost": "Costo del Sistema",
+    "netMetering": "Medición Neta",
+    "incentives": "Incentivos"
+  }
+}

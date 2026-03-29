@@ -1,0 +1,24 @@
+{
+  "common": {
+    "home": "Home",
+    "calculator": "Calculator",
+    "incentives": "Incentives",
+    "compare": "Compare",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "langSwitch": "ES",
+    "langSwitchPrefix": "/es"
+  },
+  "state": {
+    "solarCosts": "Solar Panel Costs & Savings in {state}",
+    "solarEnergy": "Solar Energy",
+    "savings": "Savings",
+    "paybackPeriod": "Payback Period",
+    "sunHours": "Sun Hours",
+    "systemCost": "System Cost",
+    "netMetering": "Net Metering",
+    "incentives": "Incentives"
+  }
+}

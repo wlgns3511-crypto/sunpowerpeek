@@ -70,6 +70,7 @@ export default function RootLayout({
               <a href="/calculator" className="hover:text-orange-600">Calculator</a>
               <a href="/incentives" className="hover:text-orange-600">Incentives</a>
               <a href="/compare/california-vs-texas-solar/" className="hover:text-orange-600">Compare</a>
+              <a href="/es/" className="text-slate-400 hover:text-orange-600 text-xs">ES</a>
             </nav>
           </div>
         </header>

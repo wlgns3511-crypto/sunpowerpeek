@@ -23,8 +23,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const state = getStateBySlug(slug);
   if (!state) return {};
   return {
-    title: `${state.state} Solar Panel Costs & Savings - ${state.avg_payback_years}yr Payback | SunPowerPeek`,
-    description: `${state.state} gets ${state.avg_sun_hours} peak sun hours/day. Average 6kW system costs $${Math.round(state.avg_system_cost_per_watt * 6000).toLocaleString()} before the 30% federal tax credit. ${state.avg_payback_years}-year payback with ${formatCurrency(state.avg_20yr_savings)} in 20-year savings.`,
+    title: `${state.state} Solar Panel Cost ${new Date().getFullYear()} - Installation Guide & ${state.avg_payback_years}yr ROI`,
+    description: `${state.state} solar installation: $${Math.round(state.avg_system_cost_per_watt * 6000).toLocaleString()} for 6kW system (before 30% federal tax credit). ${state.avg_sun_hours} peak sun hours, ${state.avg_payback_years}-year payback, ${formatCurrency(state.avg_20yr_savings)} in 20-year savings. Compare solar quotes & incentives.`,
     alternates: { canonical: `https://sunpowerpeek.com/state/${slug}/` },
   };
 }

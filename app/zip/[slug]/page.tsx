@@ -12,8 +12,12 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamicParams = true;
+export const revalidate = 86400;
+
 export async function generateStaticParams() {
-  const zips = getAllZips();
+  // Pre-render top 500 ZIPs; rest served via ISR
+  const zips = getAllZips().slice(0, 500);
   return zips.map((z) => ({ slug: z.slug }));
 }
 
@@ -166,6 +170,44 @@ export default async function ZipPage({ params }: PageProps) {
               </a>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Compare solar with other ZIPs */}
+      {stateZips.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-slate-800 mb-3">
+            Compare Solar in {zip.zip_code} vs Nearby ZIPs
+          </h2>
+          <p className="text-sm text-slate-600 mb-3">
+            See how solar potential in {zip.zip_code} {zip.city} compares with other areas in {state.state}.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {stateZips.slice(0, 6).map((nz) => {
+              const savDiff = nz.annual_savings - zip.annual_savings;
+              const diffLabel = savDiff > 0 ? `${formatCurrency(Math.abs(savDiff))}/yr more` : savDiff < 0 ? `${formatCurrency(Math.abs(savDiff))}/yr less` : "same savings";
+              return (
+                <a
+                  key={nz.zip_code}
+                  href={`/zip/${nz.slug}/`}
+                  className="flex justify-between items-center p-3 border border-slate-200 rounded-lg hover:border-orange-300 hover:bg-orange-50 transition-all text-sm"
+                >
+                  <span>
+                    <span className="font-medium text-orange-700">{zip.zip_code} vs {nz.zip_code}</span>{" "}
+                    <span className="text-slate-500">{nz.city}</span>
+                  </span>
+                  <span className={`text-xs font-medium ${savDiff > 0 ? "text-green-600" : savDiff < 0 ? "text-red-600" : "text-slate-500"}`}>
+                    {diffLabel}
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+          <p className="text-xs text-slate-400 mt-3">
+            <a href={`/compare/${state.slug}-vs-${state.slug}-solar/`} className="text-orange-600 hover:underline">
+              Compare {state.state} solar with other states
+            </a>
+          </p>
         </section>
       )}
 

@@ -14,9 +14,22 @@ interface PageProps {
 }
 
 function parseCompareSlug(slug: string): { state1Slug: string; state2Slug: string } | null {
+  // Try standard format first: state1-vs-state2-solar
   const match = slug.match(/^(.+)-vs-(.+)-solar$/);
-  if (!match) return null;
-  return { state1Slug: match[1], state2Slug: match[2] };
+  if (match) return { state1Slug: match[1], state2Slug: match[2] };
+
+  // Fallback: try all "-vs-" split points and validate against DB
+  const marker = "-vs-";
+  let idx = slug.indexOf(marker);
+  while (idx !== -1) {
+    const s1 = slug.slice(0, idx);
+    const s2 = slug.slice(idx + marker.length).replace(/-solar$/, "");
+    if (getStateBySlug(s1) && getStateBySlug(s2)) {
+      return { state1Slug: s1, state2Slug: s2 };
+    }
+    idx = slug.indexOf(marker, idx + 1);
+  }
+  return null;
 }
 
 export async function generateStaticParams() {

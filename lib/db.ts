@@ -194,6 +194,13 @@ export function getNeighboringStates(abbr: string): State[] {
 
 // --- All state vs state comparison pairs (50*49/2 = 1,225 pairs) ---
 
+export function searchZips(query: string, limit = 50): ZipSolar[] {
+  const pattern = `%${query}%`;
+  return getDb().prepare(
+    'SELECT * FROM zip_solar WHERE zip_code LIKE ? OR city LIKE ? OR state LIKE ? ORDER BY annual_savings DESC LIMIT ?'
+  ).all(pattern, pattern, pattern, limit) as ZipSolar[];
+}
+
 export function getTopComparisonPairs(): { state1: string; state2: string; slug: string }[] {
   const states = getDb().prepare('SELECT slug FROM states ORDER BY state').all() as { slug: string }[];
   const slugs = states.map((s) => s.slug);

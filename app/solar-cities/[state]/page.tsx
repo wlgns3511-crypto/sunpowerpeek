@@ -6,6 +6,10 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
+import { EditorNote } from "@/components/EditorNote";
+import { DidYouKnow } from "@/components/DidYouKnow";
+import { DataSourceBadge } from "@/components/DataSourceBadge";
+import { CrossSiteLinks } from "@/components/CrossSiteLinks";
 
 interface PageProps {
   params: Promise<{ state: string }>;
@@ -50,13 +54,15 @@ export default async function SolarCitiesPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            breadcrumbSchema([
+          __html: JSON.stringify({
+            ...breadcrumbSchema([
               { name: "Home", url: "/" },
               { name: "Solar Cities", url: "/solar-cities/" },
               { name: `${state.state} Solar Cities`, url: `/solar-cities/${stateSlug}/` },
-            ])
-          ),
+            ]),
+            dateModified: "2026-03-31",
+            author: { "@type": "Organization", name: "DataPeek" },
+          }),
         }}
       />
 
@@ -86,6 +92,8 @@ export default async function SolarCitiesPage({ params }: PageProps) {
           </>
         )}
       </p>
+
+      <EditorNote note={`Solar potential varies significantly across ${state.state}. Peak sun hours, local incentives, and electricity rates all influence your real-world payback period. We recommend comparing at least 3 quotes from local installers.`} />
 
       <AdSlot id="1234509876" />
 
@@ -177,6 +185,8 @@ export default async function SolarCitiesPage({ params }: PageProps) {
         </div>
       </section>
 
+      <DidYouKnow fact="A typical 6kW residential solar system can offset 7-10 tons of CO2 per year, equivalent to planting about 150 trees annually. With the 30% federal tax credit available through 2032, most homeowners see payback within 6-9 years." />
+
       {/* Links */}
       <section className="mb-8 p-4 bg-slate-50 rounded-lg border border-slate-200">
         <h2 className="text-lg font-semibold text-slate-800 mb-2">Explore More</h2>
@@ -199,7 +209,14 @@ export default async function SolarCitiesPage({ params }: PageProps) {
         </div>
       </section>
 
+      <DataSourceBadge sources={[
+        { name: "NREL", url: "https://www.nrel.gov" },
+        { name: "EIA", url: "https://www.eia.gov" },
+      ]} />
+
       <FreshnessTag source="NREL, DSIRE, EIA" />
+
+      <CrossSiteLinks current="SunPowerPeek" />
     </>
   );
 }

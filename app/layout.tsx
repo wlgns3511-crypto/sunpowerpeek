@@ -49,14 +49,19 @@ export default function RootLayout({
               "name": "SunPowerPeek",
               "url": "https://sunpowerpeek.com",
               "description": "Compare solar panel costs, savings, and government incentives across all 50 US states and 500+ ZIP codes. Calculate your solar ROI with our free tools.",
-              "inLanguage": "en-US"
+              "inLanguage": "en-US",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://sunpowerpeek.com/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
             },
             {
               "@type": "Organization",
               "name": "SunPowerPeek",
               "url": "https://sunpowerpeek.com",
               "description": "Compare solar panel costs, savings, and government incentives across all 50 US states and 500+ ZIP codes. Calculate your solar ROI with our free tools.",
-              "sameAs": []
+              "sameAs": ["https://vocabwize.com", "https://vocablibre.com", "https://wortwize.com", "https://kalimawize.com", "https://dicionariowize.com", "https://kotobapeek.com", "https://salarybycity.com", "https://netpaypeek.com", "https://wagepeek.com", "https://costbycity.com", "https://fairrentwize.com", "https://propertytaxpeek.com", "https://degreewize.com", "https://nameblooms.com", "https://myschoolpeek.com", "https://medcheckwize.com", "https://medcostpeek.com", "https://eldercarepeek.com", "https://ingredipeek.com", "https://caloriewize.com", "https://powerbillpeek.com", "https://shipcalcwize.com", "https://tariffpeek.com", "https://visapeek.com", "https://zippeek.com", "https://calcpeek.com", "https://datapeekfacts.com", "https://guidebycity.com"]
             }
           ]
         }) }} />

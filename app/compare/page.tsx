@@ -25,7 +25,7 @@ export default function SolarComparePage() {
     (a, b) => b.avg_20yr_savings - a.avg_20yr_savings
   );
 
-  const listItems = sortedBySavings.map(s => ({ name: s.state_name, url: `/state/${s.slug}/` }));
+  const listItems = sortedBySavings.map(s => ({ name: s.state, url: `/state/${s.slug}/` }));
 
   return (
     <>

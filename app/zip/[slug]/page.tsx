@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllZips, getZipBySlug, getStateByAbbr, getZipsByState } from "@/lib/db";
+import { getAllZips, getZipBySlug, getStateByAbbr, getZipsByState, getNationalAvgSunHours, getNationalAvgPayback, getNationalAvgAnnualSavings, getStateRankBySunHours, getTotalStates, getNationalAvg20yrSavings } from "@/lib/db";
 import { formatCurrency, formatSunHours, getPaybackColor } from "@/lib/format";
 import { faqSchema, breadcrumbSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -118,6 +118,46 @@ export default async function ZipPage({ params }: PageProps) {
           <p className="text-xs text-slate-500">per year</p>
         </div>
       </div>
+
+      {/* Solar Insights */}
+      {(() => {
+        const avgSun = getNationalAvgSunHours();
+        const avgPayback = getNationalAvgPayback();
+        const avgSavings = getNationalAvgAnnualSavings();
+        const stateRank = getStateRankBySunHours(zip.state);
+        const totalStates = getTotalStates();
+        const avg20yr = getNationalAvg20yrSavings();
+        const insights: string[] = [];
+
+        const sunDiff = ((zip.peak_sun_hours - avgSun) / avgSun) * 100;
+        insights.push(`Solar potential of ${zip.peak_sun_hours} peak sun hours/day is ${Math.abs(Math.round(sunDiff))}% ${sunDiff > 0 ? 'above' : 'below'} the national average of ${avgSun} hours`);
+
+        const paybackDiff = zip.payback_years - avgPayback;
+        insights.push(`Estimated payback of ${zip.payback_years} years is ${Math.abs(Math.round(Math.abs(paybackDiff) * 10) / 10)} years ${paybackDiff < 0 ? 'faster' : 'slower'} than the national average of ${avgPayback} years`);
+
+        insights.push(`${state.state} ranks #${stateRank} out of ${totalStates} states for average peak sun hours`);
+
+        const savDiff = ((zip.annual_savings - avgSavings) / avgSavings) * 100;
+        insights.push(`Annual savings of ${formatCurrency(zip.annual_savings)} is ${Math.abs(Math.round(savDiff))}% ${savDiff > 0 ? 'above' : 'below'} the national average of ${formatCurrency(avgSavings)}`);
+
+        const localNet20yr = zip.annual_savings * 20 - netCost;
+        insights.push(`20-year net savings of ${formatCurrency(localNet20yr)} compare to a national average of ${formatCurrency(avg20yr)}`);
+
+        return (
+          <section className="mb-8 bg-amber-50 border border-amber-100 rounded-xl p-5">
+            <h2 className="text-lg font-bold text-amber-900 mb-3">Solar Insights for {zip.zip_code} {zip.city}</h2>
+            <ul className="space-y-2">
+              {insights.map((insight, i) => (
+                <li key={i} className="text-sm text-slate-700 flex items-start gap-2">
+                  <span className="text-amber-500 mt-0.5 font-bold">&bull;</span>
+                  {insight}
+                </li>
+              ))}
+            </ul>
+            <p className="text-xs text-slate-400 mt-3">Source: NREL, DSIRE, EIA. Calculations based on a standard 6kW residential system.</p>
+          </section>
+        );
+      })()}
 
       <AdSlot id="7890123456" />
 

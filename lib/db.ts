@@ -98,6 +98,27 @@ export function getNationalAvg20yrSavings(): number {
   return Math.round(row.avg);
 }
 
+export function getStateRankBySunHours(abbr: string): number {
+  const row = getDb().prepare(
+    'SELECT COUNT(*) + 1 as rank FROM states WHERE avg_sun_hours > (SELECT avg_sun_hours FROM states WHERE abbr = ?)'
+  ).get(abbr) as { rank: number };
+  return row.rank;
+}
+
+export function getNationalAvgAnnualSavings(): number {
+  const row = getDb().prepare('SELECT AVG(annual_savings) as avg FROM zip_solar').get() as { avg: number };
+  return Math.round(row.avg);
+}
+
+export function getNationalAvgPaybackFromZips(): number {
+  const row = getDb().prepare('SELECT AVG(payback_years) as avg FROM zip_solar').get() as { avg: number };
+  return Math.round(row.avg * 10) / 10;
+}
+
+export function getTotalStates(): number {
+  return (getDb().prepare('SELECT COUNT(*) as c FROM states').get() as { c: number }).c;
+}
+
 // --- ZIP queries ---
 
 export function getAllZips(): ZipSolar[] {

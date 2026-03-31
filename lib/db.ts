@@ -212,3 +212,11 @@ export function getTopComparisonPairs(): { state1: string; state2: string; slug:
   }
   return pairs;
 }
+
+// --- Related zips (same state) ---
+
+export function getRelatedZips(stateAbbr: string, excludeSlug: string, limit = 6): ZipSolar[] {
+  return getDb().prepare(
+    'SELECT * FROM zip_solar WHERE state = ? AND slug != ? ORDER BY annual_savings DESC LIMIT ?'
+  ).all(stateAbbr, excludeSlug, limit) as ZipSolar[];
+}

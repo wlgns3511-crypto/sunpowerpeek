@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAllStates, getTopComparisonPairs } from "@/lib/db";
 import { formatCurrency, formatSunHours } from "@/lib/format";
+import { itemListSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
@@ -24,8 +25,11 @@ export default function SolarComparePage() {
     (a, b) => b.avg_20yr_savings - a.avg_20yr_savings
   );
 
+  const listItems = sortedBySavings.map(s => ({ name: s.state_name, url: `/state/${s.slug}/` }));
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema('US States Ranked by Solar Savings', '/compare', listItems)) }} />
       <Breadcrumb
         items={[{ label: "Home", href: "/" }, { label: "Compare States" }]}
       />

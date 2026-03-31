@@ -74,8 +74,8 @@ export default function RootLayout({
               {SITE_NAME}
             </a>
             <nav className="flex gap-6 text-sm">
-              <a href="/calculator" className="hover:text-orange-600">Calculator</a>
-              <a href="/incentives" className="hover:text-orange-600">Incentives</a>
+              <a href="/calculator/" className="hover:text-orange-600">Calculator</a>
+              <a href="/incentives/" className="hover:text-orange-600">Incentives</a>
               <a href="/compare/california-vs-texas-solar/" className="hover:text-orange-600">Compare</a>
               <a href="/blog/" className="hover:text-orange-600">Guides</a>
               <a href="/es/" className="text-slate-400 hover:text-orange-600 text-xs">ES</a>
@@ -89,15 +89,15 @@ export default function RootLayout({
               Data from the National Renewable Energy Laboratory (NREL), Database of State Incentives for Renewables & Efficiency (DSIRE), and EIA.
             </p>
             <p className="mt-2">
-              <a href="/about" className="hover:text-orange-600">About</a>
+              <a href="/about/" className="hover:text-orange-600">About</a>
               {" | "}
-              <a href="/privacy" className="hover:text-orange-600">Privacy</a>
+              <a href="/privacy/" className="hover:text-orange-600">Privacy</a>
               {" | "}
-              <a href="/terms" className="hover:text-orange-600">Terms</a>
+              <a href="/terms/" className="hover:text-orange-600">Terms</a>
               {" | "}
-              <a href="/disclaimer" className="hover:text-orange-600">Disclaimer</a>
+              <a href="/disclaimer/" className="hover:text-orange-600">Disclaimer</a>
               {" | "}
-              <a href="/contact" className="hover:text-orange-600">Contact</a>
+              <a href="/contact/" className="hover:text-orange-600">Contact</a>
             </p>
             <div className="mt-4 pt-4 border-t border-slate-100">
               <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">Related Resources</p>

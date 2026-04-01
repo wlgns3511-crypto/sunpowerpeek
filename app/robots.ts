@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/embed/"],
+      disallow: ["/embed/", "/api/", "/_next/"],
     },
     sitemap: "https://sunpowerpeek.com/sitemap.xml",
   };

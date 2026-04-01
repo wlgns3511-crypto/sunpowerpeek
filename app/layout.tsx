@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   openGraph: {
     type: "website",
+    url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_US",
   },

@@ -17,10 +17,8 @@ export const metadata: Metadata = {
     "Compare solar panel costs, savings, and government incentives across all 50 US states and 500+ ZIP codes. Calculate your solar ROI with our free tools.",
   metadataBase: new URL(SITE_URL),
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_US",
   },

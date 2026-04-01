@@ -27,7 +27,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Best Cities for Solar in ${state.state} (2026) | SunPowerPeek`,
     description: `Find the best cities and ZIP codes for solar panels in ${state.state}. Compare peak sun hours, system costs, payback periods, and 20-year savings by location.`,
-    alternates: { canonical: `https://sunpowerpeek.com/solar-cities/${stateSlug}/` },
+    alternates: { canonical: `/solar-cities/${stateSlug}/` },
+    openGraph: { url: `/solar-cities/${stateSlug}/` },
     keywords: [
       `solar panels ${state.state}`,
       `best cities solar ${state.state}`,

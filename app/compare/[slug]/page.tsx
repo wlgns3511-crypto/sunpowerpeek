@@ -48,7 +48,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${state1.state} vs ${state2.state} Solar Comparison (2026)`,
     description: `Compare solar panels in ${state1.state} (${state1.avg_sun_hours} sun hrs, ${state1.avg_payback_years}yr payback) vs ${state2.state} (${state2.avg_sun_hours} sun hrs, ${state2.avg_payback_years}yr payback). Side-by-side costs, savings, and incentives.`,
-    alternates: { canonical: `https://sunpowerpeek.com/compare/${slug}/` },
+    alternates: { canonical: `/compare/${slug}/` },
+    openGraph: { url: `/compare/${slug}/` },
   };
 }
 

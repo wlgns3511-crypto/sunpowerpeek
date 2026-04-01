@@ -29,7 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Solar Panels in ${zip.zip_code} ${zip.city}, ${zip.state} - ${zip.payback_years}yr Payback`,
     description: `Solar panel data for ${zip.zip_code} ${zip.city}, ${zip.state}. ${zip.peak_sun_hours} peak sun hours, $${zip.annual_savings.toLocaleString()} annual savings, ${zip.payback_years}-year payback period. 6kW system costs $${zip.system_cost_6kw.toLocaleString()}.`,
-    alternates: { canonical: `https://sunpowerpeek.com/zip/${slug}/` },
+    alternates: { canonical: `/zip/${slug}/` },
+    openGraph: { url: `/zip/${slug}/` },
   };
 }
 

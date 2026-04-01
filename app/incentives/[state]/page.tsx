@@ -23,7 +23,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${state.state} Solar Incentives 2026 - Tax Credits, Rebates & Net Metering`,
     description: `Complete guide to solar incentives in ${state.state} for 2026. Federal 30% ITC, ${state.state_tax_credit > 0 ? `${state.state_tax_credit}% state tax credit, ` : ""}${state.state_rebate > 0 ? `$${state.state_rebate.toLocaleString()} rebate, ` : ""}net metering policy, and payback of ${state.avg_payback_years} years.`,
-    alternates: { canonical: `https://sunpowerpeek.com/incentives/${stateSlug}/` },
+    alternates: { canonical: `/incentives/${stateSlug}/` },
+    openGraph: { url: `/incentives/${stateSlug}/` },
     keywords: [
       `${state.state} solar incentives`,
       `${state.state} solar tax credit`,

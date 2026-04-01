@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Solar Savings Calculator - Estimate Your Solar Panel ROI | SunPowerPeek",
   description: "Free solar savings calculator. Enter your state, electric bill, and roof size to estimate solar panel costs, tax credits, payback period, and 20-year savings.",
   alternates: { canonical: "https://sunpowerpeek.com/calculator/" },
+  openGraph: { url: "/calculator/" },
 };
 
 export default function CalculatorPage() {

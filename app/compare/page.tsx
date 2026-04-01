@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "Compare solar panel potential, payback periods, and 20-year savings between any two US states. Find the best states for solar energy investment.",
   alternates: { canonical: "https://sunpowerpeek.com/compare/" },
+  openGraph: { url: "/compare/" },
 };
 
 export default function SolarComparePage() {

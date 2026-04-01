@@ -5,6 +5,7 @@ import { SolarCalculator } from "@/components/SolarCalculator";
 export const metadata: Metadata = {
   title: "Solar Savings Calculator - Embeddable Widget",
   robots: "noindex, nofollow",
+  openGraph: { url: "/embed/solar-calc/" },
 };
 
 export default function EmbedSolarCalcPage() {

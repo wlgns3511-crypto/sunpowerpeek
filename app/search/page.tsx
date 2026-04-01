@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Search Solar Data by ZIP Code - SunPowerPeek",
   description: "Search solar panel costs, payback periods, and annual savings for any US ZIP code or city.",
   alternates: { canonical: "/search/" },
+  openGraph: { url: "/search/" },
 };
 
 interface Props {

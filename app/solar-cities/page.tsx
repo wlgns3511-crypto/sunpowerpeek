@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description:
     "Find the best cities and locations for solar panels in every US state. Browse solar data by city, ZIP code, and state for optimal solar investment decisions.",
   alternates: { canonical: "https://sunpowerpeek.com/solar-cities/" },
+  openGraph: { url: "/solar-cities/" },
 };
 
 export default function SolarCitiesIndexPage() {

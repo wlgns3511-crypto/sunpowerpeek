@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "Expert guides on solar panel costs, ROI, state incentives, and everything you need to know before going solar.",
   alternates: { canonical: "/blog/" },
+  openGraph: { url: "/blog/" },
 };
 
 function formatDate(dateStr: string) {

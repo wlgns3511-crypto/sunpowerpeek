@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "Compare solar panel costs, savings, and government incentives across all 50 US states. The national average payback period is 9.8 years with $32,000+ in 20-year savings. Free solar calculator.",
   alternates: { canonical: "https://sunpowerpeek.com/" },
+  openGraph: { url: "/" },
 };
 
 export default function HomePage() {

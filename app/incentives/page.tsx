@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Solar Incentives by State 2026 - Tax Credits, Rebates & SRECs",
   description: "Complete guide to solar incentives in all 50 US states. Federal 30% tax credit, state tax credits, rebates, SRECs, and net metering policies for 2026.",
   alternates: { canonical: "https://sunpowerpeek.com/incentives/" },
+  openGraph: { url: "/incentives/" },
 };
 
 export default function IncentivesPage() {

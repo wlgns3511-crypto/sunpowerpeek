@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: "About SunPowerPeek",
   description: "Learn about SunPowerPeek, our mission, and data sources for US solar panel data.",
   alternates: { canonical: "/about/" },
+  openGraph: { url: "/about/" },
 };
 
 export default function AboutPage() {

@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: "Our Methodology",
   description: "Learn how SunPowerPeek collects, processes, and verifies solar energy potential and incentive data by state.",
   alternates: { canonical: "/methodology/" },
+  openGraph: { url: "/methodology/" },
 };
 
 export default function MethodologyPage() {

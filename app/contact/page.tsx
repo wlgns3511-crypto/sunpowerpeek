@@ -19,8 +19,8 @@ export default function ContactPage() {
         <h2 className="text-lg font-semibold mb-4">Get in Touch</h2>
         <p className="mb-2">
           <strong>Email:</strong>{" "}
-          <a href="mailto:contact@sunpowerpeek.com" className="text-orange-600 hover:underline">
-            contact@sunpowerpeek.com
+          <a href="mailto:datapeekfacts@gmail.com" className="text-orange-600 hover:underline">
+            datapeekfacts@gmail.com
           </a>
         </p>
         <p className="text-sm text-slate-500 mt-4">

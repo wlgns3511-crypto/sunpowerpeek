@@ -19,7 +19,7 @@ export const revalidate = false;
 
 export async function generateStaticParams() {
   // Pre-render top 500 ZIPs; rest served via ISR
-  const zips = getAllZips().slice(0, 500);
+  const zips = getAllZips().slice(0, 1000);
   return zips.map((z) => ({ slug: z.slug }));
 }
 

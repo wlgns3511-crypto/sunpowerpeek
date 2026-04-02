@@ -6,6 +6,7 @@ import { faqSchema, breadcrumbSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { DataFeedback } from "@/components/DataFeedback";
+import { SolarCalculator } from "@/components/SolarCalculator";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { CiteButton } from "@/components/CiteButton";
 
@@ -192,6 +193,18 @@ export default async function StatePage({ params }: PageProps) {
       )}
 
       <AdSlot id="6789012345" />
+
+      <SolarCalculator states={allStates.map(s => ({
+        abbr: s.abbr,
+        state: s.state,
+        avg_sun_hours: s.avg_sun_hours,
+        avg_system_cost_per_watt: s.avg_system_cost_per_watt,
+        federal_tax_credit_pct: s.federal_tax_credit_pct,
+        state_tax_credit: s.state_tax_credit,
+        state_rebate: s.state_rebate,
+        avg_electricity_rate: s.avg_electricity_rate,
+        net_metering: s.net_metering,
+      }))} />
 
       {/* ZIP code rankings */}
       {zips.length > 0 && (

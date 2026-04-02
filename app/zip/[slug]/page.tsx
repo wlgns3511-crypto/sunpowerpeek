@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllZips, getZipBySlug, getStateByAbbr, getZipsByState, getNationalAvgSunHours, getNationalAvgPayback, getNationalAvgAnnualSavings, getStateRankBySunHours, getTotalStates, getNationalAvg20yrSavings } from "@/lib/db";
+import { getAllZips, getZipBySlug, getStateByAbbr, getZipsByState, getAllStates, getNationalAvgSunHours, getNationalAvgPayback, getNationalAvgAnnualSavings, getStateRankBySunHours, getTotalStates, getNationalAvg20yrSavings } from "@/lib/db";
 import { formatCurrency, formatSunHours, getPaybackColor } from "@/lib/format";
 import { faqSchema, breadcrumbSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { DataFeedback } from "@/components/DataFeedback";
+import { SolarCalculator } from "@/components/SolarCalculator";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { AuthorBox } from "@/components/AuthorBox";
 
@@ -43,6 +44,7 @@ export default async function ZipPage({ params }: PageProps) {
   if (!state) notFound();
 
   const stateZips = getZipsByState(zip.state).filter(z => z.zip_code !== zip.zip_code).slice(0, 10);
+  const allStates = getAllStates();
 
   const netCost = Math.round(zip.system_cost_6kw * 0.7); // after 30% ITC
   const savings20yr = zip.annual_savings * 20 - netCost;
@@ -161,6 +163,18 @@ export default async function ZipPage({ params }: PageProps) {
       })()}
 
       <AdSlot id="7890123456" />
+
+      <SolarCalculator states={allStates.map(s => ({
+        abbr: s.abbr,
+        state: s.state,
+        avg_sun_hours: s.avg_sun_hours,
+        avg_system_cost_per_watt: s.avg_system_cost_per_watt,
+        federal_tax_credit_pct: s.federal_tax_credit_pct,
+        state_tax_credit: s.state_tax_credit,
+        state_rebate: s.state_rebate,
+        avg_electricity_rate: s.avg_electricity_rate,
+        net_metering: s.net_metering,
+      }))} />
 
       {/* Cost breakdown */}
       <section className="mb-8">

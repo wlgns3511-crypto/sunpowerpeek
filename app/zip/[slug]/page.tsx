@@ -13,7 +13,7 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = false;
 
 export async function generateStaticParams() {

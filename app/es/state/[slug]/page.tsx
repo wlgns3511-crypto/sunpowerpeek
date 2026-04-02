@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllStates, getStateBySlug, getIncentivesByState, getNationalAvgSunHours, getNationalAvgPayback } from "@/lib/db";
 import { formatCurrency, formatSunHours, formatPercent, getPaybackColor, getNetMeteringLabel, getSunTextColor } from "@/lib/format";
 
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = false;
 
 export function generateStaticParams() {

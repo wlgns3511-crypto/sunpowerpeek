@@ -105,6 +105,24 @@ export function getStateRankBySunHours(abbr: string): number {
   return row.rank;
 }
 
+export function getPaybackRank(abbr: string): number {
+  const row = getDb().prepare(
+    'SELECT COUNT(*) + 1 as rank FROM states WHERE avg_payback_years < (SELECT avg_payback_years FROM states WHERE abbr = ?)'
+  ).get(abbr) as { rank: number };
+  return row.rank;
+}
+
+export function getSavingsRank(abbr: string): number {
+  const row = getDb().prepare(
+    'SELECT COUNT(*) + 1 as rank FROM states WHERE avg_20yr_savings > (SELECT avg_20yr_savings FROM states WHERE abbr = ?)'
+  ).get(abbr) as { rank: number };
+  return row.rank;
+}
+
+export function getTotalStatesCount(): number {
+  return (getDb().prepare('SELECT COUNT(*) as c FROM states').get() as { c: number }).c;
+}
+
 export function getNationalAvgAnnualSavings(): number {
   const row = getDb().prepare('SELECT AVG(annual_savings) as avg FROM zip_solar').get() as { avg: number };
   return Math.round(row.avg);

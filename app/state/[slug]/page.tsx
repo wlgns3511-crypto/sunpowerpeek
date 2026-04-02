@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllStates, getStateBySlug, getZipsByState, getIncentivesByState, getNationalAvgSunHours, getNationalAvgPayback } from "@/lib/db";
+import { getAllStates, getStateBySlug, getZipsByState, getIncentivesByState, getNationalAvgSunHours, getNationalAvgPayback, getNationalAvg20yrSavings, getStateRankBySunHours, getPaybackRank, getSavingsRank, getTotalStatesCount } from "@/lib/db";
 import { formatCurrency, formatSunHours, formatPercent, getPaybackColor, getNetMeteringLabel, getNetMeteringColor, getSunTextColor } from "@/lib/format";
 import { faqSchema, breadcrumbSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { DataFeedback } from "@/components/DataFeedback";
 import { SolarCalculator } from "@/components/SolarCalculator";
+import { InsightCards } from "@/components/InsightCards";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { CiteButton } from "@/components/CiteButton";
 
@@ -48,6 +49,11 @@ export default async function StatePage({ params }: PageProps) {
 
   const sunDiff = state.avg_sun_hours - nationalSun;
   const isAboveAvgSun = sunDiff > 0;
+  const sunRank = getStateRankBySunHours(state.abbr);
+  const paybackRk = getPaybackRank(state.abbr);
+  const savingsRk = getSavingsRank(state.abbr);
+  const totalStCnt = getTotalStatesCount();
+  const nationalSavings = getNationalAvg20yrSavings();
 
   const faqs = [
     {
@@ -109,6 +115,23 @@ export default async function StatePage({ params }: PageProps) {
       </div>
 
       <AdSlot id="5678901234" />
+
+      <InsightCards
+        stateName={state.state}
+        sunHoursRank={sunRank}
+        paybackRank={paybackRk}
+        savingsRank={savingsRk}
+        totalStates={totalStCnt}
+        sunHours={state.avg_sun_hours}
+        nationalAvgSun={nationalSun}
+        paybackYears={state.avg_payback_years}
+        nationalAvgPayback={nationalPayback}
+        savings20yr={state.avg_20yr_savings}
+        nationalAvgSavings={nationalSavings}
+        federalCredit={state.federal_tax_credit_pct}
+        stateCredit={state.state_tax_credit}
+        stateRebate={state.state_rebate}
+      />
 
       {/* Cost breakdown */}
       <section className="mb-8">

@@ -5,8 +5,8 @@ import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
 
 export const metadata: Metadata = {
-  title: "Solar Incentives by State 2026 - Tax Credits, Rebates & SRECs",
-  description: "Complete guide to solar incentives in all 50 US states. Federal 30% tax credit, state tax credits, rebates, SRECs, and net metering policies for 2026.",
+  title: "Solar Incentives by State - Tax Credits, Rebates & SRECs",
+  description: "Complete guide to solar incentives in all 50 US states. Federal 30% tax credit, state tax credits, rebates, SRECs, and net metering policies.",
   alternates: { canonical: "https://sunpowerpeek.com/incentives/" },
   openGraph: { url: "/incentives/" },
 };
@@ -36,7 +36,7 @@ export default function IncentivesPage() {
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Solar Incentives" }]} />
 
       <h1 className="text-3xl font-bold text-orange-800 mb-4">
-        Solar Incentives by State (2026)
+        Solar Incentives by State
       </h1>
       <p className="text-lg text-slate-600 mb-8">
         Every US homeowner qualifies for the <strong>30% Federal Solar Investment Tax Credit</strong> through 2032.

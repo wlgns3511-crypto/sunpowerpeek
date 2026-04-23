@@ -15,6 +15,8 @@ interface PageProps {
   params: Promise<{ state: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const states = getAllStates();
   return states.map((s) => ({ state: s.slug }));
@@ -25,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const state = getStateBySlug(stateSlug);
   if (!state) return {};
   return {
-    title: `Best Cities for Solar in ${state.state} (2026) | SunPowerPeek`,
+    title: `Best Cities for Solar in ${state.state} | SunPowerPeek`,
     description: `Find the best cities and ZIP codes for solar panels in ${state.state}. Compare peak sun hours, system costs, payback periods, and 20-year savings by location.`,
     alternates: { canonical: `/solar-cities/${stateSlug}/` },
     openGraph: { url: `/solar-cities/${stateSlug}/` },
@@ -61,7 +63,6 @@ export default async function SolarCitiesPage({ params }: PageProps) {
               { name: "Solar Cities", url: "/solar-cities/" },
               { name: `${state.state} Solar Cities`, url: `/solar-cities/${stateSlug}/` },
             ]),
-            dateModified: "2026-03-31",
             author: { "@type": "Organization", name: "DataPeek" },
           }),
         }}

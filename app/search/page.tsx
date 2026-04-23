@@ -5,6 +5,7 @@ import { formatCurrency, formatSunHours, getPaybackColor } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Search Solar Data by ZIP Code - SunPowerPeek",
   description: "Search solar panel costs, payback periods, and annual savings for any US ZIP code or city.",
+  robots: { index: false, follow: true },
   alternates: { canonical: "/search/" },
   openGraph: { url: "/search/" },
 };

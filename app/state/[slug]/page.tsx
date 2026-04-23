@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllStates, getStateBySlug, getZipsByState, getIncentivesByState, getNationalAvgSunHours, getNationalAvgPayback, getNationalAvg20yrSavings, getStateRankBySunHours, getPaybackRank, getSavingsRank, getTotalStatesCount } from "@/lib/db";
+import { getAllStates, getStateBySlug, getZipsByState, getIncentivesByState, getNationalAvgSunHours, getNationalAvgPayback, getNationalAvg20yrSavings, getStateRankBySunHours, getPaybackRank, getSavingsRank, getTotalStatesCount, getNeighboringStates } from "@/lib/db";
 import { formatCurrency, formatSunHours, formatPercent, getPaybackColor, getNetMeteringLabel, getNetMeteringColor, getSunTextColor } from "@/lib/format";
+import { getStateInsights } from "@/lib/state-insights";
 import { faqSchema, breadcrumbSchema } from "@/lib/schema";
+import { generateAutoFaqs } from "@/lib/auto-faqs";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { DataFeedback } from "@/components/DataFeedback";
@@ -10,10 +12,20 @@ import { SolarCalculator } from "@/components/SolarCalculator";
 import { InsightCards } from "@/components/InsightCards";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { CiteButton } from "@/components/CiteButton";
+import { AnswerHero } from "@/components/upgrades/AnswerHero";
+import { TrustBlock } from "@/components/upgrades/TrustBlock";
+import { RelatedEntities } from "@/components/upgrades/RelatedEntities";
+import { DecisionNext } from "@/components/upgrades/DecisionNext";
+import { TableOfContents } from "@/components/upgrades/TableOfContents";
+import { SolarSavingsCalc } from "@/components/tools/SolarSavingsCalc";
+import { FeedbackButton } from "@/components/FeedbackButton";
+import { StateRich } from '@/components/state/StateRich';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const states = getAllStates();
@@ -24,11 +36,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const state = getStateBySlug(slug);
   if (!state) return {};
+  // RANGE: small 4kW system (low) vs large 10kW system (high), before federal tax credit
+  const low = Math.round(state.avg_system_cost_per_watt * 4000);
+  const high = Math.round(state.avg_system_cost_per_watt * 10000);
+  const title = `${state.state} Solar Cost: $${low.toLocaleString()}–$${high.toLocaleString()} (4kW–10kW)`;
+  const description = `${state.state} solar install ranges from $${low.toLocaleString()} (4kW) to $${high.toLocaleString()} (10kW) before the 30% federal tax credit. ${state.avg_sun_hours} peak sun hrs, ${state.avg_payback_years}-yr payback, ${formatCurrency(state.avg_20yr_savings)} 20-yr savings. Based on NREL and DSIRE inputs.`;
   return {
-    title: `${state.state} Solar Panel Cost ${new Date().getFullYear()} - Installation Guide & ${state.avg_payback_years}yr ROI`,
-    description: `${state.state} solar installation: $${Math.round(state.avg_system_cost_per_watt * 6000).toLocaleString()} for 6kW system (before 30% federal tax credit). ${state.avg_sun_hours} peak sun hours, ${state.avg_payback_years}-year payback, ${formatCurrency(state.avg_20yr_savings)} in 20-year savings. Compare solar quotes & incentives.`,
+    title,
+    description,
     alternates: { canonical: `/state/${slug}/` },
-    openGraph: { url: `/state/${slug}/` },
+    openGraph: { title, description, url: `/state/${slug}/` },
   };
 }
 
@@ -47,6 +64,8 @@ export default async function StatePage({ params }: PageProps) {
   const federalCredit = Math.round(systemCost6kw * 0.3);
   const netCost = systemCost6kw - federalCredit - (state.state_tax_credit > 0 ? Math.round(systemCost6kw * state.state_tax_credit / 100) : 0) - state.state_rebate;
 
+  const stateInsights = getStateInsights(state);
+
   const sunDiff = state.avg_sun_hours - nationalSun;
   const isAboveAvgSun = sunDiff > 0;
   const sunRank = getStateRankBySunHours(state.abbr);
@@ -55,7 +74,7 @@ export default async function StatePage({ params }: PageProps) {
   const totalStCnt = getTotalStatesCount();
   const nationalSavings = getNationalAvg20yrSavings();
 
-  const faqs = [
+  const baseFaqs = [
     {
       question: `How much do solar panels cost in ${state.state}?`,
       answer: `A typical 6kW solar system in ${state.state} costs approximately $${systemCost6kw.toLocaleString()} before incentives. After the 30% federal tax credit ($${federalCredit.toLocaleString()})${state.state_tax_credit > 0 ? ` and state incentives` : ''}, the net cost is approximately $${netCost.toLocaleString()}.`,
@@ -74,21 +93,80 @@ export default async function StatePage({ params }: PageProps) {
     },
   ];
 
+  const autoFaqs = generateAutoFaqs({
+    state: state.state,
+    abbr: state.abbr,
+    avg_sun_hours: state.avg_sun_hours,
+    avg_system_cost_per_watt: state.avg_system_cost_per_watt,
+    avg_payback_years: state.avg_payback_years,
+    avg_20yr_savings: state.avg_20yr_savings,
+    federal_tax_credit_pct: state.federal_tax_credit_pct,
+    state_tax_credit: state.state_tax_credit,
+    state_rebate: state.state_rebate,
+    net_metering: state.net_metering,
+    avg_electricity_rate: state.avg_electricity_rate,
+    avg_monthly_bill: state.avg_monthly_bill,
+    sunRank,
+    totalStates: totalStCnt,
+    nationalAvgSun: nationalSun,
+    nationalAvgPayback: nationalPayback,
+  });
+
+  const faqs = [...baseFaqs, ...autoFaqs];
+
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+      {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([{ name: "Home", url: "/" }, { name: state.state, url: `/state/${slug}/` }])) }} />
 
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: state.state }]} />
 
-      <h1 className="text-3xl font-bold text-orange-800 mb-2">
-        {state.state} Solar Panel Costs &amp; Savings
-      </h1>
-      <p className="text-lg text-slate-600 mb-8">
-        {state.state} averages <strong className={getSunTextColor(state.avg_sun_hours)}>{formatSunHours(state.avg_sun_hours)}</strong> of peak sun per day
-        with an average payback period of <strong className={getPaybackColor(state.avg_payback_years)}>{state.avg_payback_years} years</strong>.
-        Homeowners can save <strong className="text-green-700">{formatCurrency(state.avg_20yr_savings)}</strong> over 20 years.
+      <AnswerHero
+        title={`${state.state} solar panel costs & savings`}
+        subtitle={`NREL + DSIRE + EIA data`}
+        tagline={`${state.state} averages ${formatSunHours(state.avg_sun_hours)} of peak sun per day. A typical 6 kW system costs about $${systemCost6kw.toLocaleString()} before incentives, ${state.avg_payback_years}-year payback, and ${formatCurrency(state.avg_20yr_savings)} in 20-year savings. After the 30% federal tax credit${state.state_tax_credit > 0 ? ' and state credits' : ''}, the net cost is roughly $${netCost.toLocaleString()}.`}
+        badges={[
+          { label: `${state.avg_payback_years}yr payback`, tone: "indigo" as const },
+          { label: `30% federal credit`, tone: "emerald" as const },
+          ...(state.net_metering === 'yes' ? [{ label: 'Net metering', tone: "emerald" as const }] : []),
+        ]}
+        alternatives={allStates.filter(s => s.slug !== slug).slice(0, 3).map(s => ({
+          label: s.state,
+          href: `/state/${s.slug}/`,
+          sublabel: `${s.avg_payback_years}yr payback`,
+        }))}
+        alternativesLabel="Compare states"
+      />
+
+      <TableOfContents />
+
+      <TrustBlock
+        sources={[
+          { name: "NREL PVWatts", url: "https://pvwatts.nrel.gov/" },
+          { name: "DSIRE Database", url: "https://www.dsireusa.org/" },
+          { name: "EIA Solar Generation", url: "https://www.eia.gov/energyexplained/solar/" },
+          { name: "IRS Form 5695 (Residential Energy Credits)", url: "https://www.irs.gov/forms-pubs/about-form-5695" },
+          { name: "DOE Solar Energy Technologies Office", url: "https://www.energy.gov/eere/solar/solar-energy-technologies-office" },
+        ]}
+        updated={`${new Date().getFullYear()} NREL + DSIRE + IRS, refreshed monthly`}
+      />
+
+      <p className="sr-only">
+        {state.state} solar panel costs and savings overview.
       </p>
+
+      {/* Data-Driven Insights */}
+      <section className="mb-8 rounded-xl border border-orange-200 bg-orange-50/50 p-5">
+        <h2 className="text-lg font-bold text-orange-900 mb-3">Data-Driven Insights for {state.state}</h2>
+        <div className="space-y-4">
+          {stateInsights.map((insight, i) => (
+            <div key={i}>
+              <h3 className="text-sm font-semibold text-orange-800 mb-1">{insight.title}</h3>
+              <p className="text-sm text-slate-700 leading-relaxed">{insight.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Overview cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -114,6 +192,27 @@ export default async function StatePage({ params }: PageProps) {
         </div>
       </div>
 
+      {/* ROI by system size — HCU Tier S expansion 2026-04-21 */}
+      <a
+        href={`/state/${slug}/roi-by-system-size/`}
+        className="mb-8 block rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-5 transition hover:border-amber-300 hover:shadow-sm"
+      >
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-amber-700">
+              New · ROI by system size
+            </p>
+            <p className="mt-1 text-base font-semibold text-slate-900">
+              {state.state} 4–15 kW payback matrix: net cost, kWh output, 20-yr savings →
+            </p>
+            <p className="mt-1 text-sm text-slate-600">
+              See ${Math.round(state.avg_system_cost_per_watt * 4000).toLocaleString()}–${Math.round(state.avg_system_cost_per_watt * 15000).toLocaleString()} gross range by size, and which system matches your kWh usage.
+            </p>
+          </div>
+          <span className="hidden shrink-0 text-2xl text-amber-600 md:block" aria-hidden="true">→</span>
+        </div>
+      </a>
+
       <AdSlot id="5678901234" />
 
       <InsightCards
@@ -131,6 +230,17 @@ export default async function StatePage({ params }: PageProps) {
         federalCredit={state.federal_tax_credit_pct}
         stateCredit={state.state_tax_credit}
         stateRebate={state.state_rebate}
+      />
+
+      <SolarSavingsCalc
+        stateName={state.state}
+        avgSunHours={state.avg_sun_hours}
+        avgSystemCostPerWatt={state.avg_system_cost_per_watt}
+        federalTaxCreditPct={state.federal_tax_credit_pct}
+        stateTaxCredit={state.state_tax_credit}
+        stateRebate={state.state_rebate}
+        avgElectricityRate={state.avg_electricity_rate}
+        netMetering={state.net_metering}
       />
 
       {/* Cost breakdown */}
@@ -245,7 +355,7 @@ export default async function StatePage({ params }: PageProps) {
                 </tr>
               </thead>
               <tbody>
-                {zips.slice(0, 20).map(z => (
+                {zips.map(z => (
                   <tr key={z.zip_code} className="border-t border-slate-100">
                     <td className="px-4 py-2">
                       <a href={`/zip/${z.slug}/`} className="text-orange-600 hover:underline">{z.zip_code}</a>
@@ -269,7 +379,7 @@ export default async function StatePage({ params }: PageProps) {
           {allStates
             .filter(s => s.abbr !== state.abbr)
             .sort((a, b) => b.avg_sun_hours - a.avg_sun_hours)
-            .slice(0, 10)
+            
             .map(s => (
             <a
               key={s.abbr}
@@ -293,6 +403,17 @@ export default async function StatePage({ params }: PageProps) {
         </div>
       </section>
 
+      <RelatedEntities
+        entityName={state.state}
+        heading={`States near ${state.state} — solar comparison`}
+        statLabel="Payback"
+        items={getNeighboringStates(state.abbr).slice(0, 8).map(s => ({
+          name: s.state,
+          href: `/state/${s.slug}/`,
+          stat: `${s.avg_payback_years}yr payback`,
+        }))}
+      />
+
       {/* FAQ */}
       <section className="mb-8">
         <h2 className="text-xl font-bold text-slate-800 mb-3">Frequently Asked Questions</h2>
@@ -306,12 +427,93 @@ export default async function StatePage({ params }: PageProps) {
         </div>
       </section>
 
+      {/* Why this matters — US homeowner solar economics context */}
+      <section className="mb-8 mt-6" data-upgrade="why-it-matters">
+        <h2 className="text-xl font-bold mb-3">
+          Why solar in {state.state} matters
+        </h2>
+        <div className="rounded-lg border border-slate-200 bg-white p-5 text-slate-700 leading-relaxed space-y-3">
+          <p>
+            Residential solar economics in the US depend on three things
+            that vary state-by-state: peak sun hours (how much energy
+            your panels actually produce), the local electricity rate
+            you&apos;re offsetting, and the incentive stack (federal +
+            state + utility). {state.state} averages
+            {" "}{formatSunHours(state.avg_sun_hours)} of peak sun
+            &mdash; multiply that by your system size in kW and 365 to
+            get expected annual production.
+          </p>
+          <p>
+            The federal Investment Tax Credit (ITC) is currently 30% of
+            the gross system cost, claimed via IRS Form 5695, and is
+            scheduled at this rate through 2032 under the Inflation
+            Reduction Act. On a ${systemCost6kw.toLocaleString()}
+            system, that&apos;s ${federalCredit.toLocaleString()} back
+            on your federal taxes &mdash; the single largest lever in
+            most US solar deals.
+          </p>
+          <p>
+            Net metering policy is the second biggest factor.
+            {" "}{state.state} has{" "}
+            {getNetMeteringLabel(state.net_metering).toLowerCase()},
+            which directly affects how much value you get for excess
+            generation sent back to the grid. States with full retail
+            net metering produce the best paybacks; states with
+            &ldquo;net billing&rdquo; or no net metering have longer
+            paybacks even when the rate is high.
+          </p>
+          <p>
+            For an actual purchase decision, get 3-4 quotes from
+            installers (the industry has wide pricing variation), check
+            DSIRE for any utility-level rebates that might not be
+            captured in our state-level data, and run NREL PVWatts on
+            your specific roof for a precise production estimate.
+          </p>
+          <p className="text-sm text-slate-500">
+            Sources: NREL National Solar Radiation Database, DSIRE
+            (NC State University), EIA Solar Generation, IRS Form 5695.
+            Data refreshed monthly.
+          </p>
+        </div>
+      </section>
+
+      <DecisionNext
+        cards={[
+          {
+            title: `Electricity rates in ${state.state}`,
+            blurb: `Your local utility rate is what solar offsets &mdash; the higher it is, the better the payback.`,
+            href: `https://powerbillpeek.com/state/${slug}/`,
+            cta: `Open PowerBillPeek`,
+            tone: "indigo" as const,
+          },
+          {
+            title: `Property tax in ${state.state}`,
+            blurb: `Many states exempt added solar value from property tax. Worth checking before you install.`,
+            href: `https://propertytaxpeek.com/state/${slug}/`,
+            cta: `Open PropertyTaxPeek`,
+            tone: "amber" as const,
+          },
+          {
+            title: `DSIRE incentive search`,
+            blurb: `The authoritative database of US solar incentives. Always check before signing a contract.`,
+            href: `https://www.dsireusa.org/`,
+            cta: `Open DSIRE`,
+            tone: "emerald" as const,
+          },
+        ]}
+      />
+
+      <FeedbackButton pageId={slug} />
+
       <DataFeedback />
-      <FreshnessTag source="NREL, DSIRE, EIA" />
+      <FreshnessTag source="NREL National Solar Radiation Database + DSIRE incentive database + EIA solar generation data" />
 
       <div className="flex items-center gap-4 mt-4">
         <CiteButton title={`${state.state} Solar Panel Costs & Savings`} url={`https://sunpowerpeek.com/state/${slug}/`} source="SunPowerPeek (NREL Data)" />
       </div>
+
+      <StateRich slug={slug} state={state} />
+
     </>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getAllStates, getBestSolarStates, getWorstSolarStates, getFastestPaybackStates, getHighestSavingsStates, getNationalAvgSunHours, getNationalAvgPayback, getNationalAvg20yrSavings } from "@/lib/db";
 import { formatCurrency, formatSunHours, getSunColor, getPaybackColor } from "@/lib/format";
 import { datasetSchema, faqSchema } from "@/lib/schema";
+import { PopularEntities } from "@/components/upgrades/PopularEntities";
 import { SolarCalculator } from "@/components/SolarCalculator";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
@@ -30,7 +31,7 @@ export default function HomePage() {
       answer: `The average cost of a 6kW residential solar system in the US is $17,000-$21,000 before incentives. After the 30% federal tax credit, the net cost drops to $12,000-$15,000. Costs vary by state, with Southwest states generally being cheaper.`,
     },
     {
-      question: "What is the federal solar tax credit for 2026?",
+      question: "What is the federal solar tax credit?",
       answer: "The federal Solar Investment Tax Credit (ITC) is 30% of the total system cost for systems installed through 2032. It steps down to 26% in 2033 and 22% in 2034. There is no cap on the credit amount.",
     },
     {
@@ -62,6 +63,18 @@ export default function HomePage() {
         <strong>{avgPayback} years</strong> with average 20-year savings of{" "}
         <strong>{formatCurrency(avg20yrSavings)}</strong>. Use our calculator below to estimate your solar ROI.
       </p>
+
+      <PopularEntities
+        heading="Top Solar States"
+        items={getFastestPaybackStates(12).map(s => ({
+          name: s.state,
+          href: `/state/${s.slug}/`,
+          stat: `${s.avg_payback_years}yr payback`,
+        }))}
+        columns={3}
+        viewAllHref="/rankings"
+        viewAllLabel="View all rankings →"
+      />
 
       <AdSlot id="2345678901" />
 

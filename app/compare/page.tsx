@@ -19,7 +19,7 @@ export default function SolarComparePage() {
   const pairs = getTopComparisonPairs();
 
   // Show popular comparisons (first 50 pairs for display)
-  const popularPairs = pairs.slice(0, 50);
+  const popularPairs = pairs;
 
   // Sort states by 20-year savings
   const sortedBySavings = [...states].sort(

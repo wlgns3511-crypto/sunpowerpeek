@@ -1604,6 +1604,228 @@ const posts: BlogPost[] = [
 <p>The best way to cut through myths is with <strong>personalized data</strong>. Use our <a href="/calculator/">solar calculator</a> to get an accurate savings estimate for your specific home, location, and energy usage. Visit your <a href="/state/texas/">state page</a> for local incentive details and qualified installer recommendations.</p>
 `,
   },
+  {
+    slug: "solar-panel-installation-step-by-step",
+    title: "Solar Panel Installation Step by Step: What to Expect",
+    description:
+      "From initial consultation to flipping the switch, here is exactly what happens during a residential solar panel installation.",
+    publishedAt: "2025-02-15",
+    category: "Installation",
+    readingTime: 8,
+    content: `
+<h2>Step 1: Site Assessment and Design</h2>
+<p>The process begins with a site assessment, where a solar installer evaluates your roof's condition, orientation, pitch, shading, and available space. South-facing roofs with 15 to 40 degree pitch and minimal shading are ideal, but modern panel technology and microinverters make east- and west-facing installations viable as well. The installer will also review your electricity bills to size the system appropriately.</p>
+<p>Using satellite imagery and sometimes drone surveys, the installer creates a preliminary system design showing panel placement, estimated production, and projected savings. This design accounts for setback requirements, fire access pathways, and local building code restrictions that may limit where panels can be placed.</p>
+
+<h2>Step 2: Proposal Review and Contract</h2>
+<p>You will receive a detailed proposal covering system size (in kilowatts), estimated annual production (in kilowatt-hours), equipment specifications, total cost, available incentives, financing options, and projected return on investment. Compare proposals from at least three installers, looking not just at price but at equipment quality, warranty terms, and company reputation.</p>
+<p>Once you accept a proposal, the contract phase includes signing purchase or lease agreements, selecting financing, and authorizing the installer to begin the permitting process on your behalf.</p>
+
+<h2>Step 3: Permitting and Approvals</h2>
+<p>Your installer handles most of the paperwork, including building permits from your city or county and interconnection applications with your utility. This phase typically takes two to six weeks, though some jurisdictions are faster and others can take months. HOA approval, if applicable, is also obtained during this period. Most states have solar access laws that limit HOA ability to block installations.</p>
+
+<h2>Step 4: Installation Day</h2>
+<p>The actual installation typically takes one to three days for a residential system. Crews mount racking hardware to your roof, attach the panels to the racks, install the inverter (usually on an exterior wall near your electrical panel), and connect the system to your home's electrical panel. A conduit runs wiring from the rooftop panels down to the inverter and then to the electrical panel.</p>
+<p>The installation process involves roof penetrations for mounting hardware, which are sealed with flashing and waterproof sealant. A reputable installer guarantees their roof work and will repair any leaks that result from installation.</p>
+
+<h2>Step 5: Inspection and Activation</h2>
+<p>After installation, your city or county inspector verifies that the system meets building and electrical codes. Your utility then installs a bidirectional meter (for net metering) and grants permission to operate. Only after utility approval can you turn on the system. This final step can take one to four weeks depending on your utility's backlog.</p>
+<p>From initial consultation to system activation, the total timeline is typically six to twelve weeks. Use our <a href="/calculator/">solar calculator</a> to start the process with an estimate for your specific home.</p>
+`,
+  },
+  {
+    slug: "how-net-metering-works",
+    title: "How Net Metering Works: The Complete Guide for Solar Homeowners",
+    description:
+      "Net metering lets you sell excess solar electricity back to the grid. Here is how it works, what it pays, and where policies are changing.",
+    publishedAt: "2025-01-20",
+    category: "Solar Policy",
+    readingTime: 7,
+    content: `
+<h2>Net Metering Basics</h2>
+<p>Net metering is a billing arrangement where your utility credits you for excess solar electricity you send to the grid. During sunny midday hours when your panels produce more than your home consumes, the excess flows to the grid and your meter literally runs backward. At night or on cloudy days when you need more power than your panels produce, you draw from the grid as usual. At the end of each billing period, you pay only for the net electricity you consumed.</p>
+<p>Under traditional net metering (sometimes called NEM 1.0 or full retail net metering), you receive a credit at the full retail electricity rate for every kilowatt-hour you export. If your utility charges 15 cents per kWh, you receive a 15-cent credit for each kWh you send to the grid. This one-to-one exchange makes solar extremely attractive financially because your panels effectively produce electricity worth full retail value regardless of when it is generated.</p>
+
+<h2>How Credits Work</h2>
+<p>Most net metering programs operate on a monthly billing cycle. If you produce more electricity than you use in a given month, the excess credits roll over to the following month. This is particularly important because solar production peaks in summer while electricity usage may peak in winter (in heating-dominated climates) or summer (in cooling-dominated climates).</p>
+<p>At the end of your annual billing cycle, any remaining credits may be paid out at a reduced rate (often the wholesale or avoided cost rate), reset to zero, or rolled over indefinitely depending on your state's rules. Understanding your state's credit expiration policy is important for sizing your system correctly.</p>
+
+<h2>Net Metering Is Changing</h2>
+<p>Several states have moved away from full retail net metering. California's NEM 3.0, implemented in April 2023, reduced export credits by approximately 75% for new solar customers. The credits now vary by time of day, with higher values during evening peak hours and lower values during midday when solar production is highest. This change has made battery storage significantly more attractive because storing midday excess for evening self-consumption is now more valuable than exporting it.</p>
+<p>Other states considering or implementing similar changes include Nevada, Arizona, and Hawaii. The trend is toward time-of-use export rates that better reflect the actual value of solar electricity to the grid at different times of day.</p>
+
+<h2>Impact on Solar Economics</h2>
+<p>Under full retail net metering, a typical residential solar system pays for itself in six to ten years. Under reduced net metering like California's NEM 3.0, payback periods extend to ten to fifteen years without battery storage. Adding a battery can restore the economics by allowing you to use your own solar electricity during expensive peak hours rather than exporting it at low credit rates.</p>
+<p>Check your state's current net metering policy before sizing your system. Use our <a href="/calculator/">solar calculator</a> to see how local policies affect your specific savings estimate.</p>
+`,
+  },
+  {
+    slug: "solar-lease-vs-buy-comparison",
+    title: "Solar Lease vs. Buy: Which Option Saves You More Money?",
+    description:
+      "Leasing solar panels requires zero upfront cost but buying generates far greater long-term savings. Here is the full financial comparison.",
+    publishedAt: "2024-12-10",
+    category: "Solar Finance",
+    readingTime: 7,
+    content: `
+<h2>The Basic Difference</h2>
+<p>When you buy a solar system (with cash or a loan), you own the equipment and capture all financial benefits: the federal tax credit, state incentives, net metering credits, and increased home value. When you lease, a third-party company owns the system on your roof and you pay them a monthly fee for the electricity it produces. The lease company claims the tax credit and incentives as the system owner.</p>
+<p>The appeal of leasing is simplicity and zero upfront cost. The appeal of buying is significantly greater long-term savings and ownership equity in a value-adding asset.</p>
+
+<h2>Financial Comparison Over 25 Years</h2>
+<p>On a typical 8 kW system in a state with average electricity rates, a cash purchase costs approximately $22,000 before the 30% federal ITC, or about $15,400 after the credit. Over 25 years, the system produces roughly $45,000 to $55,000 worth of electricity at current rates (more if rates increase). Net savings after the purchase cost: approximately $30,000 to $40,000.</p>
+<p>A solar loan with 5% interest over 15 years costs roughly $18,000 to $20,000 after the ITC (total payments including interest). Net savings over 25 years: approximately $25,000 to $35,000, somewhat less than cash due to interest but still substantial because you capture the ITC.</p>
+<p>A lease at $100 per month with a 2% annual escalator costs roughly $38,000 over 25 years. Your electricity savings are approximately $45,000 to $55,000, giving net savings of only $7,000 to $17,000. The lease company captures the ITC, most of the financial benefit, and you own nothing at the end.</p>
+
+<h2>When Leasing Makes Sense</h2>
+<p>Leasing is appropriate if you cannot afford any upfront cost and do not qualify for a solar loan, if your tax liability is too low to benefit from the ITC (below approximately $5,000 per year), if you plan to move within five years and do not want to deal with transferring system ownership, or if you simply want lower electricity bills with zero complexity.</p>
+
+<h2>When Buying Wins</h2>
+<p>Buying wins in almost every other scenario. If you have cash, qualify for a low-interest solar loan, can use the tax credit, and plan to stay in your home for seven or more years, buying produces two to four times the net savings of leasing. Ownership also increases your home's resale value by approximately $15,000 to $25,000 according to research from Zillow and the Lawrence Berkeley National Laboratory.</p>
+
+<h2>The Bottom Line</h2>
+<p>Buying is the better financial decision for the majority of homeowners. Leasing is a valid choice for those who cannot buy but want clean energy and modest savings. Use our <a href="/calculator/">solar calculator</a> to compare ownership and lease scenarios for your specific situation.</p>
+`,
+  },
+  {
+    slug: "best-solar-inverters-2025",
+    title: "Best Solar Inverters in 2025: Complete Buyer's Guide",
+    description:
+      "The inverter is the brain of your solar system. Here is how the top brands compare on efficiency, monitoring, warranty, and price.",
+    publishedAt: "2024-11-20",
+    category: "Solar Equipment",
+    readingTime: 7,
+    content: `
+<h2>What an Inverter Does</h2>
+<p>Solar panels produce direct current (DC) electricity, but your home runs on alternating current (AC). The inverter converts DC to AC, making solar electricity usable by your appliances and compatible with the grid. The inverter also manages system safety, optimizes energy production, and provides monitoring data so you can track your system's performance.</p>
+<p>The inverter is the hardest-working component in your solar system and typically the first to need replacement. While panels last 25 to 30 years, inverters typically last 10 to 15 years for string inverters and 20 to 25 years for microinverters. Choosing the right inverter affects your system's efficiency, reliability, and long-term cost of ownership.</p>
+
+<h2>Types of Inverters</h2>
+<p>String inverters connect all panels in a series and convert the combined DC output to AC at a single point. They cost less ($1,000 to $2,000 for residential systems) but have a weakness: if one panel is shaded or underperforming, it drags down the entire string. Major brands include SMA, Fronius, and SolarEdge (when used without optimizers).</p>
+<p>Microinverters attach to each individual panel, converting DC to AC at the panel level. This means shading or debris on one panel does not affect the others. Microinverters cost more ($1,500 to $3,500 for a full system) but provide better performance in partially shaded conditions and offer panel-level monitoring. Enphase dominates this market.</p>
+<p>Power optimizers are a hybrid approach. Each panel gets an optimizer that conditions the DC output, but a central inverter handles the DC-to-AC conversion. SolarEdge is the leading manufacturer. Cost falls between string inverters and microinverters.</p>
+
+<h2>Top Brands for 2025</h2>
+<p>Enphase IQ8 series microinverters lead the market for reliability and monitoring. Their 25-year warranty matches the panel warranty, eliminating the need for a mid-life inverter replacement. Enphase also offers sunlight backup capability, allowing limited power production during grid outages without a battery.</p>
+<p>SolarEdge pairs its optimizers with a central inverter and offers excellent monitoring and rapid shutdown compliance. Their 12 to 25 year warranties (depending on model) are competitive, and the system works well with their battery products.</p>
+<p>SMA string inverters remain popular for budget-conscious installations with good sun exposure and minimal shading. Their Sunny Boy series offers good efficiency and a 10 to 15 year warranty at lower cost than microinverter systems.</p>
+
+<h2>Choosing the Right Inverter</h2>
+<p>If your roof has shading from trees, chimneys, or neighboring structures, microinverters or power optimizers are worth the premium. If your roof has full, unobstructed sun exposure, a string inverter provides the best value. For systems paired with battery storage, check compatibility between your chosen inverter and battery brands. Use our <a href="/calculator/">solar calculator</a> to see how different equipment choices affect your overall system cost and savings.</p>
+`,
+  },
+  {
+    slug: "solar-battery-storage-worth-it",
+    title: "Is Solar Battery Storage Worth It in 2025? A Realistic Analysis",
+    description:
+      "Home batteries are getting cheaper, but are they a good investment? We break down the costs, savings, and scenarios where batteries make sense.",
+    publishedAt: "2024-10-30",
+    category: "Battery Storage",
+    readingTime: 7,
+    content: `
+<h2>Current Battery Costs</h2>
+<p>A residential battery storage system costs $10,000 to $20,000 installed in 2025, depending on capacity and brand. The Tesla Powerwall 3 runs approximately $12,000 to $15,000 installed. The Enphase IQ Battery series costs $10,000 to $18,000 depending on the number of units. Franklin Home Power, Generac PWRcell, and sonnen round out the major brands at similar price points.</p>
+<p>The 30% federal Investment Tax Credit applies to battery storage (even without solar, under current IRS guidance), reducing the net cost by roughly $3,000 to $6,000. After the ITC, most homeowners pay $7,000 to $14,000 for a battery system.</p>
+
+<h2>When Batteries Save Money</h2>
+<p>Batteries generate financial returns in specific scenarios. If your utility uses time-of-use (TOU) rates with large peak-to-off-peak spreads (25 cents or more difference), storing cheap off-peak electricity and using it during expensive peak hours can save $50 to $150 per month. In California, where TOU spreads can exceed 30 cents, batteries paired with solar are increasingly necessary for good economics under NEM 3.0.</p>
+<p>If your utility has reduced or eliminated net metering, batteries let you store excess solar production for self-consumption instead of exporting at low credit rates. This is the primary driver of battery adoption in states that have moved away from full retail net metering.</p>
+
+<h2>When Batteries Do Not Make Financial Sense</h2>
+<p>If your utility offers full retail net metering with no TOU rates, a battery provides little financial benefit because the grid effectively serves as a free, unlimited battery. You export excess solar during the day at full value and draw from the grid at night at the same rate. Adding a battery in this scenario costs $10,000 or more without improving your economics.</p>
+<p>If your primary motivation is backup power during outages, consider whether the frequency and duration of outages in your area justify the cost. A $12,000 battery that provides 10 hours of backup during a once-a-year four-hour outage is expensive insurance. A portable generator at $500 to $1,500 provides similar backup at a fraction of the cost for infrequent outages.</p>
+
+<h2>Battery Lifespan and Degradation</h2>
+<p>Most home batteries come with 10-year warranties guaranteeing 70 to 80 percent of original capacity. Actual lifespan may extend to 15 years or more, but capacity degradation means the battery stores less energy over time. At a $12,000 installed cost with a 10-year warranty period, you need to save at least $1,200 per year (roughly $100 per month) to break even before the warranty expires.</p>
+
+<h2>The Verdict</h2>
+<p>Batteries are a smart investment in California (post-NEM 3.0), Hawaii, states with TOU rates and large peak spreads, and areas with frequent extended outages. For everyone else, batteries are currently a premium purchase for peace of mind rather than a financial investment. Prices are dropping roughly 10 to 15 percent per year, so waiting one to two years may improve the economics. Use our <a href="/calculator/">solar calculator</a> to model battery scenarios for your utility and rate structure.</p>
+`,
+  },
+  {
+    slug: "solar-tax-credits-explained-2025",
+    title: "Solar Tax Credits Explained for 2025: Everything You Need to Know",
+    description:
+      "The 30% federal solar tax credit is the largest solar incentive available. Here is exactly how it works, who qualifies, and how to claim it.",
+    publishedAt: "2024-09-15",
+    category: "Solar Finance",
+    readingTime: 7,
+    content: `
+<h2>The Federal Investment Tax Credit (ITC)</h2>
+<p>The Residential Clean Energy Credit, commonly called the solar Investment Tax Credit or ITC, provides a dollar-for-dollar reduction in your federal income tax equal to 30% of your total solar system cost. If your system costs $25,000, you receive a $7,500 tax credit. This is not a deduction — it reduces your actual tax bill dollar for dollar, making it significantly more valuable than a deduction of the same amount.</p>
+<p>The 30% rate was extended through 2032 by the Inflation Reduction Act of 2022. It then steps down to 26% in 2033 and 22% in 2034, expiring for residential installations after 2034. There is no maximum credit amount and no income limit for eligibility.</p>
+
+<h2>What Costs Qualify</h2>
+<p>The ITC covers the total cost of your solar energy system, including solar panels, inverter(s), racking and mounting hardware, wiring and electrical components, battery storage (added in recent years), installation labor, permitting fees, and sales tax on equipment. Roof repairs that are necessary for the installation may also qualify, but general roof replacement does not.</p>
+<p>The system must be installed at your primary or secondary residence. Rental properties do not qualify for the residential credit, though they may qualify for the commercial ITC under different rules. The home can be an existing home or new construction.</p>
+
+<h2>How to Claim the Credit</h2>
+<p>You claim the ITC when you file your federal income tax return for the year your system was placed in service (operational, not just installed). Use IRS Form 5695 (Residential Energy Credits) and transfer the credit amount to your Form 1040. If the credit exceeds your tax liability for the year, the excess carries forward to future tax years until fully used.</p>
+<p>You must own the system to claim the credit. If you lease solar panels or use a power purchase agreement (PPA), the leasing company claims the credit as the system owner. This is one of the strongest financial arguments for buying rather than leasing.</p>
+
+<h2>State and Local Credits</h2>
+<p>Many states offer additional solar tax credits on top of the federal ITC. New York provides a 25% state tax credit up to $5,000. South Carolina offers 25% up to $3,500 per year over 10 years. Massachusetts, Arizona, and several other states have their own incentive programs. State credits are generally applied after the federal credit and further reduce your net cost.</p>
+
+<h2>Common Mistakes</h2>
+<p>The most common mistake is not having enough tax liability to use the credit in one year. If you owe $4,000 in federal taxes but have a $7,500 credit, you can only use $4,000 in that year. The remaining $3,500 carries forward but may take additional years to fully capture. Planning with a tax professional before installation helps avoid this situation. Use our <a href="/calculator/">solar calculator</a> to estimate your credit and plan accordingly.</p>
+`,
+  },
+  {
+    slug: "how-much-roof-space-for-solar",
+    title: "How Much Roof Space Do You Need for Solar Panels?",
+    description:
+      "Solar panels need 200 to 600 square feet of roof space for most homes. Here is how to calculate your specific requirement.",
+    publishedAt: "2024-08-20",
+    category: "Installation",
+    readingTime: 6,
+    content: `
+<h2>The Quick Calculation</h2>
+<p>A standard residential solar panel measures approximately 17.5 square feet (65 inches by 39 inches) and produces 350 to 425 watts under standard conditions. To generate enough electricity for an average US home using about 10,000 kWh per year, you need a system of approximately 6 to 8 kW, which requires 15 to 20 panels covering 260 to 350 square feet of roof space.</p>
+<p>However, usable roof space is always less than total roof area. You must account for setback requirements (typically 3 feet from roof edges and ridges), obstructions like vents, skylights, chimneys, and plumbing stacks, fire access pathways required by building code, and shading from trees or adjacent structures. A 1,500 square foot roof may have only 500 to 800 square feet of usable solar space.</p>
+
+<h2>Factors That Affect How Many Panels You Need</h2>
+<p>Your electricity consumption is the primary driver. Pull 12 months of electricity bills and calculate your annual kWh usage. Divide by the expected annual production per kW of solar in your area (typically 1,200 to 1,800 kWh per kW depending on location and orientation). The result is the system size in kW you need.</p>
+<p>Panel efficiency matters too. Premium panels producing 425 watts need fewer units than budget panels producing 350 watts to reach the same system size. Fewer panels means less roof space required, which can justify the higher per-panel cost if roof space is limited.</p>
+
+<h2>Roof Orientation and Tilt</h2>
+<p>South-facing roofs produce the most energy in the Northern Hemisphere, typically 100% of their rated capacity. East and west-facing roofs produce approximately 75 to 85% as much. North-facing roofs are generally not recommended for solar but can work in some cases with specialized racking. The greater the deviation from optimal orientation, the more panels you need to compensate, requiring more roof space.</p>
+<p>Roof pitch between 15 and 40 degrees is ideal. Flat roofs work well with tilted racking but the tilted panels create shadows that require spacing between rows, reducing the usable area. Steep roofs (above 45 degrees) may require specialized mounting hardware and make installation more labor-intensive.</p>
+
+<h2>What If You Do Not Have Enough Roof Space?</h2>
+<p>If your usable roof area is too small for a full-offset system, you have several options. Ground-mounted panels can be installed in your yard if you have sufficient land. Community solar programs let you subscribe to a shared off-site solar installation and receive credits on your electricity bill. Higher-efficiency panels maximize production from limited space. Or you can install a partial-offset system and still reduce your electricity costs meaningfully.</p>
+
+<h2>Getting an Accurate Assessment</h2>
+<p>Online estimates are starting points, but a professional site assessment provides the definitive answer. Installers use satellite imagery and sometimes drone surveys to map your usable roof area precisely. Use our <a href="/calculator/">solar calculator</a> for an initial estimate, then request site assessments from local installers for exact system sizing.</p>
+`,
+  },
+  {
+    slug: "solar-panels-in-cloudy-states",
+    title: "Do Solar Panels Work in Cloudy States? The Surprising Truth",
+    description:
+      "Solar panels produce less in cloudy climates but can still be an excellent investment. Here is why geography matters less than you think.",
+    publishedAt: "2024-07-25",
+    category: "Solar Basics",
+    readingTime: 6,
+    content: `
+<h2>Clouds Reduce Output but Do Not Eliminate It</h2>
+<p>Solar panels produce electricity from light, not heat. On a cloudy day, panels still generate 10 to 25 percent of their rated output because diffuse sunlight penetrates cloud cover. During partly cloudy conditions, panels can produce 50 to 80 percent of clear-sky output. Only during extremely heavy overcast or storms does production drop below 10 percent.</p>
+<p>This means that even in the cloudiest states, solar panels produce meaningful electricity year-round. The difference between a sunny state like Arizona and a cloudy state like Washington is significant but not as dramatic as most people assume.</p>
+
+<h2>Production by Region</h2>
+<p>A 6 kW solar system in Phoenix, Arizona produces approximately 10,500 kWh per year. The same system in Seattle, Washington produces about 7,200 kWh per year — roughly 30% less. In Portland, Oregon: about 7,000 kWh. In Cleveland, Ohio: about 7,500 kWh. In Boston, Massachusetts: about 7,800 kWh. Even the cloudiest locations produce more than two-thirds of what the sunniest locations deliver.</p>
+<p>Interestingly, Germany — which has comparable cloud cover to the Pacific Northwest — was the world's leading solar market for years. Germany demonstrates that solar economics depend on electricity prices, incentives, and policy as much as sunshine.</p>
+
+<h2>Why Cloudy States Can Still Be Great for Solar</h2>
+<p>Solar panel ROI depends on the value of the electricity produced, not just the quantity. Cloudy states often have higher electricity rates than sunny states. Washington state has among the cheapest electricity in the country (thanks to hydropower), making solar less attractive. But Massachusetts, New Jersey, Connecticut, and New York have electricity rates of 20 to 35 cents per kWh, making every kilowatt-hour of solar production worth significantly more than in states like Texas or Louisiana where rates are 10 to 12 cents.</p>
+<p>State incentives also matter. Massachusetts SMART program, New York's NYSERDA rebates, and New Jersey's Solar Renewable Energy Credits provide additional income that improves solar economics regardless of cloud cover. When you combine high electricity rates with strong incentives, cloudy states can offer better solar ROI than sunny states with cheap electricity.</p>
+
+<h2>Panel Technology Improvements</h2>
+<p>Modern solar panels perform better in cloudy conditions than older generations. Heterojunction (HJT) and passivated emitter rear cell (PERC) technologies have improved low-light performance. Microinverters optimize each panel independently, preventing a single shaded panel from dragging down the entire system. These technological improvements have progressively reduced the disadvantage of cloudy climates.</p>
+
+<h2>The Bottom Line</h2>
+<p>Do not dismiss solar because you live in a cloudy state. Calculate your specific economics based on your electricity rate, available incentives, and estimated production for your location. In many cloudy states, the combination of high electricity costs and strong incentives makes solar a better investment than in sunny states with cheap power. Use our <a href="/calculator/">solar calculator</a> to see the actual numbers for your location.</p>
+`,
+  },
 ];
 
 export function getAllPosts(): BlogPost[] {

@@ -1,7 +1,9 @@
+import { PUBLISHER, EDITORIAL_TEAM } from './authorship';
+
 const SITE_NAME = 'SunPowerPeek';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://sunpowerpeek.com';
 
-export function datasetSchema() {
+export function datasetSchema(reviewedAt?: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Dataset',
@@ -14,6 +16,8 @@ export function datasetSchema() {
     },
     license: 'https://creativecommons.org/publicdomain/zero/1.0/',
     temporalCoverage: '2026',
+    ...(reviewedAt && { dateModified: reviewedAt }),
+    distribution: { '@type': 'DataDownload', encodingFormat: 'text/html', contentUrl: `${SITE_URL}/` },
     spatialCoverage: {
       '@type': 'Place',
       name: 'United States',
@@ -27,16 +31,14 @@ export function datasetSchema() {
 }
 
 export function faqSchema(faqs: { question: string; answer: string }[]) {
+  if (!faqs || faqs.length === 0) return null;
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqs.map(faq => ({
+    mainEntity: faqs.map(f => ({
       '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
     })),
   };
 }
@@ -54,7 +56,7 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
   };
 }
 
-export function webPageSchema(title: string, description: string, url: string) {
+export function webPageSchema(title: string, description: string, url: string, reviewedAt?: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -66,7 +68,7 @@ export function webPageSchema(title: string, description: string, url: string) {
       name: SITE_NAME,
       url: SITE_URL,
     },
-    dateModified: new Date().toISOString(),
+    ...(reviewedAt && { dateModified: reviewedAt }),
   };
 }
 
@@ -83,5 +85,23 @@ export function itemListSchema(name: string, url: string, items: { name: string;
       name: item.name,
       url: `${SITE_URL}${item.url}`,
     })),
+  };
+}
+
+export function articleSchema(post: { title: string; description: string; slug: string; urlPath?: string; publishedAt: string; updatedAt?: string; category?: string }) {
+  const articlePath = post.urlPath ?? (post.slug.includes('/') ? `/${post.slug.replace(/^\/+|\/+$/g, '')}/` : `/blog/${post.slug}/`);
+  const url = `${SITE_URL}${articlePath}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.description,
+    url,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
+    author: { '@type': 'Organization', name: EDITORIAL_TEAM.name, url: EDITORIAL_TEAM.url },
+    publisher: { '@type': 'Organization', name: PUBLISHER.name, url: PUBLISHER.url },
+    mainEntityOfPage: url,
+    ...(post.category && { articleSection: post.category }),
   };
 }

@@ -9,18 +9,21 @@ import { DataFeedback } from "@/components/DataFeedback";
 import { SolarCalculator } from "@/components/SolarCalculator";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { AuthorBox } from "@/components/AuthorBox";
+import { TrustBlock } from '@/components/upgrades/TrustBlock';
+import { InsightBlock } from '@/components/upgrades/InsightBlock';
+import { getInsights } from '@/lib/insights';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = false;
-export const revalidate = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
-  // Pre-render top 500 ZIPs; rest served via ISR
-  const zips = getAllZips().slice(0, 1000);
-  return zips.map((z) => ({ slug: z.slug }));
+  // Pre-render a hot set; the rest are generated on demand via ISR.
+  const zips = getAllZips();
+  return zips.slice(0, 500).map((z) => ({ slug: z.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -43,7 +46,7 @@ export default async function ZipPage({ params }: PageProps) {
   const state = getStateByAbbr(zip.state);
   if (!state) notFound();
 
-  const stateZips = getZipsByState(zip.state).filter(z => z.zip_code !== zip.zip_code).slice(0, 10);
+  const stateZips = getZipsByState(zip.state).filter(z => z.zip_code !== zip.zip_code);
   const allStates = getAllStates();
 
   const netCost = Math.round(zip.system_cost_6kw * 0.7); // after 30% ITC
@@ -66,7 +69,7 @@ export default async function ZipPage({ params }: PageProps) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+      {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
         { name: "Home", url: "/" },
         { name: state.state, url: `/state/${state.slug}/` },
@@ -229,6 +232,28 @@ export default async function ZipPage({ params }: PageProps) {
         </section>
       )}
 
+      <TrustBlock sources={[{name:"NREL PVWatts",url:"https://pvwatts.nrel.gov/"},{name:"DSIRE",url:"https://www.dsireusa.org/"},{name:"EIA Solar",url:"https://www.eia.gov/electricity/monthly/"}]} updated="Latest NREL NSRDB and DSIRE release" />
+
+      <InsightBlock
+        entityName={`${zip.zip_code} ${zip.city}`}
+        insights={getInsights({
+          zipCode: zip.zip_code,
+          city: zip.city,
+          state: state.state,
+          peakSunHours: zip.peak_sun_hours,
+          systemCost6kw: zip.system_cost_6kw,
+          annualSavings: zip.annual_savings,
+          annualProductionKwh: zip.annual_production_kwh,
+          paybackYears: zip.payback_years,
+          co2OffsetTons: zip.co2_offset_tons,
+          nationalAvgSunHours: getNationalAvgSunHours(),
+          nationalAvgPayback: getNationalAvgPayback(),
+          nationalAvgAnnualSavings: getNationalAvgAnnualSavings(),
+          stateRank: getStateRankBySunHours(zip.state),
+          totalStates: getTotalStates(),
+        })}
+      />
+
       {/* Compare solar with other ZIPs */}
       {stateZips.length > 0 && (
         <section className="mb-8">
@@ -239,7 +264,7 @@ export default async function ZipPage({ params }: PageProps) {
             See how solar potential in {zip.zip_code} {zip.city} compares with other areas in {state.state}.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {stateZips.slice(0, 6).map((nz) => {
+            {stateZips.map((nz) => {
               const savDiff = nz.annual_savings - zip.annual_savings;
               const diffLabel = savDiff > 0 ? `${formatCurrency(Math.abs(savDiff))}/yr more` : savDiff < 0 ? `${formatCurrency(Math.abs(savDiff))}/yr less` : "same savings";
               return (

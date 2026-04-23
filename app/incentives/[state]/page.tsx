@@ -11,6 +11,8 @@ interface PageProps {
   params: Promise<{ state: string }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const states = getAllStates();
   return states.map((s) => ({ state: s.slug }));
@@ -21,8 +23,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const state = getStateBySlug(stateSlug);
   if (!state) return {};
   return {
-    title: `${state.state} Solar Incentives 2026 - Tax Credits, Rebates & Net Metering`,
-    description: `Complete guide to solar incentives in ${state.state} for 2026. Federal 30% ITC, ${state.state_tax_credit > 0 ? `${state.state_tax_credit}% state tax credit, ` : ""}${state.state_rebate > 0 ? `$${state.state_rebate.toLocaleString()} rebate, ` : ""}net metering policy, and payback of ${state.avg_payback_years} years.`,
+    title: `${state.state} Solar Incentives - Tax Credits, Rebates & Net Metering`,
+    description: `Complete guide to solar incentives in ${state.state}. Federal 30% ITC, ${state.state_tax_credit > 0 ? `${state.state_tax_credit}% state tax credit, ` : ""}${state.state_rebate > 0 ? `$${state.state_rebate.toLocaleString()} rebate, ` : ""}net metering policy, and payback of ${state.avg_payback_years} years.`,
     alternates: { canonical: `/incentives/${stateSlug}/` },
     openGraph: { url: `/incentives/${stateSlug}/` },
     keywords: [
@@ -30,7 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${state.state} solar tax credit`,
       `${state.state} solar rebate`,
       `${state.state} net metering`,
-      `${state.state} solar panels 2026`,
+      `${state.state} solar panel incentives`,
     ],
   };
 }
@@ -90,7 +92,7 @@ export default async function StateIncentivesPage({ params }: PageProps) {
       />
 
       <h1 className="text-3xl font-bold text-orange-800 mb-2">
-        {state.state} Solar Incentives (2026)
+        {state.state} Solar Incentives
       </h1>
       <p className="text-lg text-slate-600 mb-6">
         {state.state} homeowners qualify for the <strong>30% federal solar tax credit</strong>

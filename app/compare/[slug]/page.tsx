@@ -32,8 +32,10 @@ function parseCompareSlug(slug: string): { state1Slug: string; state2Slug: strin
   return null;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
-  const pairs = getTopComparisonPairs();
+  const pairs = getTopComparisonPairs().slice(0, 100);
   return pairs.map((p) => ({ slug: p.slug }));
 }
 
@@ -46,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!state1 || !state2) return {};
 
   return {
-    title: `${state1.state} vs ${state2.state} Solar Comparison (2026)`,
+    title: `${state1.state} vs ${state2.state} Solar Comparison`,
     description: `Compare solar panels in ${state1.state} (${state1.avg_sun_hours} sun hrs, ${state1.avg_payback_years}yr payback) vs ${state2.state} (${state2.avg_sun_hours} sun hrs, ${state2.avg_payback_years}yr payback). Side-by-side costs, savings, and incentives.`,
     alternates: { canonical: `/compare/${slug}/` },
     openGraph: { url: `/compare/${slug}/` },
@@ -97,7 +99,7 @@ export default async function CompareStatePage({ params }: PageProps) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+      {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
         { name: "Home", url: "/" },
         { name: `${state1.state} vs ${state2.state}`, url: `/compare/${slug}/` },

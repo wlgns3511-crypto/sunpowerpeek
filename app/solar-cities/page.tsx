@@ -6,7 +6,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
 
 export const metadata: Metadata = {
-  title: "Best Cities for Solar Panels by State (2026) | SunPowerPeek",
+  title: "Best Cities for Solar Panels by State | SunPowerPeek",
   description:
     "Find the best cities and locations for solar panels in every US state. Browse solar data by city, ZIP code, and state for optimal solar investment decisions.",
   alternates: { canonical: "https://sunpowerpeek.com/solar-cities/" },
@@ -18,7 +18,7 @@ export default function SolarCitiesIndexPage() {
   const sortedByState = [...states].sort((a, b) => a.state.localeCompare(b.state));
   const bestStates = [...states]
     .sort((a, b) => b.avg_20yr_savings - a.avg_20yr_savings)
-    .slice(0, 10);
+    ;
 
   return (
     <>

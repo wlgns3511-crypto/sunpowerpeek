@@ -5,6 +5,7 @@ import { EmbedButton } from "@/components/EmbedButton";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
+import { TrustMetaStrip } from "@/components/TrustMetaStrip";
 
 export const metadata: Metadata = {
   title: "Solar Savings Calculator - Estimate Your Solar Panel ROI | SunPowerPeek",
@@ -27,6 +28,8 @@ export default function CalculatorPage() {
         Estimate your solar panel costs, federal and state tax credits, payback period, and 20-year savings.
         Select your state, adjust your system size, and see how much you can save by going solar.
       </p>
+
+      <TrustMetaStrip />
 
       <SolarCalculator
         states={states.map(s => ({

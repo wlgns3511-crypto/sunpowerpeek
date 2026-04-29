@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllStates, getStateBySlug, getZipsByState } from "@/lib/db";
+import { getSunResource, getZipIrradianceCoverage, getSolarPayback, getIncentiveBundle } from "@/lib/state-facts";
+import { buildStateCommentary } from "@/lib/state-commentary";
 import { formatCurrency, formatSunHours, getPaybackColor } from "@/lib/format";
 import { breadcrumbSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -47,6 +49,12 @@ export default async function SolarCitiesPage({ params }: PageProps) {
   if (!state) notFound();
 
   const zips = getZipsByState(state.abbr);
+
+  const sunResource = getSunResource(stateSlug);
+  const zipCoverage = getZipIrradianceCoverage(stateSlug);
+  const payback = getSolarPayback(stateSlug);
+  const bundle = getIncentiveBundle(stateSlug);
+  const commentary = buildStateCommentary(state.state, stateSlug, sunResource, payback, bundle, zipCoverage);
 
   const bestZip = zips.length > 0 ? zips[0] : null; // sorted by annual_savings DESC
   const avgSun = zips.length > 0 ? zips.reduce((s, z) => s + z.peak_sun_hours, 0) / zips.length : state.avg_sun_hours;
@@ -96,6 +104,31 @@ export default async function SolarCitiesPage({ params }: PageProps) {
       </p>
 
       <EditorNote note={`Solar potential varies significantly across ${state.state}. Peak sun hours, local incentives, and electricity rates all influence your real-world payback period. We recommend comparing at least 3 quotes from local installers.`} />
+
+      {/* HCU 5-청크 Layer 1+2 — NREL irradiance commentary */}
+      {(commentary.sunSentence || commentary.zipSentence) && (
+        <section className="mb-6 rounded-xl border border-amber-200 bg-amber-50/40 p-4 space-y-2">
+          {commentary.sunSentence && (
+            <p className="text-sm text-slate-700 leading-relaxed">
+              {commentary.sunSentence}
+            </p>
+          )}
+          {commentary.zipSentence && (
+            <p className="text-sm text-slate-700 leading-relaxed">
+              {commentary.zipSentence}
+            </p>
+          )}
+          {zipCoverage && zipCoverage.distinctSunBuckets > 1 && (
+            <p className="text-xs text-amber-800">
+              <span className="font-semibold">NREL grid resolution:</span>{' '}
+              {zipCoverage.distinctSunBuckets} distinct sun-hour buckets across{' '}
+              {zipCoverage.zipCount.toLocaleString()} ZIPs · spread{' '}
+              {zipCoverage.sunSpread.toFixed(2)} h/day ({zipCoverage.sunMin.toFixed(2)}–
+              {zipCoverage.sunMax.toFixed(2)})
+            </p>
+          )}
+        </section>
+      )}
 
       <AdSlot id="1234509876" />
 

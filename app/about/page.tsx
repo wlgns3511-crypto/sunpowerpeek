@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TrustMetaStrip } from "@/components/TrustMetaStrip";
 
 export const metadata: Metadata = {
   title: "About SunPowerPeek",
@@ -11,6 +12,10 @@ export default function AboutPage() {
   return (
     <article className="prose prose-slate max-w-3xl mx-auto">
       <h1 className="text-3xl font-bold text-orange-700 mb-6">About SunPowerPeek</h1>
+
+      <div className="not-prose">
+        <TrustMetaStrip />
+      </div>
 
       <p>
         SunPowerPeek is a free resource that helps homeowners understand solar panel costs, savings,

@@ -3,6 +3,7 @@ import { getAllIncentives, getAllStates } from "@/lib/db";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
+import { TrustMetaStrip } from "@/components/TrustMetaStrip";
 
 export const metadata: Metadata = {
   title: "Solar Incentives by State - Tax Credits, Rebates & SRECs",
@@ -42,6 +43,8 @@ export default function IncentivesPage() {
         Every US homeowner qualifies for the <strong>30% Federal Solar Investment Tax Credit</strong> through 2032.
         Many states offer additional tax credits, rebates, and Solar Renewable Energy Credits (SRECs).
       </p>
+
+      <TrustMetaStrip />
 
       <AdSlot id="8901234567" />
 

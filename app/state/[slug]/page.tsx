@@ -20,6 +20,9 @@ import { TableOfContents } from "@/components/upgrades/TableOfContents";
 import { SolarSavingsCalc } from "@/components/tools/SolarSavingsCalc";
 import { FeedbackButton } from "@/components/FeedbackButton";
 import { StateRich } from '@/components/state/StateRich';
+import { StateAnalyticStrip } from '@/components/state/StateAnalyticStrip';
+import { SourcedIncentiveCard } from '@/components/state/SourcedIncentiveCard';
+import { getIncentiveBundle } from '@/lib/state-facts';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -139,6 +142,8 @@ export default async function StatePage({ params }: PageProps) {
       />
 
       <TableOfContents />
+
+      <StateAnalyticStrip slug={slug} stateName={state.state} />
 
       <TrustBlock
         sources={[
@@ -281,30 +286,43 @@ export default async function StatePage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Incentives */}
-      {incentives.length > 0 && (
-        <section className="mb-8">
-          <h2 className="text-xl font-bold text-slate-800 mb-3">Solar Incentives in {state.state}</h2>
-          <div className="space-y-3">
-            {incentives.map((inc, i) => (
-              <div key={i} className="p-4 rounded-lg border border-slate-200 bg-slate-50">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="font-semibold text-slate-800">{inc.incentive_name}</p>
-                    <p className="text-sm text-slate-600 mt-1">{inc.description}</p>
-                  </div>
-                  <span className="shrink-0 px-3 py-1 text-sm font-medium rounded-full bg-green-100 text-green-800">{inc.value}</span>
-                </div>
-                <div className="flex gap-3 mt-2 text-xs text-slate-400">
-                  <span className="px-2 py-0.5 bg-slate-200 rounded">{inc.type.replace('_', ' ')}</span>
-                  {inc.expiration && <span>Expires: {inc.expiration}</span>}
-                </div>
+      {/* Incentives — source-anchored (HCU 5-청크 Layer 1) */}
+      {(() => {
+        const bundle = getIncentiveBundle(slug);
+        if (!bundle || bundle.totalCount === 0) return null;
+        return (
+          <section className="mb-8">
+            <h2 className="text-xl font-bold text-slate-800 mb-3">
+              Solar Incentives in {state.state}
+            </h2>
+            {bundle.federalRows.length > 0 && (
+              <div className="space-y-3 mb-4">
+                <p className="text-sm font-medium text-orange-700 uppercase tracking-wider">
+                  Federal (available in all states)
+                </p>
+                {bundle.federalRows.map((row, i) => (
+                  <SourcedIncentiveCard key={`fed-${i}`} row={row} variant="federal" />
+                ))}
               </div>
-            ))}
-          </div>
-          <p className="mt-3 text-sm"><a href="/incentives/" className="text-orange-600 hover:underline">View all state solar incentives</a></p>
-        </section>
-      )}
+            )}
+            {bundle.stateRows.length > 0 && (
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-slate-700 uppercase tracking-wider">
+                  {state.state}-specific
+                </p>
+                {bundle.stateRows.map((row, i) => (
+                  <SourcedIncentiveCard key={`st-${i}`} row={row} variant="state" />
+                ))}
+              </div>
+            )}
+            <p className="mt-3 text-sm">
+              <a href={`/incentives/${slug}/`} className="text-orange-600 hover:underline">
+                Full {state.state} incentive page &rarr;
+              </a>
+            </p>
+          </section>
+        );
+      })()}
 
       <AdSlot id="6789012345" />
 

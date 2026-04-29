@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllStates, getStateBySlug, getIncentivesByState } from "@/lib/db";
+import { getAllStates, getStateBySlug } from "@/lib/db";
 import { formatCurrency, formatSunHours, getNetMeteringLabel } from "@/lib/format";
 import { breadcrumbSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
+import { SourcedIncentiveCard } from "@/components/state/SourcedIncentiveCard";
+import {
+  getIncentiveBundle,
+  getSunResource,
+  getSolarPayback,
+  getZipIrradianceCoverage,
+} from "@/lib/state-facts";
+import { buildStateCommentary } from "@/lib/state-commentary";
 
 interface PageProps {
   params: Promise<{ state: string }>;
@@ -42,23 +50,14 @@ export default async function StateIncentivesPage({ params }: PageProps) {
   const state = getStateBySlug(stateSlug);
   if (!state) notFound();
 
-  const incentives = getIncentivesByState(state.abbr);
-  const stateOnlyIncentives = incentives.filter((i) => i.state !== "ALL");
-  const federalIncentives = incentives.filter((i) => i.state === "ALL");
+  const bundle = getIncentiveBundle(stateSlug);
+  const sun = getSunResource(stateSlug);
+  const payback = getSolarPayback(stateSlug);
+  const zip = getZipIrradianceCoverage(stateSlug);
+  const commentary = buildStateCommentary(state.state, stateSlug, sun, payback, bundle, zip);
 
-  const typeLabels: Record<string, string> = {
-    tax_credit: "Tax Credit",
-    rebate: "Rebate",
-    srec: "SREC / REC Program",
-    net_metering: "Net Metering",
-  };
-
-  const typeColors: Record<string, string> = {
-    tax_credit: "bg-blue-100 text-blue-800 border-blue-200",
-    rebate: "bg-green-100 text-green-800 border-green-200",
-    srec: "bg-purple-100 text-purple-800 border-purple-200",
-    net_metering: "bg-yellow-100 text-yellow-800 border-yellow-200",
-  };
+  const stateOnlyIncentives = bundle?.stateRows ?? [];
+  const federalIncentives = bundle?.federalRows ?? [];
 
   const netMeteringLabel = getNetMeteringLabel(state.net_metering);
   const netMeteringColor =
@@ -134,35 +133,28 @@ export default async function StateIncentivesPage({ params }: PageProps) {
 
       <AdSlot id="3456721098" />
 
+      {/* Layer 2 commentary — incentive overview sentence */}
+      {commentary.incentiveSentence && (
+        <section className="mb-6 rounded-xl border border-amber-200 bg-amber-50/40 p-4">
+          <p className="text-sm text-slate-700 leading-relaxed">
+            {commentary.incentiveSentence}
+          </p>
+          {bundle && bundle.withSourceCount > 0 && (
+            <p className="mt-2 text-xs text-emerald-700 font-medium">
+              {bundle.withSourceCount} of {bundle.totalCount} entries link to a verified .gov or utility-commission source.
+            </p>
+          )}
+        </section>
+      )}
+
       {/* Federal incentives */}
       <section className="mb-8">
         <h2 className="text-xl font-bold text-slate-800 mb-3">
           Federal Solar Incentives (Available in {state.state})
         </h2>
         <div className="space-y-3">
-          {federalIncentives.map((inc) => (
-            <div
-              key={inc.id}
-              className="p-4 bg-orange-50 rounded-lg border border-orange-200"
-            >
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <h3 className="font-semibold text-orange-800">{inc.incentive_name}</h3>
-                <span
-                  className={`text-xs px-2 py-1 rounded-full border font-medium whitespace-nowrap ${
-                    typeColors[inc.type] || "bg-slate-100 text-slate-700 border-slate-200"
-                  }`}
-                >
-                  {typeLabels[inc.type] || inc.type}
-                </span>
-              </div>
-              <p className="text-sm font-medium text-orange-700 mb-1">{inc.value}</p>
-              <p className="text-sm text-slate-600">{inc.description}</p>
-              {inc.expiration && (
-                <p className="text-xs text-slate-500 mt-2">
-                  Expires: {inc.expiration}
-                </p>
-              )}
-            </div>
+          {federalIncentives.map((row, i) => (
+            <SourcedIncentiveCard key={`fed-${i}`} row={row} variant="federal" />
           ))}
         </div>
       </section>
@@ -174,29 +166,8 @@ export default async function StateIncentivesPage({ params }: PageProps) {
             {state.state}-Specific Solar Incentives
           </h2>
           <div className="space-y-3">
-            {stateOnlyIncentives.map((inc) => (
-              <div
-                key={inc.id}
-                className="p-4 bg-slate-50 rounded-lg border border-slate-200"
-              >
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <h3 className="font-semibold text-slate-800">{inc.incentive_name}</h3>
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full border font-medium whitespace-nowrap ${
-                      typeColors[inc.type] || "bg-slate-100 text-slate-700 border-slate-200"
-                    }`}
-                  >
-                    {typeLabels[inc.type] || inc.type}
-                  </span>
-                </div>
-                <p className="text-sm font-medium text-slate-700 mb-1">{inc.value}</p>
-                <p className="text-sm text-slate-600">{inc.description}</p>
-                {inc.expiration && (
-                  <p className="text-xs text-slate-500 mt-2">
-                    Expires: {inc.expiration}
-                  </p>
-                )}
-              </div>
+            {stateOnlyIncentives.map((row, i) => (
+              <SourcedIncentiveCard key={`st-${i}`} row={row} variant="state" />
             ))}
           </div>
         </section>
@@ -211,6 +182,13 @@ export default async function StateIncentivesPage({ params }: PageProps) {
           </p>
         </section>
       )}
+
+      {/* Disclaimer (YMYL guardrail) */}
+      <section className="mb-8 p-3 rounded-lg border border-slate-200 bg-slate-50">
+        <p className="text-xs text-slate-600 italic leading-relaxed">
+          {commentary.disclaimerSentence}
+        </p>
+      </section>
 
       <AdSlot id="4567832109" />
 

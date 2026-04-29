@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TrustMetaStrip } from "@/components/TrustMetaStrip";
 
 export const metadata: Metadata = {
   title: "Our Methodology — How SunPowerPeek Builds Its Solar Data",
@@ -12,6 +13,9 @@ export default function MethodologyPage() {
   return (
     <article className="prose prose-slate max-w-3xl mx-auto">
       <h1>Our Methodology</h1>
+      <div className="not-prose">
+        <TrustMetaStrip />
+      </div>
       <p className="lead text-lg text-slate-600">
         Installing residential solar is a multi-decade financial
         commitment. You deserve to know exactly where our payback,

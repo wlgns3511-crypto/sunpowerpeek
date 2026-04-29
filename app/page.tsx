@@ -6,6 +6,7 @@ import { PopularEntities } from "@/components/upgrades/PopularEntities";
 import { SolarCalculator } from "@/components/SolarCalculator";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
+import { TrustMetaStrip } from "@/components/TrustMetaStrip";
 
 export const metadata: Metadata = {
   title: "US Solar Panel Costs, Savings & Incentives by State | SunPowerPeek",
@@ -63,6 +64,8 @@ export default function HomePage() {
         <strong>{avgPayback} years</strong> with average 20-year savings of{" "}
         <strong>{formatCurrency(avg20yrSavings)}</strong>. Use our calculator below to estimate your solar ROI.
       </p>
+
+      <TrustMetaStrip />
 
       <PopularEntities
         heading="Top Solar States"

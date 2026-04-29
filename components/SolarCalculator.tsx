@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 interface StateData {
   abbr: string;
@@ -15,10 +15,21 @@ interface StateData {
 
 interface Props {
   states: StateData[];
+  /** Optional initial state abbreviation (e.g. "CA") preloaded from URL ?state= or page-level slug. */
+  initialState?: string;
 }
 
-export function SolarCalculator({ states }: Props) {
-  const [selectedState, setSelectedState] = useState("");
+export function SolarCalculator({ states, initialState }: Props) {
+  const [selectedState, setSelectedState] = useState(initialState ?? "");
+
+  // Hydrate from ?state= URL param (deeplink from StateAnalyticStrip CTAs etc.)
+  useEffect(() => {
+    if (initialState || typeof window === 'undefined') return;
+    const urlAbbr = new URLSearchParams(window.location.search).get('state');
+    if (urlAbbr && states.some((s) => s.abbr === urlAbbr.toUpperCase())) {
+      setSelectedState(urlAbbr.toUpperCase());
+    }
+  }, [initialState, states]);
   const [zipCode, setZipCode] = useState("");
   const [monthlyBill, setMonthlyBill] = useState(150);
   const [roofSize, setRoofSize] = useState(1500);

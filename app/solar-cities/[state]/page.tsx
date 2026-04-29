@@ -199,8 +199,8 @@ export default async function SolarCitiesPage({ params }: PageProps) {
           >
             {state.state} Solar Overview
           </a>
-          <a href="/compare/" className="text-orange-600 hover:underline">
-            Compare States
+          <a href="/solar-cities/" className="text-orange-600 hover:underline">
+            All States
           </a>
           <a href="/calculator/" className="text-orange-600 hover:underline">
             Solar Calculator

@@ -192,26 +192,7 @@ export default async function StatePage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* ROI by system size — HCU Tier S expansion 2026-04-21 */}
-      <a
-        href={`/state/${slug}/roi-by-system-size/`}
-        className="mb-8 block rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-5 transition hover:border-amber-300 hover:shadow-sm"
-      >
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-amber-700">
-              New · ROI by system size
-            </p>
-            <p className="mt-1 text-base font-semibold text-slate-900">
-              {state.state} 4–15 kW payback matrix: net cost, kWh output, 20-yr savings →
-            </p>
-            <p className="mt-1 text-sm text-slate-600">
-              See ${Math.round(state.avg_system_cost_per_watt * 4000).toLocaleString()}–${Math.round(state.avg_system_cost_per_watt * 15000).toLocaleString()} gross range by size, and which system matches your kWh usage.
-            </p>
-          </div>
-          <span className="hidden shrink-0 text-2xl text-amber-600 md:block" aria-hidden="true">→</span>
-        </div>
-      </a>
+      {/* /roi-by-system-size/ leaf killed 2026-04-25 HCU Phase C — 0 GSC clicks */}
 
       <AdSlot id="5678901234" />
 

@@ -155,10 +155,10 @@ export default async function BlogPostPage({
             Solar Calculator
           </a>
           <a
-            href="/compare/"
+            href="/incentives/"
             className="text-sm px-4 py-2 bg-white border border-orange-300 text-orange-700 rounded-lg hover:bg-orange-50 font-medium"
           >
-            Compare States
+            State Incentives
           </a>
           <a
             href="/"

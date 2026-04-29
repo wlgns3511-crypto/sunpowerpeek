@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from 'next/headers';
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { UpgradeAnalytics } from "@/components/upgrades/UpgradeAnalytics";
@@ -9,18 +8,10 @@ const inter = Inter({ subsets: ["latin"], display: "swap" });
 const SITE_NAME = "SunPowerPeek";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sunpowerpeek.com";
 
-const ROOT_LOCALES = ['es'] as const;
-type RootLocale = (typeof ROOT_LOCALES)[number];
 const ROOT_ALTERNATE_LANGUAGES = {
   en: `${SITE_URL}/`,
-  es: `${SITE_URL}/es/`,
   'x-default': `${SITE_URL}/`,
 } as const;
-
-function getHtmlLang(pathname: string | null): string {
-  const locale = pathname?.split('/').filter(Boolean)[0] as RootLocale | undefined;
-  return locale && ROOT_LOCALES.includes(locale) ? locale : 'en';
-}
 
 const GA_ID = "G-795SVW8599";
 
@@ -33,7 +24,6 @@ export const metadata: Metadata = {
     "Compare solar panel costs, savings, and government incentives across all 50 US states and 500+ ZIP codes. Calculate your solar ROI with our free tools.",
   metadataBase: new URL(SITE_URL),
   alternates: { languages: ROOT_ALTERNATE_LANGUAGES },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
@@ -43,16 +33,13 @@ export const metadata: Metadata = {
   other: { "google-adsense-account": "ca-pub-5724806562146685" },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerStore = await headers();
-  const pathname = headerStore.get('x-pathname');
-  const htmlLang = getHtmlLang(pathname);
   return (
-    <html lang={htmlLang}>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
@@ -104,10 +91,9 @@ export default async function RootLayout({
             <nav className="flex gap-6 text-sm">
               <a href="/calculator/" className="hover:text-orange-600">Calculator</a>
               <a href="/incentives/" className="hover:text-orange-600">Incentives</a>
-              <a href="/compare/california-vs-texas-solar/" className="hover:text-orange-600">Compare</a>
+              <a href="/solar-cities/" className="hover:text-orange-600">Cities</a>
               <a href="/guide/" className="hover:text-orange-600">Guides</a>
               <a href="/blog/" className="hover:text-orange-600">Articles</a>
-              <a href="/es/" className="text-slate-400 hover:text-orange-600 text-xs">ES</a>
             </nav>
           </div>
         </header>

@@ -1,0 +1,259 @@
+{
+  "_meta": {
+    "source": "DSIRE (NC Clean Energy Technology Center) + state energy office .gov pages + IRS",
+    "scope": "Pilot 4 states (TN/WA/UT/AL) + ALL federal, manually verified against .gov primary sources",
+    "vintage": "2026-Q2",
+    "verified_at": "2026-04-29",
+    "notes": "Pivot from GSC 0-click crisis: 189 queries / 0 clicks 3-month — TN/WA/UT/AL incentives queries dominated. Each row source-anchored to .gov; honest 'not available' / 'phased out' notes preserved per HCU E-E-A-T."
+  },
+  "ALL": [
+    {
+      "name": "Federal Solar Investment Tax Credit (ITC)",
+      "type": "tax_credit",
+      "value": "30% of system cost",
+      "description": "Federal Residential Clean Energy Credit (IRS Section 25D) equal to 30% of qualified solar PV property installed at a primary residence. Eligible costs include panels, installation labor, on-site preparation, and wiring. Public-utility rebates and manufacturer rebates reduce the qualified basis; net-metering credits do not. Available at 30% through 2032 per the Inflation Reduction Act, stepping down to 26% in 2033 and 22% in 2034. Nonrefundable, but excess carries forward.",
+      "expiration": "30% through 2032; 26% in 2033; 22% in 2034. Verify current-year percentage with IRS before filing.",
+      "source": "irs",
+      "source_url": "https://www.irs.gov/credits-deductions/residential-clean-energy-credit",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Modified Accelerated Cost-Recovery System (MACRS) — commercial only",
+      "type": "depreciation",
+      "value": "5-year MACRS recovery (commercial/business solar)",
+      "description": "MACRS lets solar PV used in a trade or business depreciate over 5 years. Does NOT apply to a homeowner's primary residence — listed for completeness for mixed-use properties.",
+      "expiration": "ongoing",
+      "source": "irs",
+      "source_url": "https://www.irs.gov/publications/p946",
+      "last_verified": "2026-04-29"
+    }
+  ],
+  "TN": [
+    {
+      "name": "Tennessee State Energy Office — Residential Solar resources",
+      "type": "information",
+      "value": "Guidance only (no direct rebate)",
+      "description": "TN.gov State Energy Office publishes residential solar guidance, federal-credit explainers, and links to TVA programs. Tennessee does NOT operate a state-level residential solar tax credit or rebate.",
+      "expiration": "ongoing",
+      "source": "tn-seo",
+      "source_url": "https://www.tn.gov/environment/program-areas/energy/state-energy-office--seo-/solar-energy/residential-solar.html",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "TVA Tennessee Valley Renewable Energy programs",
+      "type": "utility_program",
+      "value": "Varies by local utility",
+      "description": "TVA's Tennessee Valley Renewable Energy initiative coordinates residential solar guidance, the TN Valley Solar Calculator, and connections to local-utility programs across TVA territory. Direct payments depend on the local distributor utility.",
+      "expiration": "ongoing",
+      "source": "tn-seo",
+      "source_url": "https://www.tn.gov/environment/program-areas/energy/state-energy-office--seo-/solar-energy/residential-solar.html",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Nashville Electric Service — Music City Solar (community solar)",
+      "type": "community_solar",
+      "value": "Subscription-based (no rooftop install required)",
+      "description": "NES community-solar program for residential customers in Nashville/Davidson County who cannot install rooftop solar. Pay a monthly subscription for a share of off-site solar production credited on the electric bill.",
+      "expiration": "ongoing (subject to NES enrollment availability)",
+      "source": "tn-seo",
+      "source_url": "https://www.tn.gov/environment/program-areas/energy/state-energy-office--seo-/solar-energy/residential-solar.html",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Middle Tennessee Electric — Cooperative Solar",
+      "type": "community_solar",
+      "value": "Subscription-based",
+      "description": "Cooperative-solar program for MTEMC member households. Subscribers receive bill credits for production from a shared solar facility.",
+      "expiration": "ongoing (cooperative member eligibility)",
+      "source": "tn-seo",
+      "source_url": "https://www.tn.gov/environment/program-areas/energy/state-energy-office--seo-/solar-energy/residential-solar.html",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Knoxville Utilities Board — KUB Community Solar",
+      "type": "community_solar",
+      "value": "Subscription-based",
+      "description": "KUB's community-solar program for Knoxville-area residential customers. Subscribe to a share of off-site solar capacity and receive bill credits proportional to production.",
+      "expiration": "ongoing (KUB enrollment)",
+      "source": "tn-seo",
+      "source_url": "https://www.tn.gov/environment/program-areas/energy/state-energy-office--seo-/solar-energy/residential-solar.html",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "TN State-mandated net metering — NOT available",
+      "type": "limitation_note",
+      "value": "No statewide mandate",
+      "description": "Tennessee does not have a statewide net-metering requirement. Whether excess generation is credited (and at what rate) depends entirely on the local distributor utility. Confirm interconnection terms with your utility before signing a solar contract.",
+      "expiration": "n/a — limitation note",
+      "source": "tn-seo",
+      "source_url": "https://www.tn.gov/environment/program-areas/energy/state-energy-office--seo-/solar-energy/residential-solar.html",
+      "last_verified": "2026-04-29"
+    }
+  ],
+  "WA": [
+    {
+      "name": "Washington Sales and Use Tax Exemption (solar 1-100 kW AC)",
+      "type": "sales_tax_exemption",
+      "value": "100% exemption on equipment + qualifying installation labor",
+      "description": "Sales and use tax does not apply to purchases or installation of solar PV systems generating at least 1 kW and at most 100 kW AC. Exemption covers machinery, equipment, and labor when installed by a registered contractor with current licenses, industrial insurance, and a clean wage-law record (24 months). Buyer presents WA DOR Buyer's Retail Sales Tax Exemption Certificate at purchase.",
+      "expiration": "Effective July 1, 2019 through December 31, 2029",
+      "source": "wa-dor",
+      "source_url": "https://dor.wa.gov/forms-publications/publications-subject/special-notices/sales-and-use-tax-exemption-purchases-and-installation-solar-energy-systems",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Washington net-metering requirement",
+      "type": "net_metering",
+      "value": "Excess generation credited at retail rate",
+      "description": "Washington Utilities and Transportation Commission (UTC) requires utilities to net-meter customer-generated electricity. Excess kWh produced and exported are credited at the utility's retail electricity rate. Carryover and true-up rules vary by utility.",
+      "expiration": "ongoing (statewide requirement)",
+      "source": "wa-utc",
+      "source_url": "https://www.utc.wa.gov/regulated-industries/utilities/energy/conservation-and-renewable-energy-overview/washington-energy-independence-act-i-937/renewable-energy-incentives",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Washington Solar for All (low-income)",
+      "type": "rebate",
+      "value": "Income-qualified — see program",
+      "description": "WA Department of Commerce administers the federally funded Solar for All program targeting low- and moderate-income households. Direct subsidy or rebate value depends on enrollment cohort and household income.",
+      "expiration": "ongoing — subject to federal funding",
+      "source": "wa-commerce",
+      "source_url": "https://www.commerce.wa.gov/epic/solar-for-all/",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Renewable Energy System Incentive Program (RESIP) — closed",
+      "type": "limitation_note",
+      "value": "No longer accepting applications",
+      "description": "Washington's RESIP production-incentive program reached its statutory cap and has been fully subscribed since June 2021. New residential applicants are NOT eligible. Existing participants continue to receive payments through their committed term.",
+      "expiration": "Closed to new applicants June 2021",
+      "source": "wa-utc",
+      "source_url": "https://www.utc.wa.gov/regulated-industries/utilities/energy/conservation-and-renewable-energy-overview/washington-energy-independence-act-i-937/renewable-energy-incentives",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Washington property tax — solar treatment",
+      "type": "property_tax_note",
+      "value": "Personal-property assessment varies",
+      "description": "Washington does not have a blanket property-tax exemption for residential solar. Real-property reassessment treatment for added solar value varies by county assessor. Check with your county assessor before installation.",
+      "expiration": "n/a — limitation note",
+      "source": "wa-dor",
+      "source_url": "https://dor.wa.gov/forms-publications/publications-subject/tax-topics/clean-energy-renewable-energy-equipment",
+      "last_verified": "2026-04-29"
+    }
+  ],
+  "UT": [
+    {
+      "name": "Utah Renewable Energy Systems Tax Credit — residential solar PV ENDED 2024",
+      "type": "limitation_note",
+      "value": "$0 (phased out for residential PV)",
+      "description": "Utah's state Residential Renewable Energy Systems Tax Credit is NOT available for solar PV systems installed in 2024 or later. The credit was historically 25% of system cost, capped at $1,600 (2018-2020), $1,200 (2021), $800 (2022), $400 (2023). Per HB 264 (2025 session) the remaining commercial credit fully expires after Jan 1, 2028 — residential PV phase-out is already complete.",
+      "expiration": "Residential PV: ENDED Jan 1, 2024",
+      "source": "utah-energy",
+      "source_url": "https://energy.utah.gov/homepage/tax-credits/renewable-energy-systems-tax-credit/",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Rocky Mountain Power Net Energy Metering (NEM) — pre-Nov 2017 grandfathered",
+      "type": "net_metering",
+      "value": "Retail-rate net metering (legacy customers only)",
+      "description": "If your interconnection application was complete before Nov 15, 2017, you remain a NEM customer through Dec 31, 2035. Energy is netted monthly at the retail rate; excess production carries forward as ¢/kWh credit.",
+      "expiration": "Through Dec 31, 2035 for grandfathered customers; closed to new applicants",
+      "source": "utah-psc",
+      "source_url": "https://pscdocs.utah.gov/electric/17docs/1703561/319988PblcCmntsAug1620218-16-2021.pdf",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Rocky Mountain Power Export Credit (Post-Transition customers)",
+      "type": "export_credit",
+      "value": "5.160¢/kWh summer (Jun-Sep), 4.462¢/kWh winter (Oct-May)",
+      "description": "If your interconnection application was complete after Oct 30, 2020, exported customer-generated energy is compensated at fixed seasonal export rates rather than retail-rate net metering. Significantly less favorable than legacy NEM.",
+      "expiration": "ongoing (subject to PSC review)",
+      "source": "utah-psc",
+      "source_url": "https://pscdocs.utah.gov/electric/17docs/1703561/319988PblcCmntsAug1620218-16-2021.pdf",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Utah Residential Solar Energy Consumer Protection Act (Title 13 Ch 52)",
+      "type": "consumer_protection",
+      "value": "Statutory disclosure + cancellation rights",
+      "description": "Utah law mandates installer disclosures, written contracts with required terms, and consumer-cancellation windows for residential solar installations. Not a financial incentive but a buyer-protection layer when comparing installer quotes.",
+      "expiration": "ongoing",
+      "source": "utah-leg",
+      "source_url": "https://le.utah.gov/xcode/Title13/Chapter52/C13-52_2025050720250507.pdf",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Utah Office of Consumer Services — Rooftop Solar guidance",
+      "type": "information",
+      "value": "Consumer guidance only",
+      "description": "Utah OCS publishes consumer-facing rooftop-solar guidance: how to evaluate quotes, common contract pitfalls, and links to PSC tariffs. Free resource.",
+      "expiration": "ongoing",
+      "source": "utah-ocs",
+      "source_url": "https://ocs.utah.gov/rooftop-solar",
+      "last_verified": "2026-04-29"
+    }
+  ],
+  "AL": [
+    {
+      "name": "Alabama State Energy Program (SEP)",
+      "type": "information",
+      "value": "Energy-efficiency programs, not direct solar rebate",
+      "description": "ADECA administers Alabama's State Energy Program funded by the U.S. DOE. Focus is broader energy efficiency, weatherization, and building codes. Does NOT directly rebate residential solar PV installation costs but supports related efficiency upgrades.",
+      "expiration": "ongoing — federally funded",
+      "source": "adeca",
+      "source_url": "https://adeca.alabama.gov/sep/",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Alabama IRA Home Energy Rebate Programs (pending)",
+      "type": "rebate",
+      "value": "Pending federal approval and program launch",
+      "description": "ADECA is implementing Inflation Reduction Act Home Energy Rebate Programs covering home electrification and energy-efficiency upgrades. As of early 2026, residential PV is NOT a primary rebate target — focus is heat pumps, induction stoves, weatherization. Confirm latest status with ADECA before relying on this program.",
+      "expiration": "Implementation phase — verify 2026 status",
+      "source": "adeca",
+      "source_url": "https://adeca.alabama.gov/ira-rebates/",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Alabama state tax credit — NOT available",
+      "type": "limitation_note",
+      "value": "$0",
+      "description": "Alabama does not offer a state income-tax credit for residential solar PV installation. The Alabama Department of Revenue's solar guidance addresses generation-facility sales/use tax for utility-scale projects, not homeowner credits.",
+      "expiration": "n/a — limitation note",
+      "source": "al-revenue",
+      "source_url": "https://www.revenue.alabama.gov/division/tax-incentives/",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "TVA territory programs (Northern Alabama)",
+      "type": "utility_program",
+      "value": "Varies by local distributor utility",
+      "description": "Northern Alabama is largely served by TVA-distributor utilities (e.g., Huntsville Utilities, Decatur Utilities). TVA discontinued the Green Power Providers production-incentive program in 2019; current solar offerings depend on the local distributor utility. Contact your utility before installation.",
+      "expiration": "Varies by program",
+      "source": "tva",
+      "source_url": "https://www.revenue.alabama.gov/tax-types/tennessee-valley-authority-in-lieu-of-tax-payments/",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "Alabama Power Solar (Southern AL — Alabama Power)",
+      "type": "utility_program",
+      "value": "Capacity reservation and interconnection fees apply",
+      "description": "Customers of Alabama Power (Southern Company subsidiary) may install rooftop solar but face a monthly capacity-reservation charge based on system size, plus interconnection fees. This significantly extends payback compared to TVA territory or out-of-state. Confirm current tariff with Alabama Power before signing.",
+      "expiration": "ongoing — Alabama Power tariff",
+      "source": "al-psc",
+      "source_url": "https://psc.alabama.gov/",
+      "last_verified": "2026-04-29"
+    },
+    {
+      "name": "AL state-mandated net metering — NOT available",
+      "type": "limitation_note",
+      "value": "No statewide mandate",
+      "description": "Alabama has no state-mandated net-metering policy. Treatment of excess solar generation is set by each utility's tariff (TVA distributors, Alabama Power, or municipal). Read the interconnection agreement carefully — payback economics depend heavily on this.",
+      "expiration": "n/a — limitation note",
+      "source": "al-psc",
+      "source_url": "https://psc.alabama.gov/",
+      "last_verified": "2026-04-29"
+    }
+  ]
+}

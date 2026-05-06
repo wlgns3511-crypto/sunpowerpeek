@@ -8,6 +8,8 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
+import { AuthorBox } from "@/components/AuthorBox";
+import { STATE_VINTAGE } from "@/lib/authorship";
 import { EditorNote } from "@/components/EditorNote";
 import { DidYouKnow } from "@/components/DidYouKnow";
 import { DataSourceBadge } from "@/components/DataSourceBadge";
@@ -252,6 +254,8 @@ export default async function SolarCitiesPage({ params }: PageProps) {
       <FreshnessTag source="NREL, DSIRE, EIA" />
 
       <CrossSiteLinks current="SunPowerPeek" />
+
+      <AuthorBox vintage={STATE_VINTAGE} source="NREL NSRDB + EIA + DSIRE" showDisclaimer />
     </>
   );
 }

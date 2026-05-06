@@ -6,6 +6,8 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { TrustMetaStrip } from "@/components/TrustMetaStrip";
+import { AuthorBox } from "@/components/AuthorBox";
+import { METHODOLOGY_VINTAGE } from "@/lib/authorship";
 
 export const metadata: Metadata = {
   title: "Solar Savings Calculator - Estimate Your Solar Panel ROI | SunPowerPeek",
@@ -83,6 +85,8 @@ export default function CalculatorPage() {
       </section>
 
       <FreshnessTag source="NREL, DSIRE, EIA" />
+
+      <AuthorBox vintage={METHODOLOGY_VINTAGE} source="NREL PVWatts + IRS Form 5695 ITC math" showDisclaimer />
     </>
   );
 }

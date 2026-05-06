@@ -113,7 +113,7 @@ export default async function GuidePage({ params }: Props) {
         </div>
       </section>
 
-      <AuthorBox />
+      <AuthorBox vintage={guide.updatedAt} source={`SunPowerPeek guide: ${guide.category}`} />
       <CrossSiteLinks current="SunPowerPeek" />
     </article>
   );

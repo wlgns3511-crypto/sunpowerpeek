@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllStates, getStateBySlug } from "@/lib/db";
 import { formatCurrency, formatSunHours, getNetMeteringLabel } from "@/lib/format";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, datasetSchema } from "@/lib/schema";
+import { INCENTIVE_VINTAGE } from "@/lib/authorship";
+import { AuthorBox } from "@/components/AuthorBox";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
@@ -78,6 +80,28 @@ export default async function StateIncentivesPage({ params }: PageProps) {
               { name: "Solar Incentives", url: "/incentives/" },
               { name: `${state.state} Solar Incentives`, url: `/incentives/${stateSlug}/` },
             ])
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            datasetSchema(
+              `${state.state} Solar Incentives`,
+              `Federal and ${state.state}-specific solar incentives — 30% federal ITC (IRS Form 5695), state tax credits, rebates, and net metering policy from DSIRE.`,
+              {
+                spatialCoverage: state.state,
+                vintage: INCENTIVE_VINTAGE,
+                variableMeasured: [
+                  'Federal ITC (30%, IRS Form 5695)',
+                  'State Tax Credit (%)',
+                  'State Rebate (USD)',
+                  'Net Metering Policy',
+                  'Average Payback Years',
+                ],
+              },
+            ),
           ),
         }}
       />
@@ -237,6 +261,8 @@ export default async function StateIncentivesPage({ params }: PageProps) {
       </section>
 
       <FreshnessTag source="DSIRE, NREL, EIA" />
+
+      <AuthorBox vintage={INCENTIVE_VINTAGE} source="DSIRE state incentive database + IRS Form 5695" showDisclaimer />
     </>
   );
 }

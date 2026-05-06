@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 import { getAllStates, getStateBySlug, getZipsByState, getIncentivesByState, getNationalAvgSunHours, getNationalAvgPayback, getNationalAvg20yrSavings, getStateRankBySunHours, getPaybackRank, getSavingsRank, getTotalStatesCount, getNeighboringStates } from "@/lib/db";
 import { formatCurrency, formatSunHours, formatPercent, getPaybackColor, getNetMeteringLabel, getNetMeteringColor, getSunTextColor } from "@/lib/format";
 import { getStateInsights } from "@/lib/state-insights";
-import { faqSchema, breadcrumbSchema } from "@/lib/schema";
+import { faqSchema, breadcrumbSchema, datasetSchema } from "@/lib/schema";
 import { generateAutoFaqs } from "@/lib/auto-faqs";
+import { ENTITY_VINTAGE } from "@/lib/authorship";
+import { AuthorBox } from "@/components/AuthorBox";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { DataFeedback } from "@/components/DataFeedback";
@@ -121,6 +123,7 @@ export default async function StatePage({ params }: PageProps) {
     <>
       {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([{ name: "Home", url: "/" }, { name: state.state, url: `/state/${slug}/` }])) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema(`${state.state} Solar Panel Costs, Savings & Incentives`, `Residential solar economics for ${state.state} — peak sun hours, system cost per watt, federal ITC math, state incentives, net metering policy, and 20-year savings.`, { spatialCoverage: state.state, vintage: ENTITY_VINTAGE, variableMeasured: ['Peak Sun Hours (hours per day)', 'System Cost per Watt (USD per watt)', 'Average Payback Years', '20-Year Savings (USD)', 'Federal ITC (30%, IRS Form 5695)', 'State Tax Credit (%)', 'Net Metering Policy'] })) }} />
 
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: state.state }]} />
 
@@ -513,6 +516,7 @@ export default async function StatePage({ params }: PageProps) {
 
       <StateRich slug={slug} state={state} />
 
+      <AuthorBox vintage={ENTITY_VINTAGE} source="NREL NSRDB + DSIRE + EIA + IRS Form 5695" showDisclaimer />
     </>
   );
 }

@@ -7,6 +7,8 @@ import { SolarCalculator } from "@/components/SolarCalculator";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { TrustMetaStrip } from "@/components/TrustMetaStrip";
+import { AuthorBox } from "@/components/AuthorBox";
+import { ENTITY_VINTAGE, SITE_VINTAGE } from "@/lib/authorship";
 
 export const metadata: Metadata = {
   title: "US Solar Panel Costs, Savings & Incentives by State | SunPowerPeek",
@@ -49,12 +51,14 @@ export default function HomePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema(undefined, undefined, { vintage: ENTITY_VINTAGE })) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
-      />
+      {(faqs?.length ?? 0) > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }}
+        />
+      )}
 
       <h1 className="text-3xl md:text-4xl font-bold text-orange-800 mb-4">
         US Solar Panel Costs, Savings &amp; Incentives by State
@@ -221,6 +225,8 @@ export default function HomePage() {
       </section>
 
       <FreshnessTag source="NREL, DSIRE, EIA" />
+
+      <AuthorBox vintage={SITE_VINTAGE} source="NREL NSRDB + DSIRE + EIA + IRS Form 5695" />
     </>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { TrustMetaStrip } from "@/components/TrustMetaStrip";
+import { AuthorBox } from "@/components/AuthorBox";
+import { METHODOLOGY_VINTAGE } from "@/lib/authorship";
 
 export const metadata: Metadata = {
   title: "Our Methodology — How SunPowerPeek Builds Its Solar Data",
@@ -199,10 +201,13 @@ export default function MethodologyPage() {
       </p>
 
       <p className="text-sm text-slate-500 border-t pt-4 mt-8">
-        This methodology page was last reviewed in March 2026. Material
-        changes to how we source or compute the data will be reflected
-        here before they reach production pages.
+        This methodology page was last reviewed on{" "}
+        <time dateTime={METHODOLOGY_VINTAGE}>{METHODOLOGY_VINTAGE}</time>.
+        Material changes to how we source or compute the data will be
+        reflected here before they reach production pages.
       </p>
+
+      <AuthorBox vintage={METHODOLOGY_VINTAGE} source="NREL PVWatts methodology + DSIRE + EIA + IRS Form 5695" />
     </article>
   );
 }

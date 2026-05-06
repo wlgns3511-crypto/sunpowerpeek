@@ -1,9 +1,21 @@
-import { DB_UPDATED } from "@/lib/authorship";
-import { EDITORIAL_TEAM, PUBLISHER } from "@/lib/authorship";
+import {
+  DB_UPDATED,
+  EDITORIAL_TEAM,
+  PUBLISHER,
+  REVIEWER_DISCLAIMER,
+  SOURCE_AUTHORITIES,
+  SOURCE_VINTAGES,
+} from "@/lib/authorship";
 
-export function AuthorBox() {
-  const reviewedAt = DB_UPDATED;
-  const dataVintage = "Public dataset snapshot";
+type AuthorBoxProps = {
+  vintage?: string;
+  source?: string;
+  showDisclaimer?: boolean;
+};
+
+export function AuthorBox({ vintage, source, showDisclaimer }: AuthorBoxProps = {}) {
+  const reviewedAt = vintage ?? DB_UPDATED;
+  const dataVintage = source ?? "Public dataset snapshot";
 
   return (
     <div className="mt-10 p-5 bg-slate-50 border border-slate-200 rounded-xl">
@@ -16,7 +28,7 @@ export function AuthorBox() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="font-semibold text-slate-900 text-sm">
-            Data verified by {EDITORIAL_TEAM.name}
+            Reviewed by the {EDITORIAL_TEAM.name}
           </div>
           <div className="text-xs text-slate-500 mt-0.5">
             Part of the <a href={PUBLISHER.url} className="text-slate-700 hover:underline" rel="noopener">{PUBLISHER.name}</a>
@@ -24,12 +36,40 @@ export function AuthorBox() {
         </div>
       </div>
       <p className="text-xs text-slate-600 leading-relaxed mb-3">
-        SunPowerPeek is maintained by an editorial workflow that audits public data sources and verifies dates, values, and methodology on every page. We publish as an organization — no individual bylines — and disclose our data vintage and review dates openly.
+        Each state solar estimate on SunPowerPeek is cross-referenced against{" "}
+        {SOURCE_AUTHORITIES.map((s, i) => (
+          <span key={s.name}>
+            {i > 0 && (i === SOURCE_AUTHORITIES.length - 1 ? ", and " : ", ")}
+            <a
+              href={s.url}
+              className="underline underline-offset-2 hover:text-slate-900"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {s.name}
+            </a>
+          </span>
+        ))}{" "}
+        before publication. Our editorial workflow audits NREL peak sun hours, DSIRE state-incentive entries, EIA retail electricity rates, and IRS Form 5695 ITC math on every release cycle.
       </p>
+      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 mb-2">
+        <span>
+          Source vintages:{" "}
+          {Object.entries(SOURCE_VINTAGES).map(([k, v], i, arr) => (
+            <span key={k}>
+              <span className="font-medium text-slate-700">{k}</span> ({v})
+              {i < arr.length - 1 ? "; " : ""}
+            </span>
+          ))}
+        </span>
+      </div>
       <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
         {reviewedAt && (
           <>
-            <span>Last verified: <time dateTime={reviewedAt}>{reviewedAt}</time></span>
+            <span>
+              Last reviewed:{" "}
+              <time dateTime={reviewedAt}>{reviewedAt}</time>
+            </span>
             <span className="text-slate-300">·</span>
           </>
         )}
@@ -41,6 +81,11 @@ export function AuthorBox() {
         <span className="text-slate-300">·</span>
         <a href="/contact/" className="underline underline-offset-2 hover:text-slate-900">Send a correction</a>
       </div>
+      {showDisclaimer && (
+        <p className="mt-3 pt-3 border-t border-slate-200 text-xs italic text-slate-600 leading-relaxed">
+          {REVIEWER_DISCLAIMER}
+        </p>
+      )}
     </div>
   );
 }

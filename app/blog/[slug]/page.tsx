@@ -133,7 +133,7 @@ export default async function BlogPostPage({
           prose-a:text-orange-600 prose-a:no-underline hover:prose-a:underline"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
-      <AuthorBox />
+      <AuthorBox vintage={post.updatedAt ?? post.publishedAt} source="SunPowerPeek editorial team" />
 
 
       <AdSlot id="5678901234" />

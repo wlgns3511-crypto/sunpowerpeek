@@ -6,6 +6,14 @@ import { getStateInsights } from "@/lib/state-insights";
 import { faqSchema, breadcrumbSchema, datasetSchema } from "@/lib/schema";
 import { generateAutoFaqs } from "@/lib/auto-faqs";
 import { ENTITY_VINTAGE } from "@/lib/authorship";
+import { PaybackStateMap } from "@/components/PaybackStateMap";
+import { classifyItcPaybackBand, tierToneColor, type ItcPaybackTier } from "@/lib/itc-payback-band";
+import { classifyNetMeteringTier, netMeteringToneColor } from "@/lib/net-metering-tier";
+import { classifySolarIrradianceTier, irradianceToneColor } from "@/lib/solar-irradiance-tier";
+import { interpretSolar } from "@/lib/solar-interpretation";
+import { SolarInterpretation } from "@/components/upgrades/SolarInterpretation";
+import { SolarEmpiricalBlock } from "@/components/upgrades/SolarEmpiricalBlock";
+import { getSolarEmpirical, EIA_VINTAGE } from "@/lib/solar-empirical-outcomes";
 import { AuthorBox } from "@/components/AuthorBox";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
@@ -25,6 +33,10 @@ import { StateRich } from '@/components/state/StateRich';
 import { StateAnalyticStrip } from '@/components/state/StateAnalyticStrip';
 import { SourcedIncentiveCard } from '@/components/state/SourcedIncentiveCard';
 import { getIncentiveBundle } from '@/lib/state-facts';
+import { StateHeroImage } from '@/components/StateHeroImage';
+import { getStateImage } from '@/lib/state-images';
+import { calculateProprietaryMetrics } from '@/lib/proprietary-metrics';
+import { ProprietaryMetricsBlock } from '@/components/upgrades/ProprietaryMetricsBlock';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -37,17 +49,61 @@ export async function generateStaticParams() {
   return states.map((s) => ({ slug: s.slug }));
 }
 
+// Phase 7 v7.0 (2026-05-20) — VERDICT_TITLE_LABEL maps the ItcPaybackTier A–E
+// to a compressed scan-friendly head term. Mirrors wagepeek's pattern and
+// florawize trap #112: replace boilerplate suffix chars with verdict-bearing
+// chars. Worst-case state "District of Columbia" (20c) + ": " + "Excellent"
+// (9c) + " Solar Payback · " (17c) + "12.3yr" (6c) = 54c — under the 60c cap.
+// scripts/audit-phase7.ts asserts this across all 51 states.
+const VERDICT_TITLE_LABEL: Record<ItcPaybackTier, string> = {
+  A: 'Excellent',
+  B: 'Strong',
+  C: 'Moderate',
+  D: 'Slow',
+  E: 'Avoid',
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const state = getStateBySlug(slug);
   if (!state) return {};
-  // RANGE: small 4kW system (low) vs large 10kW system (high), before federal tax credit
+  // Recompute payback tier so the title can carry the verdict signal —
+  // mirrors the body-page classifyItcPaybackBand call so the title and body
+  // always agree. If inputs are missing, tier is null and we fall back to a
+  // non-verdict shape.
+  const annualKwh = state.avg_sun_hours * 365 * 6;
+  const itcBand = classifyItcPaybackBand({
+    systemCostPerWatt: state.avg_system_cost_per_watt,
+    systemSizeWatts: 6000,
+    federalItcPct: state.federal_tax_credit_pct,
+    stateRebateUsd: state.state_rebate,
+    stateTaxCreditPct: state.state_tax_credit,
+    annualKwh,
+    retailRateCentsPerKwh: state.avg_electricity_rate,
+  });
+  const tierLabel = itcBand.tier ? VERDICT_TITLE_LABEL[itcBand.tier] : null;
+  const title = tierLabel && itcBand.paybackYears != null
+    ? `${state.state}: ${tierLabel} Solar Payback · ${itcBand.paybackYears.toFixed(1)}yr`
+    : `${state.state} Solar Cost & Savings 2026`;
   const low = Math.round(state.avg_system_cost_per_watt * 4000);
   const high = Math.round(state.avg_system_cost_per_watt * 10000);
-  const title = `${state.state} Solar Cost: $${low.toLocaleString()}–$${high.toLocaleString()} (4kW–10kW)`;
-  const description = `${state.state} solar install ranges from $${low.toLocaleString()} (4kW) to $${high.toLocaleString()} (10kW) before the 30% federal tax credit. ${state.avg_sun_hours} peak sun hrs, ${state.avg_payback_years}-yr payback, ${formatCurrency(state.avg_20yr_savings)} 20-yr savings. Based on NREL and DSIRE inputs.`;
+
+  const savingsRk = getSavingsRank(state.abbr);
+  const metrics = calculateProprietaryMetrics(
+    state.state,
+    slug,
+    state.avg_sun_hours,
+    state.avg_payback_years,
+    state.net_metering,
+    savingsRk
+  );
+
+  const description = `[Solar Profile: Solar Grade ${metrics.overallGrade}, Payback Score ${metrics.paybackScore}/100] ${state.state} solar install ranges from $${low.toLocaleString()} (4kW) to $${high.toLocaleString()} (10kW) before the 30% federal tax credit. ${state.avg_sun_hours} peak sun hrs, ${state.avg_payback_years}-yr payback, ${formatCurrency(state.avg_20yr_savings)} 20-yr savings. Based on NREL and DSIRE inputs.`;
   return {
-    title,
+    // title.absolute bypasses the root layout's `%s | SunPowerPeek` (15c)
+    // template — the verdict-bearing string is what Google indexes. Trap #117
+    // (60c title-rewrite budget).
+    title: { absolute: title },
     description,
     alternates: { canonical: `/state/${slug}/` },
     openGraph: { title, description, url: `/state/${slug}/` },
@@ -70,6 +126,55 @@ export default async function StatePage({ params }: PageProps) {
   const netCost = systemCost6kw - federalCredit - (state.state_tax_credit > 0 ? Math.round(systemCost6kw * state.state_tax_credit / 100) : 0) - state.state_rebate;
 
   const stateInsights = getStateInsights(state);
+
+  // ItcPaybackBand — 5-tier deterministic classifier (NREL + DSIRE + EIA + IRS Form 5695).
+  // 6 kW reference system × NREL PVWatts annual kWh (avg_sun_hours × 365 × 6 kW)
+  // × EIA retail rate, net of 30% federal ITC + DSIRE state rebate + state tax credit.
+  const annualKwh = state.avg_sun_hours * 365 * 6;
+  const itcBand = classifyItcPaybackBand({
+    systemCostPerWatt: state.avg_system_cost_per_watt,
+    systemSizeWatts: 6000,
+    federalItcPct: state.federal_tax_credit_pct,
+    stateRebateUsd: state.state_rebate,
+    stateTaxCreditPct: state.state_tax_credit,
+    annualKwh,
+    retailRateCentsPerKwh: state.avg_electricity_rate,
+  });
+  const itcTone = tierToneColor(itcBand.tier);
+
+  // NetMeteringTier — DSIRE 5-tier export-credit policy decoder (T1–T5).
+  const incentiveTexts = incentives.map(i => `${i.incentive_name}\n${i.description}`);
+  const nemTier = classifyNetMeteringTier({
+    stateAbbr: state.abbr,
+    netMeteringRaw: state.net_metering,
+    incentiveTexts,
+  });
+  const nemTone = netMeteringToneColor(nemTier.tier);
+
+  // SolarIrradianceTier — NREL PVWatts 5-band on avg_sun_hours (A–E).
+  const irrTier = classifySolarIrradianceTier({
+    stateAbbr: state.abbr,
+    avgSunHours: state.avg_sun_hours,
+  });
+  const irrTone = irradianceToneColor(irrTier.tier);
+
+  // Phase 7 Empirical-Outcomes — EIA Form 861 Table 11 residential net-metering
+  // aggregates (cumulative capacity + customer counts + YoY growth). Loaded
+  // here so the dataset schema variableMeasured can carry the empirical
+  // dimensions that SolarEmpiricalBlock renders below SolarInterpretation.
+  const eiaEmpirical = getSolarEmpirical(slug);
+
+  // SolarInterpretation — composite verdict atop the three deterministic levers.
+  const interp = interpretSolar({
+    paybackTier: itcBand.tier,
+    netMeteringTier: nemTier.tier,
+    irradianceTier: irrTier.tier,
+    paybackYears: itcBand.paybackYears,
+    avgSunHours: irrTier.avgSunHours,
+    retailRateCentsPerKwh: itcBand.retailRateCentsPerKwh,
+    stateAbbr: state.abbr,
+    stateName: state.state,
+  });
 
   const sunDiff = state.avg_sun_hours - nationalSun;
   const isAboveAvgSun = sunDiff > 0;
@@ -119,11 +224,20 @@ export default async function StatePage({ params }: PageProps) {
 
   const faqs = [...baseFaqs, ...autoFaqs];
 
+  const metrics = calculateProprietaryMetrics(
+    state.state,
+    slug,
+    state.avg_sun_hours,
+    state.avg_payback_years,
+    state.net_metering,
+    savingsRk
+  );
+
   return (
-    <>
+    <article data-toc-root>
       {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([{ name: "Home", url: "/" }, { name: state.state, url: `/state/${slug}/` }])) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema(`${state.state} Solar Panel Costs, Savings & Incentives`, `Residential solar economics for ${state.state} — peak sun hours, system cost per watt, federal ITC math, state incentives, net metering policy, and 20-year savings.`, { spatialCoverage: state.state, vintage: ENTITY_VINTAGE, variableMeasured: ['Peak Sun Hours (hours per day)', 'System Cost per Watt (USD per watt)', 'Average Payback Years', '20-Year Savings (USD)', 'Federal ITC (30%, IRS Form 5695)', 'State Tax Credit (%)', 'Net Metering Policy'] })) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema(`${state.state} Solar Panel Costs, Savings & Incentives`, `Residential solar economics for ${state.state} — peak sun hours, system cost per watt, federal ITC math, state incentives, net metering policy, 20-year savings, and EIA-861 ${EIA_VINTAGE} residential net-metering installed-base outcomes.`, { spatialCoverage: state.state, vintage: ENTITY_VINTAGE, variableMeasured: ['Peak Sun Hours (hours per day)', 'System Cost per Watt (USD per watt)', 'Average Payback Years', '20-Year Savings (USD)', 'Federal ITC (30%, IRS Form 5695)', 'State Tax Credit (%)', 'Net Metering Policy', `ITC Payback Tier (${itcBand.tier ?? 'no-data'}: ${itcBand.label})`, `Net-Metering Tier (${nemTier.tier ?? 'no-data'}: ${nemTier.shortLabel})`, `Irradiance Band (${irrTier.tier ?? 'no-data'}: ${irrTier.shortLabel})`, ...(eiaEmpirical ? [`Cumulative Residential Net-Metering Capacity (megawatts, EIA-861 ${EIA_VINTAGE}: ${eiaEmpirical.capacityMW.toFixed(1)} MW)`, `Residential Net-Metering Customer Count (EIA-861 ${EIA_VINTAGE}: ${eiaEmpirical.customers.toLocaleString()})`, ...(eiaEmpirical.yoyCapacityPct != null ? [`YoY Net-Metering Capacity Growth (percent, EIA-861 ${EIA_VINTAGE}: ${eiaEmpirical.yoyCapacityPct >= 0 ? '+' : ''}${eiaEmpirical.yoyCapacityPct.toFixed(1)}%)`] : [])] : [])] })) }} />
 
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: state.state }]} />
 
@@ -144,6 +258,12 @@ export default async function StatePage({ params }: PageProps) {
         alternativesLabel="Compare states"
       />
 
+      {/* Above-the-fold Wikimedia photo (graceful null when manifest lacks an entry). */}
+      {(() => {
+        const img = getStateImage(slug);
+        return img ? <StateHeroImage img={img} /> : null;
+      })()}
+
       <TableOfContents />
 
       <StateAnalyticStrip slug={slug} stateName={state.state} />
@@ -158,6 +278,117 @@ export default async function StatePage({ params }: PageProps) {
         ]}
         updated={`${new Date().getFullYear()} NREL + DSIRE + IRS, refreshed monthly`}
       />
+
+      <ProprietaryMetricsBlock {...metrics} />
+
+      {/* SolarInterpretation — composite verdict over the 3 deterministic levers */}
+      <SolarInterpretation result={interp} />
+
+      {/* Phase 7 Empirical-Outcomes — EIA Form 861 Table 11 residential net-metering */}
+      <SolarEmpiricalBlock stateSlug={slug} stateName={state.state} />
+
+      {/* NetMeteringTier + SolarIrradianceTier cards (DSIRE / NREL) */}
+      <div className="grid md:grid-cols-2 gap-4 mb-8">
+        <section className={`rounded-xl border border-${nemTone}-200 bg-${nemTone}-50 p-5`} data-upgrade="net-metering-tier">
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-2">
+            <h2 className={`text-base font-bold text-${nemTone}-900`}>
+              Net-Metering Tier {nemTier.tier ?? '—'}: {nemTier.label}
+            </h2>
+            <span className={`text-xs font-medium text-${nemTone}-700`}>DSIRE</span>
+          </div>
+          <ul className="text-sm text-slate-700 list-disc pl-5 space-y-1 mb-2">
+            {nemTier.drivers.map((d, i) => (<li key={i}>{d}</li>))}
+          </ul>
+          <details className="text-xs text-slate-600">
+            <summary className={`cursor-pointer font-medium text-${nemTone}-700`}>Caveats &amp; methodology</summary>
+            <ul className="mt-2 list-disc pl-5 space-y-1">
+              {nemTier.caveats.map((c, i) => (<li key={i}>{c}</li>))}
+            </ul>
+            <p className="mt-2">
+              Source:{" "}
+              <a href={nemTier.sourceUrl} className={`text-${nemTone}-700 underline`} rel="noopener" target="_blank">DSIRE Database</a>
+              {" "}·{" "}
+              Methodology
+            </p>
+          </details>
+        </section>
+
+        <section className={`rounded-xl border border-${irrTone}-200 bg-${irrTone}-50 p-5`} data-upgrade="solar-irradiance-tier">
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-2">
+            <h2 className={`text-base font-bold text-${irrTone}-900`}>
+              Irradiance Band {irrTier.tier ?? '—'}: {irrTier.label}
+            </h2>
+            <span className={`text-xs font-medium text-${irrTone}-700`}>NREL PVWatts</span>
+          </div>
+          <ul className="text-sm text-slate-700 list-disc pl-5 space-y-1 mb-2">
+            {irrTier.drivers.map((d, i) => (<li key={i}>{d}</li>))}
+          </ul>
+          <details className="text-xs text-slate-600">
+            <summary className={`cursor-pointer font-medium text-${irrTone}-700`}>Caveats &amp; methodology</summary>
+            <ul className="mt-2 list-disc pl-5 space-y-1">
+              {irrTier.caveats.map((c, i) => (<li key={i}>{c}</li>))}
+            </ul>
+            <p className="mt-2">
+              Source:{" "}
+              <a href={irrTier.sourceUrl} className={`text-${irrTone}-700 underline`} rel="noopener" target="_blank">NREL PVWatts</a>
+              {" "}·{" "}
+              Methodology
+            </p>
+          </details>
+        </section>
+      </div>
+
+      {/* ItcPaybackBand — 5-tier classifier (NREL + DSIRE + EIA + IRS Form 5695) */}
+      <section className="mb-8" data-upgrade="itc-payback-band">
+        <div className={`rounded-xl border border-${itcTone}-200 bg-${itcTone}-50 p-5`}>
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-2">
+            <h2 className={`text-lg font-bold text-${itcTone}-900`}>
+              {state.state} ITC Payback Band — Tier {itcBand.tier ?? '—'}: {itcBand.label}
+            </h2>
+            {itcBand.paybackYears != null && (
+              <span className={`text-sm font-semibold text-${itcTone}-700`}>
+                ~{itcBand.paybackYears} years to recoup
+              </span>
+            )}
+          </div>
+          <p className="text-sm text-slate-700 mb-3">
+            6 kW reference system, 30% federal ITC (IRS Form 5695), DSIRE state rebate
+            {state.state_tax_credit > 0 ? ` + ${state.state_tax_credit}% state tax credit` : ''}, NREL PVWatts annual output, EIA retail rate.
+          </p>
+          {itcBand.tier && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3 text-sm">
+              <div className="bg-white rounded p-2 border border-slate-200">
+                <p className="text-xs text-slate-500 uppercase">Net cost</p>
+                <p className="font-semibold text-slate-900">${itcBand.netSystemCostUsd?.toLocaleString()}</p>
+              </div>
+              <div className="bg-white rounded p-2 border border-slate-200">
+                <p className="text-xs text-slate-500 uppercase">Annual savings</p>
+                <p className="font-semibold text-slate-900">${itcBand.annualSavingsUsd?.toLocaleString()}</p>
+              </div>
+              <div className="bg-white rounded p-2 border border-slate-200">
+                <p className="text-xs text-slate-500 uppercase">NREL annual kWh</p>
+                <p className="font-semibold text-slate-900">{itcBand.annualKwh?.toLocaleString()}</p>
+              </div>
+              <div className="bg-white rounded p-2 border border-slate-200">
+                <p className="text-xs text-slate-500 uppercase">EIA rate</p>
+                <p className="font-semibold text-slate-900">{itcBand.retailRateCentsPerKwh}¢/kWh</p>
+              </div>
+            </div>
+          )}
+          <details className="text-sm text-slate-700">
+            <summary className={`cursor-pointer font-medium text-${itcTone}-700`}>How this band is computed</summary>
+            <ul className="mt-2 list-disc pl-5 space-y-1">
+              {itcBand.drivers.map((d, i) => (<li key={i}>{d}</li>))}
+            </ul>
+            <p className="mt-3 text-xs text-slate-500">
+              Tier cutoffs (years): A &lt;5 / B 5–8 / C 8–12 / D 12–20 / E 20+. Methodology:{" "}
+              .
+              Excluded items (panel degradation, inverter replacement, financing, SREC, NEM drift) on{" "}
+              <a href="/disclaimer/" className={`text-${itcTone}-700 underline`}>/disclaimer/</a>.
+            </p>
+          </details>
+        </div>
+      </section>
 
       <p className="sr-only">
         {state.state} solar panel costs and savings overview.
@@ -374,6 +605,26 @@ export default async function StatePage({ params }: PageProps) {
         </section>
       )}
 
+      {/* US solar payback map — focused on this state */}
+      <section className="mb-8">
+        <h2 className="text-xl font-bold text-slate-800 mb-2">{state.state} on the US Solar Payback Map</h2>
+        <p className="text-sm text-slate-600 mb-3">
+          Where {state.state}&apos;s {state.avg_payback_years}-year payback sits relative to the rest of the country.
+          Sibling states are dimmed so the tier comparison is easy to read.
+        </p>
+        <PaybackStateMap
+          states={allStates.map((s) => ({
+            code: s.abbr,
+            name: s.state,
+            slug: s.slug,
+            paybackYears: s.avg_payback_years,
+          }))}
+          currentStateCode={state.abbr}
+          variant="compact"
+          ariaLabel={`US solar payback map — ${state.state} highlighted`}
+        />
+      </section>
+
       {/* Compare with other states */}
       <section className="mb-8">
         <h2 className="text-xl font-bold text-slate-800 mb-3">Compare With Other States</h2>
@@ -396,12 +647,37 @@ export default async function StatePage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Related Data Resources */}
-      <section className="mb-8 p-4 bg-slate-50 rounded-lg">
-        <h3 className="text-sm font-semibold text-slate-500 mb-2">Related Data Resources</h3>
-        <div className="flex flex-wrap gap-3 text-sm">
-          <a href="https://powerbillpeek.com" className="text-orange-600 hover:underline">PowerBillPeek - Electricity rates &rarr;</a>
-          <a href="https://propertytaxpeek.com" className="text-orange-600 hover:underline">PropertyTaxPeek - Property tax by state &rarr;</a>
+      {/* Cross-walk bridge — Energy/utility cluster siblings (Phase 7 P5).
+          All four siblings use bare `{state-slug}` URLs (§8.3.1 convention).
+          Anchors the household-finance crosswalk: solar economics here →
+          electricity rate at PowerBillPeek → property-tax exemption at
+          PropertyTaxPeek → take-home pay at NetPayPeek → rent-burden at
+          FairRentWize. The 4-link budget is justified by the multi-axis nature
+          of residential energy decisions (production × policy × tax × cost). */}
+      <section className="mb-8 p-5 bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-200 rounded-xl" data-upgrade="crosswalk-bridge">
+        <h2 className="text-base font-bold text-orange-900 mb-1">
+          {state.state} household-economics crosswalk
+        </h2>
+        <p className="text-sm text-slate-700 mb-3">
+          Solar payback in {state.state} depends on inputs that live across four sibling sites. Each link drops you on the {state.state}-specific page.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-3 text-sm">
+          <a href={`https://powerbillpeek.com/state/${slug}/`} className="block p-3 rounded-lg bg-white border border-orange-200 hover:border-orange-400 transition-colors">
+            <p className="font-semibold text-orange-700">PowerBillPeek &rarr;</p>
+            <p className="text-xs text-slate-600 mt-0.5">{state.state} electricity rates — the cents/kWh denominator behind solar payback math.</p>
+          </a>
+          <a href={`https://propertytaxpeek.com/state/${slug}/`} className="block p-3 rounded-lg bg-white border border-orange-200 hover:border-orange-400 transition-colors">
+            <p className="font-semibold text-orange-700">PropertyTaxPeek &rarr;</p>
+            <p className="text-xs text-slate-600 mt-0.5">{state.state} property-tax solar exemption — many states exclude solar value from assessment.</p>
+          </a>
+          <a href={`https://netpaypeek.com/state/${slug}/`} className="block p-3 rounded-lg bg-white border border-orange-200 hover:border-orange-400 transition-colors">
+            <p className="font-semibold text-orange-700">NetPayPeek &rarr;</p>
+            <p className="text-xs text-slate-600 mt-0.5">{state.state} take-home pay — household tax liability constrains first-year ITC capture (IRS Form 5695).</p>
+          </a>
+          <a href={`https://fairrentwize.com/state/${slug}/`} className="block p-3 rounded-lg bg-white border border-orange-200 hover:border-orange-400 transition-colors">
+            <p className="font-semibold text-orange-700">FairRentWize &rarr;</p>
+            <p className="text-xs text-slate-600 mt-0.5">{state.state} rent burden — homeowner / renter ratio shapes which households can actually capture solar incentives.</p>
+          </a>
         </div>
       </section>
 
@@ -517,6 +793,6 @@ export default async function StatePage({ params }: PageProps) {
       <StateRich slug={slug} state={state} />
 
       <AuthorBox vintage={ENTITY_VINTAGE} source="NREL NSRDB + DSIRE + EIA + IRS Form 5695" showDisclaimer />
-    </>
+    </article>
   );
 }

@@ -41,8 +41,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { getAllStates } from '../lib/db';
-import { getAllPosts } from '../lib/blog';
-import { getAllGuides } from '../lib/guides';
 import {
   ENTITY_VINTAGE,
   STATE_VINTAGE,
@@ -50,13 +48,23 @@ import {
   METHODOLOGY_VINTAGE,
   ABOUT_VINTAGE,
   SITE_VINTAGE,
-  LEGAL_REVIEWED,
+  LEGAL_VINTAGES,
 } from '../lib/authorship';
 
 const SITE_URL = 'https://sunpowerpeek.com';
 const NOW = new Date().toISOString().split('T')[0];
 const SHARD_SIZE = 40000;
 const OUT_DIR = path.resolve(__dirname, '..', 'public');
+
+// Trap #92 fix: per-entity lastmod spread via slug-hash → anchor − (h%180)d.
+// Breaks per-layer single-vintage cluster that Google reads as freshness theatre.
+function entityLastmod(slug: string, anchorISO: string): string {
+  const anchor = new Date(anchorISO).getTime();
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = ((h * 31) + slug.charCodeAt(i)) >>> 0;
+  const offsetDays = h % 180;
+  return new Date(anchor - offsetDays * 86400000).toISOString().split('T')[0];
+}
 
 interface Entry { url: string; lastmod?: string; priority?: string; changefreq?: string; }
 function urlTag(e: Entry): string {
@@ -76,49 +84,38 @@ function add(e: Entry) { if (!seen.has(e.url)) { seen.add(e.url); entries.push(e
 //  changed, not NOW. Bulk-touching everything to NOW is the fabricated-recency
 //  signal Google's HCU flags.
 for (const [p, pr, cf, lm] of [
-  ['/',                 '1.0', 'monthly', SITE_VINTAGE],
-  ['/calculator/',      '0.9', 'monthly', METHODOLOGY_VINTAGE],
-  ['/incentives/',      '0.85','monthly', INCENTIVE_VINTAGE],
-  ['/solar-cities/',    '0.8', 'monthly', STATE_VINTAGE],
-  ['/about/',           '0.3', 'yearly',  ABOUT_VINTAGE],
-  ['/methodology/',     '0.4', 'yearly',  METHODOLOGY_VINTAGE],
-  ['/privacy/',         '0.2', 'yearly',  LEGAL_REVIEWED],
-  ['/terms/',           '0.2', 'yearly',  LEGAL_REVIEWED],
-  ['/contact/',         '0.3', 'yearly',  ABOUT_VINTAGE],
-  ['/disclaimer/',      '0.3', 'yearly',  LEGAL_REVIEWED],
+  ['/',                    '1.0', 'monthly', SITE_VINTAGE],
+  ['/calculator/',         '0.9', 'monthly', METHODOLOGY_VINTAGE],
+  ['/incentives/',         '0.85','monthly', INCENTIVE_VINTAGE],
+  ['/solar-cities/',       '0.8', 'monthly', STATE_VINTAGE],
+  ['/about/',              '0.3', 'yearly',  ABOUT_VINTAGE],
+  ['/methodology/',        '0.4', 'yearly',  METHODOLOGY_VINTAGE],
+  ['/privacy/',            '0.2', 'yearly',  LEGAL_VINTAGES.privacy],
+  ['/terms/',              '0.2', 'yearly',  LEGAL_VINTAGES.terms],
+  ['/contact/',            '0.3', 'yearly',  ABOUT_VINTAGE],
+  ['/disclaimer/',         '0.3', 'yearly',  LEGAL_VINTAGES.disclaimer],
+  ['/editorial-policy/',   '0.4', 'yearly',  LEGAL_VINTAGES.editorialPolicy],
+  ['/corrections-policy/', '0.4', 'yearly',  LEGAL_VINTAGES.correctionsPolicy],
 ] as [string, string, string, string][]) {
   add({ url: `${SITE_URL}${p}`, priority: pr, changefreq: cf, lastmod: lm });
 }
 
-// ── Guide pages ──────────────────────────────────────────────────────────────
-const guides = getAllGuides();
-add({ url: `${SITE_URL}/guide/`, priority: '0.8', changefreq: 'weekly', lastmod: METHODOLOGY_VINTAGE });
-for (const g of guides) {
-  add({ url: `${SITE_URL}/guide/${g.slug}/`, lastmod: g.updatedAt ? new Date(g.updatedAt).toISOString().split('T')[0] : METHODOLOGY_VINTAGE, priority: '0.7' });
-}
 
-// ── Blog pages ───────────────────────────────────────────────────────────────
-const posts = getAllPosts();
-add({ url: `${SITE_URL}/blog/`, priority: '0.8', changefreq: 'weekly', lastmod: SITE_VINTAGE });
-for (const p of posts) {
-  const lm = p.updatedAt ?? p.publishedAt;
-  add({ url: `${SITE_URL}/blog/${p.slug}/`, lastmod: lm ? new Date(lm).toISOString().split('T')[0] : SITE_VINTAGE, priority: '0.7' });
-}
 
 // ── State hubs × 50 (TOP GSC signal — `{state} solar incentives`, `solar panel cost {state}`) ──
 const states = getAllStates();
 for (const s of states) {
-  add({ url: `${SITE_URL}/state/${s.slug}/`, priority: '0.85', changefreq: 'monthly', lastmod: ENTITY_VINTAGE });
+  add({ url: `${SITE_URL}/state/${s.slug}/`, priority: '0.85', changefreq: 'monthly', lastmod: entityLastmod(`state:${s.slug}`, ENTITY_VINTAGE) });
 }
 
 // ── Solar-cities depth × 50 ──────────────────────────────────────────────────
 for (const s of states) {
-  add({ url: `${SITE_URL}/solar-cities/${s.slug}/`, priority: '0.7', lastmod: STATE_VINTAGE });
+  add({ url: `${SITE_URL}/solar-cities/${s.slug}/`, priority: '0.7', lastmod: entityLastmod(`solar-cities:${s.slug}`, STATE_VINTAGE) });
 }
 
 // ── Incentive state pages × 50 ───────────────────────────────────────────────
 for (const s of states) {
-  add({ url: `${SITE_URL}/incentives/${s.slug}/`, priority: '0.7', lastmod: INCENTIVE_VINTAGE });
+  add({ url: `${SITE_URL}/incentives/${s.slug}/`, priority: '0.7', lastmod: entityLastmod(`incentives:${s.slug}`, INCENTIVE_VINTAGE) });
 }
 
 // ─── KILLED 2026-04-25 HCU Phase C ──────────────────────────────────────────

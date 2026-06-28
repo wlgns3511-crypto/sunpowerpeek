@@ -1,0 +1,27 @@
+# SunPowerPeek
+
+> US Solar Panel Costs, Savings & Incentives by State
+
+Compare solar panel costs, savings, and government incentives across all 50 US states and 500+ ZIP codes. Calculate your solar ROI with our free tools.
+
+## Core pages
+- [Methodology and data sources](https://sunpowerpeek.com/methodology/): how every figure is derived, with primary-source citations
+- [About and editorial standards](https://sunpowerpeek.com/about/): authorship and review policy
+
+## Key state
+- [Alabama](https://sunpowerpeek.com/state/alabama/)
+- [Alaska](https://sunpowerpeek.com/state/alaska/)
+- [Arizona](https://sunpowerpeek.com/state/arizona/)
+- [Arkansas](https://sunpowerpeek.com/state/arkansas/)
+- [California](https://sunpowerpeek.com/state/california/)
+- [Colorado](https://sunpowerpeek.com/state/colorado/)
+- [Connecticut](https://sunpowerpeek.com/state/connecticut/)
+- [Delaware](https://sunpowerpeek.com/state/delaware/)
+- [Florida](https://sunpowerpeek.com/state/florida/)
+- [Georgia](https://sunpowerpeek.com/state/georgia/)
+- [Hawaii](https://sunpowerpeek.com/state/hawaii/)
+- [Idaho](https://sunpowerpeek.com/state/idaho/)
+
+## Data
+- Primary sources: NREL PVWatts (NSRDB), DSIRE Incentive Database, US EIA Electric Power, US EIA Form 861 (Net Metering)
+- All figures are derived from these primary sources; see /methodology/ for derivation and vintage.

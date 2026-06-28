@@ -1,0 +1,414 @@
+{
+  "vintage": "2024",
+  "priorVintage": "2023",
+  "fetchedAt": "2026-05-28T13:23:59.996Z",
+  "sourceUrl": "https://www.eia.gov/electricity/data.php#sales",
+  "apiEndpoint": "https://api.eia.gov/v2/electricity/state-electricity-profiles/net-metering/data/",
+  "publisher": "U.S. Energy Information Administration",
+  "survey": "Form EIA-861 Annual Electric Power Industry Report",
+  "table": "State Electricity Profiles, Table 11 (Net Metering)",
+  "methodology": "EIA aggregates post-2019 net-metering data into a single \"All Technologies\" row per (state, sector). Residential net-metering installations are predominantly photovoltaic systems (typically >95%) with minor contributions from small wind. Values reflect cumulative year-end installed nameplate capacity (megawatts) and customer counts as reported by retail electric utilities on Form EIA-861.",
+  "technologyNote": "After 2019, EIA stopped publishing separate Photovoltaic / Wind / Other rows for residential customers; the All Technologies aggregate is used here as a residential PV adoption proxy.",
+  "byState": {
+    "alaska": {
+      "capacityMW": 14.421,
+      "customers": 2771,
+      "priorCapacityMW": 13.029,
+      "priorCustomers": 2527,
+      "yoyCapacityPct": 10.683859083582773,
+      "yoyCustomersPct": 9.65571824297586
+    },
+    "alabama": {
+      "capacityMW": 0.871,
+      "customers": 77,
+      "priorCapacityMW": 0.806,
+      "priorCustomers": 69,
+      "yoyCapacityPct": 8.064516129032251,
+      "yoyCustomersPct": 11.594202898550725
+    },
+    "arkansas": {
+      "capacityMW": 171.861,
+      "customers": 19659,
+      "priorCapacityMW": 144.539,
+      "priorCustomers": 16940,
+      "yoyCapacityPct": 18.902856668442432,
+      "yoyCustomersPct": 16.050767414403776
+    },
+    "arizona": {
+      "capacityMW": 2278.233,
+      "customers": 317286,
+      "priorCapacityMW": 2094.176,
+      "priorCustomers": 295394,
+      "yoyCapacityPct": 8.788993857249833,
+      "yoyCustomersPct": 7.411118709249341
+    },
+    "california": {
+      "capacityMW": 12772.375,
+      "customers": 2100679,
+      "priorCapacityMW": 11692.295,
+      "priorCustomers": 1935523,
+      "yoyCapacityPct": 9.237536343378267,
+      "yoyCustomersPct": 8.53288749345784
+    },
+    "colorado": {
+      "capacityMW": 940.857,
+      "customers": 182390,
+      "priorCapacityMW": 848.032,
+      "priorCustomers": 163649,
+      "yoyCapacityPct": 10.945931285611856,
+      "yoyCustomersPct": 11.451948988383673
+    },
+    "connecticut": {
+      "capacityMW": 800.792,
+      "customers": 103856,
+      "priorCapacityMW": 669.331,
+      "priorCustomers": 90721,
+      "yoyCapacityPct": 19.640656117825113,
+      "yoyCustomersPct": 14.478455925309467
+    },
+    "delaware": {
+      "capacityMW": 108.649,
+      "customers": 14174,
+      "priorCapacityMW": 99.374,
+      "priorCustomers": 12978,
+      "yoyCapacityPct": 9.33342725461389,
+      "yoyCustomersPct": 9.215595623362614
+    },
+    "florida": {
+      "capacityMW": 2585.88,
+      "customers": 290580,
+      "priorCapacityMW": 2342.516,
+      "priorCustomers": 251688,
+      "yoyCapacityPct": 10.389000544713463,
+      "yoyCustomersPct": 15.45246495661295
+    },
+    "georgia": {
+      "capacityMW": 143.133,
+      "customers": 22579,
+      "priorCapacityMW": 97.441,
+      "priorCustomers": 15445,
+      "yoyCapacityPct": 46.89196539444382,
+      "yoyCustomersPct": 46.18970540628035
+    },
+    "hawaii": {
+      "capacityMW": 531.816,
+      "customers": 98447,
+      "priorCapacityMW": 487.877,
+      "priorCustomers": 93671,
+      "yoyCapacityPct": 9.006163438735587,
+      "yoyCustomersPct": 5.098696501585336
+    },
+    "iowa": {
+      "capacityMW": 140.022,
+      "customers": 18554,
+      "priorCapacityMW": 119.271,
+      "priorCustomers": 16042,
+      "yoyCapacityPct": 17.398194028724493,
+      "yoyCustomersPct": 15.658895399576112
+    },
+    "idaho": {
+      "capacityMW": 149.293,
+      "customers": 23062,
+      "priorCapacityMW": 129.778,
+      "priorCustomers": 20442,
+      "yoyCapacityPct": 15.037217402025007,
+      "yoyCustomersPct": 12.816749828783877
+    },
+    "illinois": {
+      "capacityMW": 945.895,
+      "customers": 136536,
+      "priorCapacityMW": 674.069,
+      "priorCustomers": 99091,
+      "yoyCapacityPct": 40.326138718736516,
+      "yoyCustomersPct": 37.78849744174547
+    },
+    "indiana": {
+      "capacityMW": 96.87,
+      "customers": 11166,
+      "priorCapacityMW": 92.028,
+      "priorCustomers": 10485,
+      "yoyCapacityPct": 5.261442169774415,
+      "yoyCustomersPct": 6.494992846924178
+    },
+    "kansas": {
+      "capacityMW": 68.794,
+      "customers": 9665,
+      "priorCapacityMW": 57.251,
+      "priorCustomers": 8055,
+      "yoyCapacityPct": 20.16209323854605,
+      "yoyCustomersPct": 19.987585350713843
+    },
+    "kentucky": {
+      "capacityMW": 77.81,
+      "customers": 10137,
+      "priorCapacityMW": 67.153,
+      "priorCustomers": 8751,
+      "yoyCapacityPct": 15.869730317335035,
+      "yoyCustomersPct": 15.83818992115187
+    },
+    "louisiana": {
+      "capacityMW": 187.857,
+      "customers": 34424,
+      "priorCapacityMW": 169.75,
+      "priorCustomers": 31467,
+      "yoyCapacityPct": 10.666863033873343,
+      "yoyCustomersPct": 9.397146216671434
+    },
+    "massachusetts": {
+      "capacityMW": 1305.841,
+      "customers": 189826,
+      "priorCapacityMW": 1152.893,
+      "priorCustomers": 159518,
+      "yoyCapacityPct": 13.266452307369361,
+      "yoyCustomersPct": 18.999736706829324
+    },
+    "maryland": {
+      "capacityMW": 907.315,
+      "customers": 117422,
+      "priorCapacityMW": 827.027,
+      "priorCustomers": 100184,
+      "yoyCapacityPct": 9.708026461046618,
+      "yoyCustomersPct": 17.206340333785832
+    },
+    "maine": {
+      "capacityMW": 123.144,
+      "customers": 15328,
+      "priorCapacityMW": 84.997,
+      "priorCustomers": 10911,
+      "yoyCapacityPct": 44.88040754379567,
+      "yoyCustomersPct": 40.48208230226377
+    },
+    "michigan": {
+      "capacityMW": 159.249,
+      "customers": 26544,
+      "priorCapacityMW": 141.469,
+      "priorCustomers": 23917,
+      "yoyCapacityPct": 12.568124465430591,
+      "yoyCustomersPct": 10.983819040849605
+    },
+    "minnesota": {
+      "capacityMW": 196.734,
+      "customers": 23858,
+      "priorCapacityMW": 163.534,
+      "priorCustomers": 19850,
+      "yoyCapacityPct": 20.301588660462055,
+      "yoyCustomersPct": 20.191435768261965
+    },
+    "missouri": {
+      "capacityMW": 277.161,
+      "customers": 30816,
+      "priorCapacityMW": 247.21,
+      "priorCustomers": 26992,
+      "yoyCapacityPct": 12.115610209942961,
+      "yoyCustomersPct": 14.167160640189685
+    },
+    "mississippi": {
+      "capacityMW": 9.856,
+      "customers": 1790,
+      "priorCapacityMW": 6.59,
+      "priorCustomers": 1182,
+      "yoyCapacityPct": 49.55993930197269,
+      "yoyCustomersPct": 51.438240270727576
+    },
+    "montana": {
+      "capacityMW": 67.687,
+      "customers": 9735,
+      "priorCapacityMW": 46.771,
+      "priorCustomers": 6929,
+      "yoyCapacityPct": 44.72001881507771,
+      "yoyCustomersPct": 40.496464136239
+    },
+    "north-carolina": {
+      "capacityMW": 425.699,
+      "customers": 58743,
+      "priorCapacityMW": 361.537,
+      "priorCustomers": 52341,
+      "yoyCapacityPct": 17.747007913436256,
+      "yoyCustomersPct": 12.231329168338396
+    },
+    "north-dakota": {
+      "capacityMW": 1.323,
+      "customers": 250,
+      "priorCapacityMW": 1.09,
+      "priorCustomers": 240,
+      "yoyCapacityPct": 21.376146788990813,
+      "yoyCustomersPct": 4.166666666666666
+    },
+    "nebraska": {
+      "capacityMW": 27.372,
+      "customers": 3697,
+      "priorCapacityMW": 25.212,
+      "priorCustomers": 3423,
+      "yoyCapacityPct": 8.567348881485009,
+      "yoyCustomersPct": 8.004674262342974
+    },
+    "new-hampshire": {
+      "capacityMW": 181.93,
+      "customers": 22585,
+      "priorCapacityMW": 152.077,
+      "priorCustomers": 19215,
+      "yoyCapacityPct": 19.63018733930838,
+      "yoyCustomersPct": 17.5383814728077
+    },
+    "new-jersey": {
+      "capacityMW": 1383.125,
+      "customers": 201596,
+      "priorCapacityMW": 1268.34,
+      "priorCustomers": 182456,
+      "yoyCapacityPct": 9.050018133938856,
+      "yoyCustomersPct": 10.490200377077214
+    },
+    "new-mexico": {
+      "capacityMW": 333.428,
+      "customers": 62069,
+      "priorCapacityMW": 304.472,
+      "priorCustomers": 57433,
+      "yoyCapacityPct": 9.510234110197331,
+      "yoyCustomersPct": 8.072014347152335
+    },
+    "nevada": {
+      "capacityMW": 1021.214,
+      "customers": 134326,
+      "priorCapacityMW": 853.233,
+      "priorCustomers": 115145,
+      "yoyCapacityPct": 19.687588267214245,
+      "yoyCustomersPct": 16.658126709800687
+    },
+    "new-york": {
+      "capacityMW": 1579.913,
+      "customers": 227703,
+      "priorCapacityMW": 1416.884,
+      "priorCustomers": 204507,
+      "yoyCapacityPct": 11.506164230805062,
+      "yoyCustomersPct": 11.342399037685752
+    },
+    "ohio": {
+      "capacityMW": 206.37,
+      "customers": 27793,
+      "priorCapacityMW": 167.978,
+      "priorCustomers": 22692,
+      "yoyCapacityPct": 22.85537391801307,
+      "yoyCustomersPct": 22.479287854750574
+    },
+    "oklahoma": {
+      "capacityMW": 135.053,
+      "customers": 19894,
+      "priorCapacityMW": 106.639,
+      "priorCustomers": 15789,
+      "yoyCapacityPct": 26.645036056227084,
+      "yoyCustomersPct": 25.999113306732536
+    },
+    "oregon": {
+      "capacityMW": 334.278,
+      "customers": 52939,
+      "priorCapacityMW": 279.864,
+      "priorCustomers": 45391,
+      "yoyCapacityPct": 19.443015178801147,
+      "yoyCustomersPct": 16.628847128285344
+    },
+    "pennsylvania": {
+      "capacityMW": 657.833,
+      "customers": 81937,
+      "priorCapacityMW": 551.761,
+      "priorCustomers": 68894,
+      "yoyCapacityPct": 19.22426557875602,
+      "yoyCustomersPct": 18.93198246581705
+    },
+    "rhode-island": {
+      "capacityMW": 106.015,
+      "customers": 17335,
+      "priorCapacityMW": 98.06,
+      "priorCustomers": 14045,
+      "yoyCapacityPct": 8.112380175402812,
+      "yoyCustomersPct": 23.424706301174794
+    },
+    "south-carolina": {
+      "capacityMW": 303.228,
+      "customers": 40305,
+      "priorCapacityMW": 288.041,
+      "priorCustomers": 38269,
+      "yoyCapacityPct": 5.272513288038859,
+      "yoyCustomersPct": 5.320233086832685
+    },
+    "south-dakota": {
+      "capacityMW": 3.721,
+      "customers": 489,
+      "priorCapacityMW": 2.324,
+      "priorCustomers": 323,
+      "yoyCapacityPct": 60.11187607573151,
+      "yoyCustomersPct": 51.39318885448917
+    },
+    "tennessee": {
+      "capacityMW": 0.601,
+      "customers": 87,
+      "priorCapacityMW": 0.531,
+      "priorCustomers": 78,
+      "yoyCapacityPct": 13.182674199623342,
+      "yoyCustomersPct": 11.538461538461538
+    },
+    "texas": {
+      "capacityMW": 1002.145,
+      "customers": 137209,
+      "priorCapacityMW": 889.073,
+      "priorCustomers": 124052,
+      "yoyCapacityPct": 12.71796579133547,
+      "yoyCustomersPct": 10.60603617837681
+    },
+    "utah": {
+      "capacityMW": 481.581,
+      "customers": 81212,
+      "priorCapacityMW": 430.026,
+      "priorCustomers": 73188,
+      "yoyCapacityPct": 11.988809978931508,
+      "yoyCustomersPct": 10.96354593649232
+    },
+    "virginia": {
+      "capacityMW": 513.987,
+      "customers": 69622,
+      "priorCapacityMW": 439.432,
+      "priorCustomers": 58583,
+      "yoyCapacityPct": 16.966220029492607,
+      "yoyCustomersPct": 18.843350460031065
+    },
+    "vermont": {
+      "capacityMW": 103.8,
+      "customers": 9466,
+      "priorCapacityMW": 106.381,
+      "priorCustomers": 10131,
+      "yoyCapacityPct": -2.426185127043366,
+      "yoyCustomersPct": -6.5640114500049345
+    },
+    "washington": {
+      "capacityMW": 430.722,
+      "customers": 61047,
+      "priorCapacityMW": 373.065,
+      "priorCustomers": 52326,
+      "yoyCapacityPct": 15.454947529250932,
+      "yoyCustomersPct": 16.666666666666664
+    },
+    "wisconsin": {
+      "capacityMW": 138.182,
+      "customers": 19222,
+      "priorCapacityMW": 108.687,
+      "priorCustomers": 15858,
+      "yoyCapacityPct": 27.137560149787916,
+      "yoyCustomersPct": 21.213267751292722
+    },
+    "west-virginia": {
+      "capacityMW": 32.637,
+      "customers": 3648,
+      "priorCapacityMW": 26.439,
+      "priorCustomers": 3035,
+      "yoyCapacityPct": 23.442641552252354,
+      "yoyCustomersPct": 20.197693574958812
+    },
+    "wyoming": {
+      "capacityMW": 19.095,
+      "customers": 3119,
+      "priorCapacityMW": 15.024,
+      "priorCustomers": 2560,
+      "yoyCapacityPct": 27.096645367412144,
+      "yoyCustomersPct": 21.8359375
+    }
+  }
+}

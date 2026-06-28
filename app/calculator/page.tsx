@@ -82,6 +82,25 @@ export default function CalculatorPage() {
           <li><strong>System size</strong>: Larger systems produce more energy but cost more upfront.</li>
           <li><strong>Roof orientation</strong>: South-facing roofs in the Northern Hemisphere are ideal.</li>
         </ul>
+
+        <h2 className="text-xl font-bold text-slate-800 mt-8 mb-3" data-upgrade="itc-payback-band-methodology">ItcPaybackBand Methodology</h2>
+        <p className="text-sm text-slate-600">
+          Every state page surfaces an{" "}
+          ItcPaybackBand{" "}
+          — a 5-tier deterministic classifier (A under 5 years / B 5–8 years / C 8–12 years /
+          D 12–20 years / E 20+ years) anchored to the same four authorities the calculator above pulls from:
+        </p>
+        <ul className="list-disc pl-5 space-y-1 text-sm text-slate-600 mt-2">
+          <li><strong>NREL PVWatts</strong> — annual kWh production for a 6 kW reference system at state-average peak sun hours.</li>
+          <li><strong>DSIRE</strong> — state rebate and state tax credit snapshot (rendered net of installed cost).</li>
+          <li><strong>EIA</strong> — most-recent published state retail electricity rate, used to price displaced kWh.</li>
+          <li><strong>IRS Form 5695</strong> — 30% Residential Clean Energy Credit under the Inflation Reduction Act through tax year 2032.</li>
+        </ul>
+        <p className="text-sm text-slate-600 mt-2">
+          Payback years = (installed cost − federal ITC − DSIRE rebate − state credit) / (NREL annual kWh × EIA rate).
+          The band intentionally excludes panel degradation, inverter replacement, financing, SREC value, and net-metering
+          policy drift — see <a href="/disclaimer/" className="text-orange-700 underline">/disclaimer/</a> for the full list.
+        </p>
       </section>
 
       <FreshnessTag source="NREL, DSIRE, EIA" />

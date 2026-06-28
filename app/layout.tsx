@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { UpgradeAnalytics } from "@/components/upgrades/UpgradeAnalytics";
+import RelatedSites from "@/components/RelatedSites";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -92,8 +93,6 @@ export default function RootLayout({
               <a href="/calculator/" className="hover:text-orange-600">Calculator</a>
               <a href="/incentives/" className="hover:text-orange-600">Incentives</a>
               <a href="/solar-cities/" className="hover:text-orange-600">Cities</a>
-              <a href="/guide/" className="hover:text-orange-600">Guides</a>
-              <a href="/blog/" className="hover:text-orange-600">Articles</a>
             </nav>
           </div>
         </header>
@@ -106,6 +105,12 @@ export default function RootLayout({
             <p className="mt-2">
               <a href="/about/" className="hover:text-orange-600">About</a>
               {" | "}
+              <a href="/methodology/" className="hover:text-orange-600">Methodology</a>
+              {" | "}
+              <a href="/editorial-policy/" className="hover:text-orange-600">Editorial Policy</a>
+              {" | "}
+              <a href="/corrections-policy/" className="hover:text-orange-600">Corrections</a>
+              {" | "}
               <a href="/privacy/" className="hover:text-orange-600">Privacy</a>
               {" | "}
               <a href="/terms/" className="hover:text-orange-600">Terms</a>
@@ -114,15 +119,7 @@ export default function RootLayout({
               {" | "}
               <a href="/contact/" className="hover:text-orange-600">Contact</a>
             </p>
-            <div className="mt-4 pt-4 border-t border-slate-100">
-              <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">Free Data Tools</p>
-              <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
-                <a href="https://powerbillpeek.com" className="hover:text-orange-600" rel="nofollow noopener">Power Bills</a>
-                <a href="https://calcpeek.com" className="hover:text-orange-600" rel="nofollow noopener">Calculators</a>
-                <a href="https://costbycity.com" className="hover:text-orange-600" rel="nofollow noopener">Cost of Living</a>
-                <a href="https://propertytaxpeek.com" className="hover:text-orange-600" rel="nofollow noopener">Property Tax</a>
-              </div>
-            </div>
+            <RelatedSites currentSite="SunPowerPeek" accentClass="hover:text-orange-600" label="Free Data Tools" />
             <p className="mt-4 text-xs text-slate-400">Helping homeowners understand solar potential and energy savings.</p>
             <p className="mt-2">
               &copy; {new Date().getFullYear()} {SITE_NAME}. Independent and unbiased.

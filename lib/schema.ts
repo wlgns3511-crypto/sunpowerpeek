@@ -15,6 +15,14 @@ type DatasetSchemaOpts = {
   spatialCoverage?: string;
   variableMeasured?: string[];
   vintage?: string;
+  /**
+   * Legacy single-creator hint. v7 Phase 7 Trap #117 fix promotes Dataset.creator
+   * to an array of every SOURCE_AUTHORITIES org, so a single index no longer
+   * mutually-excludes the others. Retained for back-compat — when set, the
+   * named source moves to index 0 of the creator array (primary origin), with
+   * the remaining sources following in original order.
+   */
+  creatorIndex?: number;
 };
 
 export function datasetSchema(
@@ -38,13 +46,32 @@ export function datasetSchema(
     : description;
   const dateModified = isLegacyCall ? nameOrReviewedAt : (opts.vintage ?? ENTITY_VINTAGE);
 
+  // Trap #105 + Trap #117 honest attribution: schema.org Dataset.creator = the
+  // organizations that *created the underlying data*. SunPowerPeek aggregates
+  // and computes a 3-axis composite (payback × net-metering × irradiance) over
+  // NREL PVWatts + DSIRE + EIA + IRS Form 5695 — no single one of these can
+  // answer the composite question alone, so the schema reflects that with a
+  // multi-creator array (Trap #117 fix). The creatorIndex hint, if set, hoists
+  // the named source to position 0 (primary origin) so the principal authority
+  // for a given page stays first in the JSON-LD; the remaining sources follow.
+  // Publisher stays DataPeek; sourceOrganization still enumerates the full list
+  // (back-compat with consumers reading either field); reviewedBy is editorial.
+  const primaryIdx = Math.min(Math.max(opts.creatorIndex ?? 0, 0), SOURCE_AUTHORITIES.length - 1);
+  const creatorOrdered = [
+    SOURCE_AUTHORITIES[primaryIdx],
+    ...SOURCE_AUTHORITIES.filter((_, i) => i !== primaryIdx),
+  ];
   return {
     '@context': 'https://schema.org',
     '@type': 'Dataset',
     name,
     description: desc,
     url: SITE_URL,
-    creator: PUBLISHER_NODE,
+    creator: creatorOrdered.map(s => ({ // SOURCE_AUTHORITIES
+      '@type': 'Organization',
+      name: s.name,
+      url: s.url,
+    })),
     publisher: PUBLISHER_NODE,
     sourceOrganization: SOURCE_AUTHORITIES.map(s => ({
       '@type': 'Organization',

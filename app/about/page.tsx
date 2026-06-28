@@ -152,13 +152,64 @@ export default function AboutPage() {
         changes to the user-facing numbers.
       </p>
 
+      <h2 className="text-xl font-semibold mt-8 mb-3">Editorial reading layers atop the four authorities</h2>
+      <p>
+        On every state page, SunPowerPeek renders four editorial reading
+        layers above the raw NREL PVWatts, DSIRE Database, EIA monthly
+        retail-rate, and IRS Form 5695 inputs. The ItcPaybackBand is a
+        five-tier classifier (A under five years through E twenty plus
+        years) that collapses the NREL PVWatts production × EIA retail
+        rate savings stream into the years-to-recoup the net post-IRS-ITC
+        system cost. The NetMeteringTier is a five-tier classifier (T1
+        full retail-rate banking through T5 no statutory state policy)
+        that decodes the DSIRE-published state net-metering framework
+        with explicit state-PUC-anchored hardcoded memberships for
+        California (Tier T2 post-NEM-3.0), Hawaii and Nevada (Tier T3
+        net-billing), and Kentucky, Tennessee, West Virginia (Tier T5
+        no statutory state policy). The SolarIrradianceTier is a
+        five-band classifier (A 6.0 plus through E under 4.0 sun
+        hours/day) over the NREL PVWatts NSRDB peak-sun-hours aggregate.
+        The SolarInterpretation is a composite verdict that synthesizes
+        the three deterministic levers into one of eight
+        decision-framing branches, with honest-null data-incomplete
+        fallback when two or more inputs are unverified in the
+        NREL / DSIRE / EIA / IRS Form 5695 snapshot.
+      </p>
+
+      <h2 className="text-xl font-semibold mt-8 mb-3">Honest attribution chain</h2>
+      <p>
+        Every number on SunPowerPeek traces to one of four named
+        upstream authorities. NREL PVWatts peak-sun-hours and the
+        NSRDB typical-meteorological-year aggregate back annual
+        production figures. DSIRE state-rebate and state-tax-credit
+        snapshots back the state-incentive dollar amounts. The EIA
+        monthly retail electricity rate publication backs the
+        cents-per-kWh denominator. IRS Form 5695 backs the 30% federal
+        Investment Tax Credit applied under the Inflation Reduction Act
+        through 2032. Schema.org Dataset.creator on every state page
+        identifies the source authority that dominantly originated the
+        data (NREL for state / ZIP / methodology surfaces; DSIRE for
+        net-metering / incentive-anchored surfaces). The reviewedBy
+        property identifies SunPowerPeek Editorial Team as the layer
+        author. Publisher is DataPeek Research Network. The full chain
+        is documented on{" "}
+        <a href="/editorial-policy/" className="text-orange-600 hover:underline">/editorial-policy/</a>.
+      </p>
+
       <h2 className="text-xl font-semibold mt-8 mb-3">Corrections and contact</h2>
       <p>
-        If a published NREL, DSIRE, EIA, or IRS figure disagrees with what
-        you see here, we want to know first.
+        If a published NREL, DSIRE, EIA, or IRS Form 5695 figure
+        disagrees with what you see here, we want to know first. The
+        NREL PVWatts NSRDB, DSIRE Database, EIA monthly retail-rate
+        publication, and IRS Form 5695 instruction cycle are each
+        reviewed on their own cadence — NREL on NSRDB rotation, DSIRE
+        on continuous maintenance, EIA monthly, IRS Form 5695 annually.
         Visit our <a href="/contact" className="text-orange-600 hover:underline">Contact page</a> with
         the source URL and the page you saw the discrepancy on, and we
         will fix it on the next refresh cycle (usually within a week).
+        Reclassifications across ItcPaybackBand, NetMeteringTier, and
+        SolarIrradianceTier are documented on{" "}
+        <a href="/corrections-policy/" className="text-orange-600 hover:underline">/corrections-policy/</a>.
       </p>
 
       <AuthorBox vintage={ABOUT_VINTAGE} source="NREL NSRDB + DSIRE + EIA + IRS Form 5695" showDisclaimer />

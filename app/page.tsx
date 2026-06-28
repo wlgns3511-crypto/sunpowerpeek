@@ -9,6 +9,7 @@ import { FreshnessTag } from "@/components/FreshnessTag";
 import { TrustMetaStrip } from "@/components/TrustMetaStrip";
 import { AuthorBox } from "@/components/AuthorBox";
 import { ENTITY_VINTAGE, SITE_VINTAGE } from "@/lib/authorship";
+import { PaybackStateMap } from "@/components/PaybackStateMap";
 
 export const metadata: Metadata = {
   title: "US Solar Panel Costs, Savings & Incentives by State | SunPowerPeek",
@@ -84,6 +85,25 @@ export default function HomePage() {
       />
 
       <AdSlot id="2345678901" />
+
+      {/* US solar payback choropleth */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold text-slate-800 mb-2">US Solar Payback at a Glance</h2>
+        <p className="text-sm text-slate-600 mb-3">
+          Residential solar payback years per state (EIA retail rate × NREL PVWatts × DSIRE × IRS Form 5695 30% ITC),
+          shaded by a 5-band A–E classifier mirroring our lib/itc-payback-band.ts logic. National median sits in the
+          {' '}{avgPayback}-year band.
+        </p>
+        <PaybackStateMap
+          states={states.map((s) => ({
+            code: s.abbr,
+            name: s.state,
+            slug: s.slug,
+            paybackYears: s.avg_payback_years,
+          }))}
+          variant="full"
+        />
+      </section>
 
       {/* State grid with sun hours color */}
       <section className="mb-12">

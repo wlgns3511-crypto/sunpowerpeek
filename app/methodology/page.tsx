@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { TrustMetaStrip } from "@/components/TrustMetaStrip";
 import { AuthorBox } from "@/components/AuthorBox";
 import { METHODOLOGY_VINTAGE } from "@/lib/authorship";
+import { datasetSchema } from "@/lib/schema";
+import { PaybackStateMap } from "@/components/PaybackStateMap";
+import { getAllStates } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Our Methodology — How SunPowerPeek Builds Its Solar Data",
@@ -12,8 +15,29 @@ export const metadata: Metadata = {
 };
 
 export default function MethodologyPage() {
+  const states = getAllStates();
   return (
     <article className="prose prose-slate max-w-3xl mx-auto">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema(
+        'SunPowerPeek Methodology — NREL × DSIRE × EIA × IRS Form 5695 with ItcPaybackBand, NetMeteringTier, SolarIrradianceTier, SolarInterpretation Editorial Layers',
+        'Methodology for the US residential solar dataset SunPowerPeek publishes — NREL PVWatts NSRDB peak-sun-hours, DSIRE state incentive snapshots, EIA monthly retail-rate publications, IRS Form 5695 30% federal Investment Tax Credit, and four editorial reading layers (ItcPaybackBand 5-tier payback economics, NetMeteringTier 5-tier DSIRE export-credit decoder, SolarIrradianceTier 5-band NREL PVWatts irradiance classifier, SolarInterpretation composite verdict).',
+        {
+          spatialCoverage: 'United States',
+          vintage: METHODOLOGY_VINTAGE,
+          creatorIndex: 0,
+          variableMeasured: [
+            'NREL PVWatts Peak Sun Hours (hours per day)',
+            'DSIRE State Rebate (USD)',
+            'DSIRE State Tax Credit (percent of installed cost)',
+            'EIA Retail Rate (cents per kWh)',
+            'IRS Form 5695 Federal ITC (percent, 30% under IRA)',
+            'ItcPaybackBand Tier (A through E, payback years)',
+            'NetMeteringTier Tier (T1 through T5, DSIRE export-credit framework)',
+            'SolarIrradianceTier Band (A through E, NSRDB peak-sun-hours)',
+            'SolarInterpretation DecisionFraming (8 branches plus data-incomplete)',
+          ],
+        }
+      )) }} />
       <h1>Our Methodology</h1>
       <div className="not-prose">
         <TrustMetaStrip />
@@ -24,6 +48,20 @@ export default function MethodologyPage() {
         savings, and incentive figures come from, and what they cannot
         tell you about your specific roof.
       </p>
+
+      <h2>Geographic coverage at a glance</h2>
+      <div className="not-prose">
+        <PaybackStateMap
+          states={states.map((s) => ({
+            code: s.abbr,
+            name: s.state,
+            slug: s.slug,
+            paybackYears: s.avg_payback_years,
+          }))}
+          variant="full"
+          caption={`Verbatim render of the states.avg_payback_years column (${states.length} state rows). Each row is computed from EIA Form 861 retail rate × NREL PVWatts annual kWh × DSIRE state rebates × IRS Form 5695 30% federal ITC, mirroring lib/itc-payback-band.ts. Tier cutoffs (5 / 8 / 12 / 20 years) are deterministic markers, not regulatory cutoffs. State boundaries: US Census TIGER/Line via us-atlas/states-10m (public domain). DC has no residential row in the upstream dataset we ingest, so the choropleth covers 50 states only. Excludes panel degradation, inverter replacement, financing, SREC value, and net-metering policy drift — see /disclaimer/.`}
+        />
+      </div>
 
       <h2>Primary sources</h2>
       <ul>
@@ -149,6 +187,53 @@ export default function MethodologyPage() {
           Payback years = net cost / annual savings.
         </li>
       </ol>
+
+      <h2>Four editorial reading layers atop NREL × DSIRE × EIA × IRS Form 5695</h2>
+      <p>
+        Every SunPowerPeek state page renders four editorial reading
+        layers above the raw NREL / DSIRE / EIA / IRS Form 5695 inputs.
+        Each layer is deterministic — given the same source inputs, the
+        layer output is reproducible. Each layer is an editorial reading
+        layer, not a binding quote or a tax-credit opinion.
+      </p>
+      <h3>ItcPaybackBand (0차 baseline, 5-tier)</h3>
+      <p>
+        Collapses the NREL PVWatts annual production × EIA retail rate
+        savings stream into the years-to-recoup the net post-incentive
+        system cost. Tiers: A under 5 years, B 5 to 8, C 8 to 12, D 12
+        to 20, E 20 plus. Full methodology at{" "}
+        .
+      </p>
+      <h3>NetMeteringTier (1차 NEW, 5-tier DSIRE decoder)</h3>
+      <p>
+        Classifies the DSIRE-published state net-metering framework into
+        five tiers: T1 full retail-rate banking, T2 avoided-cost / TOU
+        hybrid post NEM 3.0, T3 net billing / capacity-capped tariff, T4
+        partial / utility-discretion policy, T5 no statutory state
+        policy. T2 hardcodes California; T3 hardcodes Hawaii and Nevada;
+        T5 hardcodes Kentucky, Tennessee, West Virginia. Full
+        methodology at{" "}
+        .
+      </p>
+      <h3>SolarIrradianceTier (1차 NEW, 5-band NREL PVWatts classifier)</h3>
+      <p>
+        Classifies the NREL PVWatts NSRDB peak-sun-hours-per-day into
+        five bands: A ≥ 6.0 sun hours (Desert Southwest / Mountain), B
+        5.0 to 5.9 (Southwest / Southeast), C 4.5 to 4.9 (Central /
+        Plains), D 4.0 to 4.4 (Mid-Atlantic / Midwest), E under 4.0
+        (Pacific Northwest / Northeast / Alaska). Full methodology at{" "}
+        .
+      </p>
+      <h3>SolarInterpretation (composite verdict, 8 decision-framing branches)</h3>
+      <p>
+        Synthesizes the three deterministic levers above (payback ×
+        net-metering × irradiance) into one of eight decision-framing
+        branches with a four-paragraph deterministic prose verdict.
+        Honest-null contract: if two or more inputs are null, the
+        verdict is data-incomplete with no fallback guess. Full
+        methodology at{" "}
+        .
+      </p>
 
       <h2>Update frequency</h2>
       <p>

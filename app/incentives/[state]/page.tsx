@@ -9,6 +9,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { SourcedIncentiveCard } from "@/components/state/SourcedIncentiveCard";
+import { PaybackStateMap } from "@/components/PaybackStateMap";
 import {
   getIncentiveBundle,
   getSunResource,
@@ -52,6 +53,7 @@ export default async function StateIncentivesPage({ params }: PageProps) {
   const state = getStateBySlug(stateSlug);
   if (!state) notFound();
 
+  const allStates = getAllStates();
   const bundle = getIncentiveBundle(stateSlug);
   const sun = getSunResource(stateSlug);
   const payback = getSolarPayback(stateSlug);
@@ -170,6 +172,27 @@ export default async function StateIncentivesPage({ params }: PageProps) {
           )}
         </section>
       )}
+
+      {/* US solar payback map — focused on this state for incentive context */}
+      <section className="mb-8">
+        <h2 className="text-xl font-bold text-slate-800 mb-2">{state.state} on the US Solar Payback Map</h2>
+        <p className="text-sm text-slate-600 mb-3">
+          {state.state}&apos;s {state.avg_payback_years}-year baseline payback (after the 30% federal ITC) relative to
+          the rest of the country. Sibling states are dimmed so the tier comparison is easy to read — state-specific
+          incentives shown below stack on top of this baseline.
+        </p>
+        <PaybackStateMap
+          states={allStates.map((s) => ({
+            code: s.abbr,
+            name: s.state,
+            slug: s.slug,
+            paybackYears: s.avg_payback_years,
+          }))}
+          currentStateCode={state.abbr}
+          variant="compact"
+          ariaLabel={`US solar payback map — ${state.state} highlighted (incentive context)`}
+        />
+      </section>
 
       {/* Federal incentives */}
       <section className="mb-8">

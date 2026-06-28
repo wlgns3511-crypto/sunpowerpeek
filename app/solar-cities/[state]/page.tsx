@@ -4,16 +4,21 @@ import { getAllStates, getStateBySlug, getZipsByState } from "@/lib/db";
 import { getSunResource, getZipIrradianceCoverage, getSolarPayback, getIncentiveBundle } from "@/lib/state-facts";
 import { buildStateCommentary } from "@/lib/state-commentary";
 import { formatCurrency, formatSunHours, getPaybackColor } from "@/lib/format";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { AdSlot } from "@/components/AdSlot";
 import { FreshnessTag } from "@/components/FreshnessTag";
 import { AuthorBox } from "@/components/AuthorBox";
-import { STATE_VINTAGE } from "@/lib/authorship";
+import { STATE_VINTAGE, SOURCE_AUTHORITIES } from "@/lib/authorship";
 import { EditorNote } from "@/components/EditorNote";
 import { DidYouKnow } from "@/components/DidYouKnow";
 import { DataSourceBadge } from "@/components/DataSourceBadge";
 import { CrossSiteLinks } from "@/components/CrossSiteLinks";
+import { TrustBlock } from "@/components/upgrades/TrustBlock";
+import { TableOfContents } from "@/components/upgrades/TableOfContents";
+import { InsightBlock } from "@/components/upgrades/InsightBlock";
+import { RelatedEntities } from "@/components/upgrades/RelatedEntities";
+import { FAQ } from "@/components/FAQ";
 
 interface PageProps {
   params: Promise<{ state: string }>;
@@ -62,6 +67,46 @@ export default async function SolarCitiesPage({ params }: PageProps) {
   const avgSun = zips.length > 0 ? zips.reduce((s, z) => s + z.peak_sun_hours, 0) / zips.length : state.avg_sun_hours;
   const avgSavings = zips.length > 0 ? zips.reduce((s, z) => s + z.annual_savings, 0) / zips.length : state.avg_20yr_savings / 20;
 
+  const insights = [
+    {
+      text: `${state.state} has ${zips.length} tracked locations with an average peak sun exposure of ${avgSun.toFixed(2)} hours per day.`,
+      sentiment: "neutral" as const,
+    },
+    {
+      text: `Based on regional utility rates, homeowners in the state save an average of ${formatCurrency(Math.round(avgSavings))} annually, yielding an average payback period of ${state.avg_payback_years} years.`,
+      sentiment: (state.avg_payback_years <= 8 ? "positive" : state.avg_payback_years <= 11 ? "neutral" : "negative") as "positive" | "neutral" | "negative",
+    },
+    {
+      text: bestZip
+        ? `The top-performing solar location in the state is ${bestZip.city} (${bestZip.zip_code}), where annual savings reach up to ${formatCurrency(bestZip.annual_savings)}/year.`
+        : `Solar panel systems in ${state.state} qualify for the 30% federal tax credit (IRS Form 5695), significantly reducing the net system cost.`,
+      sentiment: "positive" as const,
+    },
+  ];
+
+  const allStates = getAllStates();
+  const relatedStates = allStates.filter(s => s.slug !== stateSlug).slice(0, 6);
+  const relatedItems = relatedStates.map(s => ({
+    name: `${s.state} Solar Cities`,
+    href: `/solar-cities/${s.slug}/`,
+    stat: `${s.avg_payback_years} yr payback`,
+  }));
+
+  const faqs = [
+    {
+      question: `Is solar worth it in ${state.state}?`,
+      answer: `Yes, solar panel systems in ${state.state} are generally worth it. Homeowners save an average of ${formatCurrency(Math.round(avgSavings))} per year, with typical system payback achieved in ${state.avg_payback_years} years.`,
+    },
+    {
+      question: `What is the average cost of solar in ${state.state}?`,
+      answer: `The average cost of a standard 6kW solar system in ${state.state} is ${bestZip ? formatCurrency(bestZip.system_cost_6kw) : "$15,000 to $18,000"} before applying the 30% federal Investment Tax Credit (ITC).`,
+    },
+    {
+      question: `How many peak sun hours does ${state.state} get?`,
+      answer: `${state.state} receives an average of ${formatSunHours(avgSun)} peak sun hours per day, providing ample solar irradiance for residential generation.`,
+    },
+  ];
+
   return (
     <>
       <script
@@ -77,6 +122,14 @@ export default async function SolarCitiesPage({ params }: PageProps) {
           }),
         }}
       />
+      {faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqSchema(faqs)),
+          }}
+        />
+      )}
 
       <Breadcrumb
         items={[
@@ -104,6 +157,18 @@ export default async function SolarCitiesPage({ params }: PageProps) {
           </>
         )}
       </p>
+
+      <TrustBlock
+        sources={SOURCE_AUTHORITIES.map(s => ({ name: s.name, url: s.url }))}
+        updated={STATE_VINTAGE}
+      />
+
+      <TableOfContents />
+
+      <InsightBlock
+        entityName={state.state}
+        insights={insights}
+      />
 
       <EditorNote note={`Solar potential varies significantly across ${state.state}. Peak sun hours, local incentives, and electricity rates all influence your real-world payback period. We recommend comparing at least 3 quotes from local installers.`} />
 
@@ -245,6 +310,14 @@ export default async function SolarCitiesPage({ params }: PageProps) {
           </a>
         </div>
       </section>
+
+      <RelatedEntities
+        entityName={state.state}
+        items={relatedItems}
+        heading="Solar Guides for Other States"
+      />
+
+      <FAQ items={faqs} />
 
       <DataSourceBadge sources={[
         { name: "NREL", url: "https://www.nrel.gov" },

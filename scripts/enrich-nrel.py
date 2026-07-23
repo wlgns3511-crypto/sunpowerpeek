@@ -19,7 +19,9 @@ import time
 import urllib.request
 import urllib.error
 
-NREL_API_KEY = "KQsvwDH895xuKyOzvTaoxrrhCTqZ2hLEqIKlMEvx"
+NREL_API_KEY = os.environ.get("NREL_API_KEY", "")
+if not NREL_API_KEY:
+    sys.exit("NREL_API_KEY not set. Run: NREL_API_KEY=... python scripts/enrich-nrel.py")
 NREL_URL = "https://developer.nrel.gov/api/solar/solar_resource/v1.json"
 
 DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'solar.db')

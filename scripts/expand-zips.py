@@ -30,7 +30,7 @@ import json
 import urllib.request
 import urllib.error
 
-NREL_API_KEY = "KQsvwDH895xuKyOzvTaoxrrhCTqZ2hLEqIKlMEvx"
+NREL_API_KEY = os.environ.get("NREL_API_KEY", "")
 NREL_URL = "https://developer.nrel.gov/api/solar/solar_resource/v1.json"
 
 SUNPOWER_DB = os.path.join(os.path.dirname(__file__), '..', 'data', 'solar.db')
@@ -96,6 +96,8 @@ def save_progress(progress):
 
 def fetch_nrel_solar(zip_code, api_key):
     """Fetch solar resource data from NREL API for a ZIP code."""
+    if not api_key:
+        sys.exit("NREL_API_KEY not set. Export it, or use --state-only to skip NREL.")
     url = f"{NREL_URL}?api_key={api_key}&address={zip_code}"
     try:
         req = urllib.request.Request(url)

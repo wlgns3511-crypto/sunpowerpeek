@@ -1,0 +1,239 @@
+{
+  "date": "2026-07-26",
+  "kind": "comparison",
+  "title": "Hawaii vs Louisiana: a quick SunPowerPeek comparison",
+  "description": "4 readings from the SunPowerPeek dataset for 2026-07-26: hawaii vs louisiana; ranked by avg sun hours; record in focus: nebraska; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "4 readings from the SunPowerPeek dataset for 2026-07-26: hawaii vs louisiana; ranked by avg sun hours; record in focus: nebraska; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Hawaii",
+      "value": "Avg Sun Hours: 5.5",
+      "href": "/state/hawaii/",
+      "metric": 5.5,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #7 of 50 by avg sun hours · 28% above the median (4.3)."
+    },
+    {
+      "label": "Louisiana",
+      "value": "Avg Sun Hours: 4.8",
+      "href": "/state/louisiana/",
+      "metric": 4.8,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #14 of 50 by avg sun hours · 12% above the median (4.3)."
+    },
+    {
+      "label": "Hawaii",
+      "value": "Avg Sun Hours: 5.5",
+      "href": "/state/hawaii/",
+      "metric": 5.5,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #7 of 50 by avg sun hours · 28% above the median (4.3)."
+    },
+    {
+      "label": "Florida",
+      "value": "Avg Sun Hours: 5.4",
+      "href": "/state/florida/",
+      "metric": 5.4,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #8 of 50 by avg sun hours · 26% above the median (4.3)."
+    },
+    {
+      "label": "Texas",
+      "value": "Avg Sun Hours: 5.3",
+      "href": "/state/texas/",
+      "metric": 5.3,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #9 of 50 by avg sun hours · 23% above the median (4.3)."
+    },
+    {
+      "label": "Wyoming",
+      "value": "Avg Sun Hours: 5.2",
+      "href": "/state/wyoming/",
+      "metric": 5.2,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #10 of 50 by avg sun hours · 21% above the median (4.3)."
+    },
+    {
+      "label": "Oklahoma",
+      "value": "Avg Sun Hours: 5.1",
+      "href": "/state/oklahoma/",
+      "metric": 5.1,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #11 of 50 by avg sun hours · 19% above the median (4.3)."
+    },
+    {
+      "label": "Nebraska",
+      "value": "Avg Sun Hours: 4.6",
+      "href": "/state/nebraska/",
+      "metric": 4.6,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #19 of 50 by avg sun hours · 7% above the median (4.3)."
+    },
+    {
+      "label": "Mississippi",
+      "value": "Avg Sun Hours: 4.7",
+      "href": "/state/mississippi/",
+      "metric": 4.7,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "Minnesota",
+      "value": "Avg Sun Hours: 4",
+      "href": "/state/minnesota/",
+      "metric": 4,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "Michigan",
+      "value": "Avg Sun Hours: 3.6",
+      "href": "/state/michigan/",
+      "metric": 3.6,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "Massachusetts",
+      "value": "Avg Sun Hours: 3.8",
+      "href": "/state/massachusetts/",
+      "metric": 3.8,
+      "metricLabel": "avg_sun_hours"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Hawaii",
+      "href": "/state/hawaii/"
+    },
+    {
+      "label": "View Louisiana",
+      "href": "/state/louisiana/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "comparison",
+      "heading": "Hawaii vs Louisiana",
+      "body": "Hawaii (Avg Sun Hours: 5.5) against Louisiana (Avg Sun Hours: 4.8). Hawaii is 0.7 avg sun hours higher, a 14.6% gap.",
+      "items": [
+        {
+          "label": "Hawaii",
+          "value": "Avg Sun Hours: 5.5",
+          "href": "/state/hawaii/",
+          "metric": 5.5,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #7 of 50 by avg sun hours · 28% above the median (4.3)."
+        },
+        {
+          "label": "Louisiana",
+          "value": "Avg Sun Hours: 4.8",
+          "href": "/state/louisiana/",
+          "metric": 4.8,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #14 of 50 by avg sun hours · 12% above the median (4.3)."
+        }
+      ],
+      "takeaway": "Both sit against a dataset median of 4.3 avg sun hours."
+    },
+    {
+      "kind": "ranking",
+      "heading": "Ranked by avg sun hours",
+      "body": "Positions 7–11 of 50 records carrying a avg sun hours figure. Ordering is computed from the stored values, not editorial preference.",
+      "items": [
+        {
+          "label": "Hawaii",
+          "value": "Avg Sun Hours: 5.5",
+          "href": "/state/hawaii/",
+          "metric": 5.5,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #7 of 50 by avg sun hours · 28% above the median (4.3)."
+        },
+        {
+          "label": "Florida",
+          "value": "Avg Sun Hours: 5.4",
+          "href": "/state/florida/",
+          "metric": 5.4,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #8 of 50 by avg sun hours · 26% above the median (4.3)."
+        },
+        {
+          "label": "Texas",
+          "value": "Avg Sun Hours: 5.3",
+          "href": "/state/texas/",
+          "metric": 5.3,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #9 of 50 by avg sun hours · 23% above the median (4.3)."
+        },
+        {
+          "label": "Wyoming",
+          "value": "Avg Sun Hours: 5.2",
+          "href": "/state/wyoming/",
+          "metric": 5.2,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #10 of 50 by avg sun hours · 21% above the median (4.3)."
+        },
+        {
+          "label": "Oklahoma",
+          "value": "Avg Sun Hours: 5.1",
+          "href": "/state/oklahoma/",
+          "metric": 5.1,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #11 of 50 by avg sun hours · 19% above the median (4.3)."
+        }
+      ],
+      "takeaway": "Dataset median: 4.3. Highest on file: 6.5 (Arizona)."
+    },
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Nebraska",
+      "body": "Nebraska records avg sun hours of 4.6 in the current SunPowerPeek data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Nebraska",
+          "value": "Avg Sun Hours: 4.6",
+          "href": "/state/nebraska/",
+          "metric": 4.6,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #19 of 50 by avg sun hours · 7% above the median (4.3)."
+        }
+      ],
+      "takeaway": "Ranks #19 of 50 by avg sun hours · 7% above the median (4.3)."
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through SunPowerPeek for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "Mississippi",
+          "value": "Avg Sun Hours: 4.7",
+          "href": "/state/mississippi/",
+          "metric": 4.7,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "Minnesota",
+          "value": "Avg Sun Hours: 4",
+          "href": "/state/minnesota/",
+          "metric": 4,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "Michigan",
+          "value": "Avg Sun Hours: 3.6",
+          "href": "/state/michigan/",
+          "metric": 3.6,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "Massachusetts",
+          "value": "Avg Sun Hours: 3.8",
+          "href": "/state/massachusetts/",
+          "metric": 3.8,
+          "metricLabel": "avg_sun_hours"
+        }
+      ]
+    }
+  ],
+  "source": "NREL and EIA",
+  "dataDate": "2026-07-07",
+  "fingerprint": "f24b81b5"
+}

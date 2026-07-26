@@ -1,0 +1,239 @@
+{
+  "date": "2026-07-23",
+  "kind": "comparison",
+  "title": "Florida vs South Carolina: a quick SunPowerPeek comparison",
+  "description": "4 readings from the SunPowerPeek dataset for 2026-07-23: florida vs south carolina; ranked by avg sun hours; record in focus: maryland; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "4 readings from the SunPowerPeek dataset for 2026-07-23: florida vs south carolina; ranked by avg sun hours; record in focus: maryland; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Florida",
+      "value": "Avg Sun Hours: 5.4",
+      "href": "/state/florida/",
+      "metric": 5.4,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #8 of 50 by avg sun hours · 26% above the median (4.3)."
+    },
+    {
+      "label": "South Carolina",
+      "value": "Avg Sun Hours: 4.8",
+      "href": "/state/south-carolina/",
+      "metric": 4.8,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #15 of 50 by avg sun hours · 12% above the median (4.3)."
+    },
+    {
+      "label": "Wyoming",
+      "value": "Avg Sun Hours: 5.2",
+      "href": "/state/wyoming/",
+      "metric": 5.2,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #10 of 50 by avg sun hours · 21% above the median (4.3)."
+    },
+    {
+      "label": "Oklahoma",
+      "value": "Avg Sun Hours: 5.1",
+      "href": "/state/oklahoma/",
+      "metric": 5.1,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #11 of 50 by avg sun hours · 19% above the median (4.3)."
+    },
+    {
+      "label": "Kansas",
+      "value": "Avg Sun Hours: 5",
+      "href": "/state/kansas/",
+      "metric": 5,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #12 of 50 by avg sun hours · 16% above the median (4.3)."
+    },
+    {
+      "label": "Georgia",
+      "value": "Avg Sun Hours: 4.8",
+      "href": "/state/georgia/",
+      "metric": 4.8,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #13 of 50 by avg sun hours · 12% above the median (4.3)."
+    },
+    {
+      "label": "Louisiana",
+      "value": "Avg Sun Hours: 4.8",
+      "href": "/state/louisiana/",
+      "metric": 4.8,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #14 of 50 by avg sun hours · 12% above the median (4.3)."
+    },
+    {
+      "label": "Maryland",
+      "value": "Avg Sun Hours: 4.3",
+      "href": "/state/maryland/",
+      "metric": 4.3,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #25 of 50 by avg sun hours."
+    },
+    {
+      "label": "New Mexico",
+      "value": "Avg Sun Hours: 6.2",
+      "href": "/state/new-mexico/",
+      "metric": 6.2,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "New Jersey",
+      "value": "Avg Sun Hours: 4",
+      "href": "/state/new-jersey/",
+      "metric": 4,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "New Hampshire",
+      "value": "Avg Sun Hours: 3.7",
+      "href": "/state/new-hampshire/",
+      "metric": 3.7,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "Nevada",
+      "value": "Avg Sun Hours: 6.4",
+      "href": "/state/nevada/",
+      "metric": 6.4,
+      "metricLabel": "avg_sun_hours"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Florida",
+      "href": "/state/florida/"
+    },
+    {
+      "label": "View South Carolina",
+      "href": "/state/south-carolina/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "comparison",
+      "heading": "Florida vs South Carolina",
+      "body": "Florida (Avg Sun Hours: 5.4) against South Carolina (Avg Sun Hours: 4.8). Florida is 0.6 avg sun hours higher, a 12.5% gap.",
+      "items": [
+        {
+          "label": "Florida",
+          "value": "Avg Sun Hours: 5.4",
+          "href": "/state/florida/",
+          "metric": 5.4,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #8 of 50 by avg sun hours · 26% above the median (4.3)."
+        },
+        {
+          "label": "South Carolina",
+          "value": "Avg Sun Hours: 4.8",
+          "href": "/state/south-carolina/",
+          "metric": 4.8,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #15 of 50 by avg sun hours · 12% above the median (4.3)."
+        }
+      ],
+      "takeaway": "Both sit against a dataset median of 4.3 avg sun hours."
+    },
+    {
+      "kind": "ranking",
+      "heading": "Ranked by avg sun hours",
+      "body": "Positions 10–14 of 50 records carrying a avg sun hours figure. Ordering is computed from the stored values, not editorial preference.",
+      "items": [
+        {
+          "label": "Wyoming",
+          "value": "Avg Sun Hours: 5.2",
+          "href": "/state/wyoming/",
+          "metric": 5.2,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #10 of 50 by avg sun hours · 21% above the median (4.3)."
+        },
+        {
+          "label": "Oklahoma",
+          "value": "Avg Sun Hours: 5.1",
+          "href": "/state/oklahoma/",
+          "metric": 5.1,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #11 of 50 by avg sun hours · 19% above the median (4.3)."
+        },
+        {
+          "label": "Kansas",
+          "value": "Avg Sun Hours: 5",
+          "href": "/state/kansas/",
+          "metric": 5,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #12 of 50 by avg sun hours · 16% above the median (4.3)."
+        },
+        {
+          "label": "Georgia",
+          "value": "Avg Sun Hours: 4.8",
+          "href": "/state/georgia/",
+          "metric": 4.8,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #13 of 50 by avg sun hours · 12% above the median (4.3)."
+        },
+        {
+          "label": "Louisiana",
+          "value": "Avg Sun Hours: 4.8",
+          "href": "/state/louisiana/",
+          "metric": 4.8,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #14 of 50 by avg sun hours · 12% above the median (4.3)."
+        }
+      ],
+      "takeaway": "Dataset median: 4.3. Highest on file: 6.5 (Arizona)."
+    },
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Maryland",
+      "body": "Maryland records avg sun hours of 4.3 in the current SunPowerPeek data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Maryland",
+          "value": "Avg Sun Hours: 4.3",
+          "href": "/state/maryland/",
+          "metric": 4.3,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #25 of 50 by avg sun hours."
+        }
+      ],
+      "takeaway": "Ranks #25 of 50 by avg sun hours."
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through SunPowerPeek for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "New Mexico",
+          "value": "Avg Sun Hours: 6.2",
+          "href": "/state/new-mexico/",
+          "metric": 6.2,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "New Jersey",
+          "value": "Avg Sun Hours: 4",
+          "href": "/state/new-jersey/",
+          "metric": 4,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "New Hampshire",
+          "value": "Avg Sun Hours: 3.7",
+          "href": "/state/new-hampshire/",
+          "metric": 3.7,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "Nevada",
+          "value": "Avg Sun Hours: 6.4",
+          "href": "/state/nevada/",
+          "metric": 6.4,
+          "metricLabel": "avg_sun_hours"
+        }
+      ]
+    }
+  ],
+  "source": "NREL and EIA",
+  "dataDate": "2026-07-07",
+  "fingerprint": "8d3b90d9"
+}

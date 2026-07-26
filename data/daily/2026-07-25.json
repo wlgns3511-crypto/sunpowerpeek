@@ -1,0 +1,239 @@
+{
+  "date": "2026-07-25",
+  "kind": "comparison",
+  "title": "Georgia vs Pennsylvania: a quick SunPowerPeek comparison",
+  "description": "4 readings from the SunPowerPeek dataset for 2026-07-25: georgia vs pennsylvania; ranked by avg sun hours; record in focus: delaware; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "4 readings from the SunPowerPeek dataset for 2026-07-25: georgia vs pennsylvania; ranked by avg sun hours; record in focus: delaware; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Georgia",
+      "value": "Avg Sun Hours: 4.8",
+      "href": "/state/georgia/",
+      "metric": 4.8,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #13 of 50 by avg sun hours · 12% above the median (4.3)."
+    },
+    {
+      "label": "Pennsylvania",
+      "value": "Avg Sun Hours: 3.8",
+      "href": "/state/pennsylvania/",
+      "metric": 3.8,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #41 of 50 by avg sun hours · 12% below the median (4.3)."
+    },
+    {
+      "label": "Florida",
+      "value": "Avg Sun Hours: 5.4",
+      "href": "/state/florida/",
+      "metric": 5.4,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #8 of 50 by avg sun hours · 26% above the median (4.3)."
+    },
+    {
+      "label": "Texas",
+      "value": "Avg Sun Hours: 5.3",
+      "href": "/state/texas/",
+      "metric": 5.3,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #9 of 50 by avg sun hours · 23% above the median (4.3)."
+    },
+    {
+      "label": "Wyoming",
+      "value": "Avg Sun Hours: 5.2",
+      "href": "/state/wyoming/",
+      "metric": 5.2,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #10 of 50 by avg sun hours · 21% above the median (4.3)."
+    },
+    {
+      "label": "Oklahoma",
+      "value": "Avg Sun Hours: 5.1",
+      "href": "/state/oklahoma/",
+      "metric": 5.1,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #11 of 50 by avg sun hours · 19% above the median (4.3)."
+    },
+    {
+      "label": "Kansas",
+      "value": "Avg Sun Hours: 5",
+      "href": "/state/kansas/",
+      "metric": 5,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #12 of 50 by avg sun hours · 16% above the median (4.3)."
+    },
+    {
+      "label": "Delaware",
+      "value": "Avg Sun Hours: 4.2",
+      "href": "/state/delaware/",
+      "metric": 4.2,
+      "metricLabel": "avg_sun_hours",
+      "verdict": "Ranks #29 of 50 by avg sun hours · 2% below the median (4.3)."
+    },
+    {
+      "label": "Texas",
+      "value": "Avg Sun Hours: 5.3",
+      "href": "/state/texas/",
+      "metric": 5.3,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "Tennessee",
+      "value": "Avg Sun Hours: 4.3",
+      "href": "/state/tennessee/",
+      "metric": 4.3,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "South Dakota",
+      "value": "Avg Sun Hours: 4.6",
+      "href": "/state/south-dakota/",
+      "metric": 4.6,
+      "metricLabel": "avg_sun_hours"
+    },
+    {
+      "label": "South Carolina",
+      "value": "Avg Sun Hours: 4.8",
+      "href": "/state/south-carolina/",
+      "metric": 4.8,
+      "metricLabel": "avg_sun_hours"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Georgia",
+      "href": "/state/georgia/"
+    },
+    {
+      "label": "View Pennsylvania",
+      "href": "/state/pennsylvania/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "comparison",
+      "heading": "Georgia vs Pennsylvania",
+      "body": "Georgia (Avg Sun Hours: 4.8) against Pennsylvania (Avg Sun Hours: 3.8). Georgia is 1 avg sun hours higher, a 26.3% gap.",
+      "items": [
+        {
+          "label": "Georgia",
+          "value": "Avg Sun Hours: 4.8",
+          "href": "/state/georgia/",
+          "metric": 4.8,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #13 of 50 by avg sun hours · 12% above the median (4.3)."
+        },
+        {
+          "label": "Pennsylvania",
+          "value": "Avg Sun Hours: 3.8",
+          "href": "/state/pennsylvania/",
+          "metric": 3.8,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #41 of 50 by avg sun hours · 12% below the median (4.3)."
+        }
+      ],
+      "takeaway": "Both sit against a dataset median of 4.3 avg sun hours."
+    },
+    {
+      "kind": "ranking",
+      "heading": "Ranked by avg sun hours",
+      "body": "Positions 8–12 of 50 records carrying a avg sun hours figure. Ordering is computed from the stored values, not editorial preference.",
+      "items": [
+        {
+          "label": "Florida",
+          "value": "Avg Sun Hours: 5.4",
+          "href": "/state/florida/",
+          "metric": 5.4,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #8 of 50 by avg sun hours · 26% above the median (4.3)."
+        },
+        {
+          "label": "Texas",
+          "value": "Avg Sun Hours: 5.3",
+          "href": "/state/texas/",
+          "metric": 5.3,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #9 of 50 by avg sun hours · 23% above the median (4.3)."
+        },
+        {
+          "label": "Wyoming",
+          "value": "Avg Sun Hours: 5.2",
+          "href": "/state/wyoming/",
+          "metric": 5.2,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #10 of 50 by avg sun hours · 21% above the median (4.3)."
+        },
+        {
+          "label": "Oklahoma",
+          "value": "Avg Sun Hours: 5.1",
+          "href": "/state/oklahoma/",
+          "metric": 5.1,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #11 of 50 by avg sun hours · 19% above the median (4.3)."
+        },
+        {
+          "label": "Kansas",
+          "value": "Avg Sun Hours: 5",
+          "href": "/state/kansas/",
+          "metric": 5,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #12 of 50 by avg sun hours · 16% above the median (4.3)."
+        }
+      ],
+      "takeaway": "Dataset median: 4.3. Highest on file: 6.5 (Arizona)."
+    },
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Delaware",
+      "body": "Delaware records avg sun hours of 4.2 in the current SunPowerPeek data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Delaware",
+          "value": "Avg Sun Hours: 4.2",
+          "href": "/state/delaware/",
+          "metric": 4.2,
+          "metricLabel": "avg_sun_hours",
+          "verdict": "Ranks #29 of 50 by avg sun hours · 2% below the median (4.3)."
+        }
+      ],
+      "takeaway": "Ranks #29 of 50 by avg sun hours · 2% below the median (4.3)."
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through SunPowerPeek for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "Texas",
+          "value": "Avg Sun Hours: 5.3",
+          "href": "/state/texas/",
+          "metric": 5.3,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "Tennessee",
+          "value": "Avg Sun Hours: 4.3",
+          "href": "/state/tennessee/",
+          "metric": 4.3,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "South Dakota",
+          "value": "Avg Sun Hours: 4.6",
+          "href": "/state/south-dakota/",
+          "metric": 4.6,
+          "metricLabel": "avg_sun_hours"
+        },
+        {
+          "label": "South Carolina",
+          "value": "Avg Sun Hours: 4.8",
+          "href": "/state/south-carolina/",
+          "metric": 4.8,
+          "metricLabel": "avg_sun_hours"
+        }
+      ]
+    }
+  ],
+  "source": "NREL and EIA",
+  "dataDate": "2026-07-07",
+  "fingerprint": "530afc22"
+}
